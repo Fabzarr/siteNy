@@ -1,0 +1,96 @@
+.evenements {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: white;
+}
+
+.evenements h2 {
+  color: #D4AF37;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.description {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #ffffff;
+  font-style: italic;
+}
+
+.evenements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.evenement-card {
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid #D4AF37;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.evenement-card:hover {
+  transform: translateY(-5px);
+}
+
+.evenement-content {
+  padding: 2rem;
+}
+
+.evenement-content h3 {
+  color: #D4AF37;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.date {
+  color: #D4AF37;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.evenement-content p {
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+.info-reservation {
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid #D4AF37;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.info-reservation h3 {
+  color: #D4AF37;
+  margin-bottom: 1rem;
+}
+
+.info-reservation p {
+  margin-bottom: 1rem;
+}
+
+.info-reservation ul {
+  list-style: none;
+  padding: 0;
+}
+
+.info-reservation li {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .evenements {
+    padding: 2rem 1rem;
+  }
+  
+  .evenements-grid {
+    grid-template-columns: 1fr;
+  }
+} 

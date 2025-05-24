@@ -1,0 +1,257 @@
+.carte {
+  padding: 0 4vw;
+  color: white;
+  background-color: #0a0c14;
+  min-height: 100vh;
+  margin-top: 80px;
+  overflow: hidden; /* Prevent main page scroll when modal is open */
+}
+
+.carte h2 {
+  color: #D4AF37;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 2.5em;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 0.2em;
+}
+
+.carte h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(212, 175, 55, 0.3),
+    #D4AF37,
+    rgba(212, 175, 55, 0.3),
+    transparent
+  );
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.menu-buttons::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(212, 175, 55, 0.3),
+    rgba(212, 175, 55, 0.5),
+    rgba(212, 175, 55, 0.3),
+    transparent
+  );
+}
+
+.menu-buttons button {
+  background: none;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #D4AF37;
+  padding: 1.8vh 2vw;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: left;
+}
+
+.menu-buttons button::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background-color: #D4AF37;
+  transition: width 0.3s ease;
+}
+
+.menu-buttons button:hover::after {
+  width: 100%;
+}
+
+.menu-buttons button:hover {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+/* Styles pour la page des pizzas */
+.menu-page {
+  padding: 4vh 4vw;
+  min-height: 100vh;
+}
+
+.menu-header {
+  text-align: center;
+  margin-bottom: 4vh;
+  margin-top: 80px;
+}
+
+.menu-header h2 {
+  font-family: 'Playfair Display', serif;
+  color: #D4AF37;
+  font-size: 2.5em;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 0.2em;
+}
+
+.menu-subheader {
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: 600;
+  margin-bottom: 2em;
+}
+
+.menu-grid {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pizza-card {
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pizza-name {
+  text-align: left;
+  margin-right: auto;
+}
+
+.pizza-ingredients {
+  text-align: left;
+  max-width: 600px;
+}
+
+.pizza-price {
+  margin-left: auto;
+}
+
+.back-button {
+  position: fixed;
+  bottom: 2vh;
+  right: 2vw;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #D4AF37;
+  padding: 0.8vh 1.5vw;
+  border-radius: 4px;
+  font-size: min(0.9rem, 1.8vh);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: rgba(212, 175, 55, 0.2);
+}
+
+@media (max-width: 1200px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .menu-buttons button {
+    padding: 1.2vh 1.5vw;
+  }
+  
+  .pizza-name {
+    font-size: 1em;
+  }
+  
+  .pizza-price {
+    font-size: 0.85em;
+  }
+  
+  .pizza-ingredients {
+    font-size: 0.8em;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+  background: none;
+  border: none;
+  color: #D4AF37;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  transform: scale(1.1);
+}
+
+.close-button::before,
+.close-button::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 1px;
+  background-color: #D4AF37;
+  transition: all 0.2s ease;
+}
+
+.close-button::before {
+  transform: rotate(45deg);
+}
+
+.close-button::after {
+  transform: rotate(-45deg);
+}
+
+.modal-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0a0c14;
+  padding: 4vh 4vw;
+  overflow-y: scroll;
+  z-index: 1000;
+}
+
+.modal-content .menu-header {
+  margin-top: 80px;
+}
+
+body:has(.modal-content) {
+  overflow: hidden; /* Prevent body scroll when modal is open */
+} 

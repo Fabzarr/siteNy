@@ -1,0 +1,121 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #0a0c14;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Styles pour tous les titres principaux */
+h1, .main-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 2.5em;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 0.2em;
+  color: #D4AF37;
+}
+
+/* Styles pour tous les sous-titres */
+h2, .section-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 2em;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin-bottom: 0.5em;
+  color: #D4AF37;
+}
+
+/* Styles pour les noms d'items (pizzas, pâtes, etc.) */
+.item-name, .menu-item-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+/* Styles pour tous les ingrédients */
+.item-ingredients, .menu-item-ingredients {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85em;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+/* Styles pour tous les prix */
+.item-price, .menu-item-price {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #D4AF37;
+  text-align: right;
+}
+
+/* Styles pour les sous-titres de sections */
+.menu-subheader, .section-subheader {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  text-align: center;
+  margin-bottom: 2em;
+  color: #fff;
+}
+
+button {
+  font-family: 'Inter', sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  h1, .main-title {
+    font-size: 2em;
+  }
+
+  h2, .section-title {
+    font-size: 1.8em;
+  }
+
+  .item-name, .menu-item-name {
+    font-size: 1em;
+  }
+
+  .item-ingredients, .menu-item-ingredients {
+    font-size: 0.8em;
+  }
+
+  .item-price, .menu-item-price {
+    font-size: 0.85em;
+  }
+}
