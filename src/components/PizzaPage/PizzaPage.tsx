@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import SideMenu from '../Carte/SideMenu';
 import './PizzaPage.css';
 
 const pizzas = [
@@ -37,51 +38,59 @@ const PizzaPage: React.FC = () => {
   const column3 = pizzas.slice(18);
 
   return (
-    <div className="pizza-page-container">
-      <div className="pizza-menu-card">
-        <div className="pizza-header">
-          <h1>New York Café</h1>
-          <h2>PIZZAS</h2>
+    <div className="page-with-menu">
+      <SideMenu />
+      <motion.div 
+        className="pizza-page-container"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="pizza-menu-card">
+          <div className="pizza-header">
+            <h1>New York Café</h1>
+            <h2>PIZZAS</h2>
+          </div>
+
+          <div className="pizza-menu">
+            <div className="menu-column">
+              {column1.map((pizza, index) => (
+                <div key={index} className="pizza-item">
+                  <div className="pizza-name-price">
+                    <span className="pizza-name">{pizza.name}</span>
+                    <span className="pizza-price">{pizza.price}€</span>
+                  </div>
+                  <div className="pizza-description">{pizza.description}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="menu-column">
+              {column2.map((pizza, index) => (
+                <div key={index} className="pizza-item">
+                  <div className="pizza-name-price">
+                    <span className="pizza-name">{pizza.name}</span>
+                    <span className="pizza-price">{pizza.price}€</span>
+                  </div>
+                  <div className="pizza-description">{pizza.description}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="menu-column">
+              {column3.map((pizza, index) => (
+                <div key={index} className="pizza-item">
+                  <div className="pizza-name-price">
+                    <span className="pizza-name">{pizza.name}</span>
+                    <span className="pizza-price">{pizza.price}€</span>
+                  </div>
+                  <div className="pizza-description">{pizza.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-
-        <div className="pizza-menu">
-          <div className="menu-column">
-            {column1.map((pizza, index) => (
-              <div key={index} className="pizza-item">
-                <div className="pizza-name-price">
-                  <span className="pizza-name">{pizza.name}</span>
-                  <span className="pizza-price">{pizza.price}</span>
-                </div>
-                <div className="pizza-description">{pizza.description}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="menu-column">
-            {column2.map((pizza, index) => (
-              <div key={index} className="pizza-item">
-                <div className="pizza-name-price">
-                  <span className="pizza-name">{pizza.name}</span>
-                  <span className="pizza-price">{pizza.price}</span>
-                </div>
-                <div className="pizza-description">{pizza.description}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="menu-column">
-            {column3.map((pizza, index) => (
-              <div key={index} className="pizza-item">
-                <div className="pizza-name-price">
-                  <span className="pizza-name">{pizza.name}</span>
-                  <span className="pizza-price">{pizza.price}</span>
-                </div>
-                <div className="pizza-description">{pizza.description}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

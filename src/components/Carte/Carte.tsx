@@ -7,11 +7,36 @@ const Carte = () => {
   const navigate = useNavigate();
 
   const handleCategoryClick = (category: string) => {
-    if (category === 'NOS PIZZAS') {
-      navigate('/nos-pizzas');
-    } else {
-      // Pour les autres catégories, on peut ajouter la logique plus tard
-      alert('Cette section sera bientôt disponible !');
+    switch (category) {
+      case 'NOS PIZZAS':
+        navigate('/nos-pizzas');
+        break;
+      case 'PETITES FAIMS':
+        navigate('/petites-faims');
+        break;
+      case 'A PARTAGER':
+        navigate('/a-partager');
+        break;
+      case 'NOS BELLES SALADES':
+        navigate('/nos-salades');
+        break;
+      case 'NOS PATES':
+        navigate('/nos-pates');
+        break;
+      case 'NOS HAMBURGERS & TARTARE':
+        navigate('/nos-burgers');
+        break;
+      case 'NOS VIANDES & POISSON':
+        navigate('/nos-viandes');
+        break;
+      case 'NOS DESSERTS':
+        navigate('/nos-desserts');
+        break;
+      case 'LA CARTE DES VINS':
+        navigate('/carte-des-vins');
+        break;
+      default:
+        alert('Cette section sera bientôt disponible !');
     }
   };
 

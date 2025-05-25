@@ -1,0 +1,146 @@
+.petites-faims-page-container {
+  flex: 1;
+  margin-left: 280px;
+  padding: 40px;
+  min-height: 100%;
+}
+
+.petites-faims-menu-card {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.petites-faims-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.petites-faims-header h1 {
+  color: #D4AF37;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
+}
+
+.petites-faims-header h2 {
+  color: white;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+}
+
+.petites-faims-menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.petites-faims-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.petites-faims-item:hover {
+  background: rgba(212, 175, 55, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.1);
+}
+
+.petites-faims-name-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.petites-faims-name {
+  color: #D4AF37;
+  font-weight: 500;
+  font-size: 1.1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.petites-faims-price {
+  color: white;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.petites-faims-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+}
+
+@media (max-width: 1200px) {
+  .petites-faims-menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .petites-faims-page-container {
+    margin-left: 220px;
+    padding: 20px;
+  }
+
+  .petites-faims-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .petites-faims-header h1 {
+    font-size: 2rem;
+  }
+
+  .petites-faims-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .petites-faims-name {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .petites-faims-page-container {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .petites-faims-menu-card {
+    padding: 15px;
+  }
+
+  .petites-faims-description {
+    font-size: 0.8rem;
+  }
+} 

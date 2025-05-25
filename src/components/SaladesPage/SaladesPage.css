@@ -1,0 +1,162 @@
+.salades-page-container {
+  flex: 1;
+  margin-left: 280px;
+  padding: 40px;
+  min-height: 100%;
+}
+
+.salades-menu-card {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.salades-header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.salades-header h1 {
+  color: #D4AF37;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
+}
+
+.salades-header h2 {
+  color: white;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+}
+
+.salades-menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.salade-item {
+  padding: 20px;
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.salade-item:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.05), rgba(0, 0, 0, 0.3));
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+}
+
+.salade-name-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.2);
+}
+
+.salade-name {
+  color: #D4AF37;
+  font-weight: 500;
+  font-size: 1.2rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.salade-price {
+  color: white;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  background: rgba(212, 175, 55, 0.15);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.salade-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+}
+
+@media (max-width: 1200px) {
+  .salades-menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .salades-page-container {
+    margin-left: 220px;
+    padding: 20px;
+  }
+
+  .salades-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .salades-header h1 {
+    font-size: 2rem;
+  }
+
+  .salades-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .salade-name {
+    font-size: 1.1rem;
+  }
+
+  .salade-item {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .salades-page-container {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .salades-menu-card {
+    padding: 15px;
+  }
+
+  .salade-description {
+    font-size: 0.85rem;
+  }
+
+  .salade-price {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+  }
+} 
