@@ -20,7 +20,7 @@ const About = () => {
         </motion.h1>
       </div>
 
-      <div className="about-content container">
+      <div className="about-content">
         <motion.div 
           className="about-section story"
           {...fadeInUp}
@@ -48,34 +48,9 @@ const About = () => {
         </motion.div>
 
         <motion.div 
-          className="team-section"
-          {...fadeInUp}
-          transition={{ delay: 0.4 }}
-        >
-          <h2>Notre Équipe</h2>
-          <div className="team-grid">
-            <div className="team-member">
-              <div className="member-photo chef"></div>
-              <h3>Chef James Wilson</h3>
-              <p>Chef exécutif, formé à New York</p>
-            </div>
-            <div className="team-member">
-              <div className="member-photo bartender"></div>
-              <h3>Lisa Chen</h3>
-              <p>Mixologue en chef</p>
-            </div>
-            <div className="team-member">
-              <div className="member-photo manager"></div>
-              <h3>Thomas Martin</h3>
-              <p>Directeur</p>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div 
           className="values-section"
           {...fadeInUp}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.4 }}
         >
           <h2>Nos Valeurs</h2>
           <div className="values-grid">

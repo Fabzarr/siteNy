@@ -1,5 +1,4 @@
 .karaoke {
-  padding-top: 80px;
   min-height: 100vh;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)),
               url('/images/karaoke-bg.jpg') no-repeat center center fixed;

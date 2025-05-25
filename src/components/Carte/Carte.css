@@ -1,112 +1,84 @@
 .carte {
-  padding: 0 4vw;
-  color: white;
-  background-color: #0a0c14;
-  min-height: 100vh;
-  margin-top: 80px;
-  overflow: hidden; /* Prevent main page scroll when modal is open */
+  padding: 40px 20px;
+  text-align: center;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+              url('/images/ny-skyline.jpg') center/cover no-repeat fixed;
 }
 
 .carte h2 {
   color: #D4AF37;
+  font-size: 3rem;
   font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  font-size: 2.5em;
-  letter-spacing: 1px;
-  text-align: center;
-  margin-bottom: 0.2em;
-}
-
-.carte h2::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(212, 175, 55, 0.3),
-    #D4AF37,
-    rgba(212, 175, 55, 0.3),
-    transparent
-  );
+  margin-bottom: 40px;
 }
 
 .menu-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 2vh;
-  width: 100%;
-  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
   margin: 0 auto;
-}
-
-.menu-buttons::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(212, 175, 55, 0.3),
-    rgba(212, 175, 55, 0.5),
-    rgba(212, 175, 55, 0.3),
-    transparent
-  );
+  padding: 20px;
 }
 
 .menu-buttons button {
-  background: none;
+  background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(212, 175, 55, 0.3);
   color: #D4AF37;
-  padding: 1.8vh 2vw;
+  padding: 15px 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  border-radius: 8px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-align: left;
-}
-
-.menu-buttons button::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 1px;
-  background-color: #D4AF37;
-  transition: width 0.3s ease;
-}
-
-.menu-buttons button:hover::after {
-  width: 100%;
+  letter-spacing: 1px;
 }
 
 .menu-buttons button:hover {
   background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
 }
 
-/* Styles pour la page des pizzas */
+@media (max-width: 768px) {
+  .carte {
+    padding: 20px 10px;
+  }
+
+  .carte h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .menu-buttons {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .menu-buttons button {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+}
+
 .menu-page {
-  padding: 4vh 4vw;
-  min-height: 100vh;
+  padding: 0 4vw;
+  min-height: calc(100vh - var(--navbar-height));
 }
 
 .menu-header {
   text-align: center;
   margin-bottom: 4vh;
-  margin-top: 80px;
+  padding-top: 1rem;
 }
 
 .menu-header h2 {
   font-family: 'Playfair Display', serif;
   color: #D4AF37;
-  font-size: 2.5em;
+  font-size: 1.8em;
   font-weight: 600;
   letter-spacing: 1px;
   margin-bottom: 0.2em;
@@ -115,7 +87,7 @@
 .menu-subheader {
   color: #fff;
   font-family: 'Inter', sans-serif;
-  font-size: 1.2em;
+  font-size: 0.9em;
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-weight: 600;
@@ -127,29 +99,42 @@
   flex-direction: column;
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
+  gap: 4px;
 }
 
+/* Ajustement pour la lisibilité des cartes de pizza */
 .pizza-card {
+  background: rgba(0, 0, 0, 0.6);
   border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-  padding: 12px 0;
+  padding: 6px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(3px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 2px;
 }
 
 .pizza-name {
   text-align: left;
   margin-right: auto;
+  font-size: 0.95em;
+  line-height: 1.2;
 }
 
 .pizza-ingredients {
   text-align: left;
   max-width: 600px;
+  font-size: 0.8em;
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .pizza-price {
   margin-left: auto;
+  font-size: 0.85em;
+  line-height: 1;
 }
 
 .back-button {
@@ -173,28 +158,6 @@
 @media (max-width: 1200px) {
   .menu-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .menu-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .menu-buttons button {
-    padding: 1.2vh 1.5vw;
-  }
-  
-  .pizza-name {
-    font-size: 1em;
-  }
-  
-  .pizza-price {
-    font-size: 0.85em;
-  }
-  
-  .pizza-ingredients {
-    font-size: 0.8em;
   }
 }
 
@@ -238,18 +201,19 @@
 
 .modal-content {
   position: fixed;
-  top: 0;
+  top: var(--navbar-height);
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--navbar-height));
   background-color: #0a0c14;
-  padding: 4vh 4vw;
+  padding: 1rem 4vw;
   overflow-y: scroll;
   z-index: 1000;
 }
 
 .modal-content .menu-header {
-  margin-top: 80px;
+  margin-top: 0;
+  padding-top: 1rem;
 }
 
 body:has(.modal-content) {
