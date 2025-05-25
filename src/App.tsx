@@ -16,17 +16,20 @@ function App() {
   return (
     <div className="app">
       <Navbar />
-      <main className="main-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/a-propos" element={<About />} />
-          <Route path="/carte" element={<Carte />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/karaoke" element={<Karaoke />} />
-          <Route path="/galerie" element={<Galerie />} />
-          <Route path="/evenements" element={<Evenements />} />
-          <Route path="/nos-pizzas" element={<PizzaPage />} />
-        </Routes>
+      <main className="main-container">
+        <div className="background-container"></div>
+        <div className="page-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/a-propos" element={<About />} />
+            <Route path="/carte" element={<Carte />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/karaoke" element={<Karaoke />} />
+            <Route path="/galerie" element={<Galerie />} />
+            <Route path="/evenements" element={<Evenements />} />
+            <Route path="/nos-pizzas" element={<PizzaPage />} />
+          </Routes>
+        </div>
       </main>
       <Footer />
     </div>

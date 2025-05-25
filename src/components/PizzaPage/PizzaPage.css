@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap');
 
 .pizza-page-container {
-  position: fixed;
-  top: var(--navbar-height);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: auto;
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+  margin-top: var(--navbar-height);
+  padding-bottom: var(--footer-height);
+  width: 100%;
 }
 
 .pizza-menu-card {
