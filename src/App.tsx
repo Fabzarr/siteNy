@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navigation/Navbar';
 import Home from './components/Home/Home';
 import About from './components/About/About';
@@ -18,9 +18,30 @@ import DessertsPage from './components/DessertsPage/DessertsPage';
 import VinsPage from './components/VinsPage/VinsPage';
 import PartagerPage from './components/PartagerPage/PartagerPage';
 import Footer from './components/Footer/Footer';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import './App.css';
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Ajout d'un petit délai pour s'assurer que la page est bien chargée
+    const timeoutId = setTimeout(() => {
+      // Force le défilement vers le haut avec les deux méthodes
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto'
+      });
+      
+      // Backup en cas d'échec de la première méthode
+      document.body.scrollTop = 0; // Pour Safari
+      document.documentElement.scrollTop = 0; // Pour Chrome, Firefox, IE et Opera
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [location.pathname]);
+
   return (
     <div className="app">
       <Navbar />
@@ -47,6 +68,7 @@ function App() {
           </Routes>
         </div>
       </main>
+      <ScrollToTop />
       <Footer />
     </div>
   );
