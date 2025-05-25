@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SideMenu from '../Carte/SideMenu';
+import CloseButton from '../common/CloseButton';
 import './PartagerPage.css';
 
 const platsPartager = [
@@ -79,6 +80,7 @@ const PartagerPage: React.FC = () => {
   return (
     <div className="page-with-menu">
       <SideMenu />
+      <CloseButton />
       <motion.div 
         className="partager-page-container"
         initial={{ opacity: 0, x: 20 }}

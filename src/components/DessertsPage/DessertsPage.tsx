@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SideMenu from '../Carte/SideMenu';
+import CloseButton from '../common/CloseButton';
 import './DessertsPage.css';
 
 const desserts = [
@@ -70,6 +71,7 @@ const DessertsPage: React.FC = () => {
   return (
     <div className="page-with-menu">
       <SideMenu />
+      <CloseButton />
       <motion.div 
         className="desserts-page-container"
         initial={{ opacity: 0, x: 20 }}

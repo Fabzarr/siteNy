@@ -49,16 +49,33 @@ const Carte = () => {
     >
       <h2>Notre Carte</h2>
 
-      <div className="menu-buttons">
-        <button onClick={() => handleCategoryClick('NOS PIZZAS')}>NOS PIZZAS</button>
-        <button onClick={() => handleCategoryClick('PETITES FAIMS')}>PETITES FAIMS</button>
-        <button onClick={() => handleCategoryClick('A PARTAGER')}>A PARTAGER</button>
-        <button onClick={() => handleCategoryClick('NOS BELLES SALADES')}>NOS BELLES SALADES</button>
-        <button onClick={() => handleCategoryClick('NOS PATES')}>NOS PATES</button>
-        <button onClick={() => handleCategoryClick('NOS HAMBURGERS & TARTARE')}>NOS HAMBURGERS & TARTARE</button>
-        <button onClick={() => handleCategoryClick('NOS VIANDES & POISSON')}>NOS VIANDES & POISSON</button>
-        <button onClick={() => handleCategoryClick('NOS DESSERTS')}>NOS DESSERTS</button>
-        <button onClick={() => handleCategoryClick('LA CARTE DES VINS')}>LA CARTE DES VINS</button>
+      <div className="menu-categories">
+        <div className="category-column">
+          <h3 className="category-title">Entrées</h3>
+          <div className="menu-buttons">
+            <button onClick={() => handleCategoryClick('PETITES FAIMS')}>PETITES FAIMS</button>
+            <button onClick={() => handleCategoryClick('A PARTAGER')}>A PARTAGER</button>
+          </div>
+        </div>
+
+        <div className="category-column">
+          <h3 className="category-title">Plats</h3>
+          <div className="menu-buttons">
+            <button onClick={() => handleCategoryClick('NOS PIZZAS')}>NOS PIZZAS</button>
+            <button onClick={() => handleCategoryClick('NOS BELLES SALADES')}>NOS BELLES SALADES</button>
+            <button onClick={() => handleCategoryClick('NOS PATES')}>NOS PATES</button>
+            <button onClick={() => handleCategoryClick('NOS HAMBURGERS & TARTARE')}>NOS HAMBURGERS & TARTARE</button>
+            <button onClick={() => handleCategoryClick('NOS VIANDES & POISSON')}>NOS VIANDES & POISSON</button>
+          </div>
+        </div>
+
+        <div className="category-column">
+          <h3 className="category-title">Desserts & Vins</h3>
+          <div className="menu-buttons">
+            <button onClick={() => handleCategoryClick('NOS DESSERTS')}>NOS DESSERTS</button>
+            <button onClick={() => handleCategoryClick('LA CARTE DES VINS')}>LA CARTE DES VINS</button>
+          </div>
+        </div>
       </div>
     </motion.div>
   );
