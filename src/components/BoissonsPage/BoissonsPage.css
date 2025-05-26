@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap');
+
+.boissons-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: white;
+}
+
+.boissons-content {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 15px;
+}
+
+.boissons-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.boissons-header h1 {
+  color: #D4AF37;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 2px;
+}
+
+.boissons-page .menu-selector {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 40px 0;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px 30px;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+}
+
+.boissons-page .menu-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Playfair Display', serif;
+  position: relative;
+  border-radius: 25px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  width: 160px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boissons-page .menu-button:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+}
+
+.boissons-page .menu-button.active {
+  color: #000;
+  background: linear-gradient(45deg, #D4AF37, #FFE169);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
+}
+
+.happy-hour-info {
+  margin: 20px 0;
+}
+
+.happy-hour-info p {
+  color: #D4AF37;
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+.karaoke-info {
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+}
+
+.karaoke-info p {
+  color: white;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.boissons-columns {
+  display: flex;
+  gap: 40px;
+  margin: 40px 0;
+}
+
+.boissons-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.boissons-section {
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.boissons-section:last-child {
+  margin-bottom: 0;
+}
+
+.boissons-section h2 {
+  color: #D4AF37;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.boisson-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.boisson-item:last-child {
+  border-bottom: none;
+}
+
+.boisson-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.boisson-name {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.boisson-price {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-left: 15px;
+  white-space: nowrap;
+}
+
+.boisson-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.boissons-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  text-align: center;
+}
+
+.boissons-footer p {
+  color: #D4AF37;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+  .boissons-columns {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .boissons-section h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .boissons-page {
+    padding: 20px 15px;
+  }
+
+  .boissons-content {
+    padding: 20px;
+  }
+
+  .boissons-header h1 {
+    font-size: 2rem;
+  }
+
+  .boissons-page .menu-selector {
+    gap: 20px;
+    padding: 10px 20px;
+    margin: 30px 0;
+  }
+
+  .boissons-page .menu-button {
+    padding: 10px 0;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    min-width: 140px;
+    width: 140px;
+    height: 40px;
+  }
+
+  .happy-hour-info p {
+    font-size: 1.1rem;
+  }
+
+  .karaoke-info p {
+    font-size: 1rem;
+  }
+
+  .boissons-section {
+    padding: 20px;
+  }
+
+  .boisson-name,
+  .boisson-price {
+    font-size: 1rem;
+  }
+
+  .boisson-description {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .boissons-page {
+    padding: 15px 10px;
+  }
+
+  .boissons-content {
+    padding: 15px;
+  }
+
+  .boissons-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .boissons-page .menu-selector {
+    gap: 10px;
+    padding: 8px 15px;
+    margin: 20px 0;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .boissons-page .menu-button {
+    padding: 8px 0;
+    font-size: 0.9rem;
+    min-width: 120px;
+    width: 120px;
+    height: 36px;
+  }
+
+  .happy-hour-info p {
+    font-size: 1rem;
+  }
+
+  .boissons-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .boisson-info {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .boisson-price {
+    margin-left: 0;
+  }
+
+  .boissons-footer p {
+    font-size: 0.9rem;
+  }
+}
+
+.cocktails-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.cocktails-section {
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+}
+
+.cocktails-section h2 {
+  color: #D4AF37;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+} 
