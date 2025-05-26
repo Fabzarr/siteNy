@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useScrollToTop } from '../../hooks/useScrollToTop';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const scrollToTop = useScrollToTop();
 
   useEffect(() => {
     setIsOpen(false);
@@ -13,7 +15,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/" className="navbar-logo">
+        <Link to="/" className="navbar-logo" onClick={scrollToTop}>
           NEW YORK CAFÉ
         </Link>
         <button
@@ -26,28 +28,28 @@ const Navbar = () => {
         </button>
       </div>
       <div className={`navbar-menu ${isOpen ? 'open' : ''}`}>
-        <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+        <Link to="/" className={location.pathname === '/' ? 'active' : ''} onClick={scrollToTop}>
           ACCUEIL
         </Link>
-        <Link to="/carte" className={location.pathname === '/carte' ? 'active' : ''}>
+        <Link to="/carte" className={location.pathname === '/carte' ? 'active' : ''} onClick={scrollToTop}>
           CARTE
         </Link>
-        <Link to="/boissons" className={location.pathname === '/boissons' ? 'active' : ''}>
+        <Link to="/boissons" className={location.pathname === '/boissons' ? 'active' : ''} onClick={scrollToTop}>
           BOISSONS
         </Link>
-        <Link to="/karaoke" className={location.pathname === '/karaoke' ? 'active' : ''}>
+        <Link to="/karaoke" className={location.pathname === '/karaoke' ? 'active' : ''} onClick={scrollToTop}>
           KARAOKÉ
         </Link>
-        <Link to="/galerie" className={location.pathname === '/galerie' ? 'active' : ''}>
+        <Link to="/galerie" className={location.pathname === '/galerie' ? 'active' : ''} onClick={scrollToTop}>
           GALERIE
         </Link>
-        <Link to="/evenements" className={location.pathname === '/evenements' ? 'active' : ''}>
+        <Link to="/evenements" className={location.pathname === '/evenements' ? 'active' : ''} onClick={scrollToTop}>
           ÉVÉNEMENTS
         </Link>
-        <Link to="/a-propos" className={location.pathname === '/a-propos' ? 'active' : ''}>
+        <Link to="/a-propos" className={location.pathname === '/a-propos' ? 'active' : ''} onClick={scrollToTop}>
           A PROPOS
         </Link>
-        <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>
+        <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''} onClick={scrollToTop}>
           CONTACT
         </Link>
       </div>
