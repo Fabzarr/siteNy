@@ -1,26 +1,29 @@
 .side-menu {
   position: fixed;
   left: 0;
-  top: var(--navbar-height);
-  bottom: var(--footer-height);
+  top: calc(var(--navbar-height) + 20px);
+  bottom: calc(var(--footer-height) + 20px);
   width: 280px;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(10px);
-  border-right: 1px solid rgba(212, 175, 55, 0.2);
+  border-right: 1px solid rgba(212, 175, 55, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 10px 0;
+  padding: 15px 0;
   z-index: 100;
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.3s ease;
+  border-radius: 0 12px 12px 0;
 }
 
 .menu-title {
   color: #D4AF37;
   font-size: 1.4rem;
   font-family: 'Playfair Display', serif;
-  padding: 0 20px;
-  margin-bottom: 8px;
+  padding: 0 25px;
+  margin-bottom: 15px;
   text-align: center;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .side-menu .menu-sections {
@@ -28,15 +31,14 @@
   flex-direction: column;
   padding: 0 !important;
   margin: 0;
-  overflow-y: auto;
 }
 
 .side-menu .menu-section {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 6px;
   margin: 0 !important;
-  padding: 0 15px !important;
+  padding: 0 25px !important;
   margin-bottom: 20px !important;
 }
 
@@ -45,42 +47,99 @@
 }
 
 .side-menu h3.section-title {
-  color: white;
+  color: #D4AF37;
   font-size: 0.95rem;
   font-family: 'Playfair Display', serif;
   margin: 0;
   margin-bottom: 10px;
-  padding-left: 5px;
-  border-left: 2px solid #D4AF37;
+  padding-left: 0;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: normal;
+  letter-spacing: 2px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.side-menu h3.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, #D4AF37, transparent);
+  margin-left: 15px;
+  opacity: 0.3;
 }
 
 .side-menu .menu-button {
-  background: transparent;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  color: #D4AF37;
-  padding: 8px 12px;
-  font-size: 0.8rem;
+  background: rgba(212, 175, 55, 0.03);
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 8px 16px;
+  font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', sans-serif;
-  border-radius: 4px;
+  border-radius: 8px;
   text-align: left;
   white-space: normal;
   line-height: 1.2;
-  margin-bottom: 2px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.side-menu .menu-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(212, 175, 55, 0.08);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+}
+
+.side-menu .menu-button span {
+  position: relative;
+  z-index: 2;
+}
+
+.side-menu .menu-button::after {
+  content: '›';
+  margin-left: auto;
+  opacity: 0.5;
+  font-size: 1.2rem;
+  transform: translateX(0);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgba(212, 175, 55, 0.5);
+  position: relative;
+  z-index: 2;
 }
 
 .side-menu .menu-button:hover {
-  background: rgba(212, 175, 55, 0.1);
-  transform: translateX(5px);
+  color: #D4AF37;
+  transform: translateX(8px);
+  background: rgba(212, 175, 55, 0.08);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+              inset 0 1px 2px rgba(255, 255, 255, 0.15);
 }
 
-.side-menu .menu-button:active {
-  background: rgba(212, 175, 55, 0.2);
-  transform: translateX(3px);
+.side-menu .menu-button:hover::before {
+  transform: scaleX(1);
+}
+
+.side-menu .menu-button:hover::after {
+  opacity: 1;
+  transform: translateX(5px);
+  color: #D4AF37;
 }
 
 /* Mobile Menu Toggle Button */
@@ -141,6 +200,7 @@
     max-height: 0;
     overflow: hidden;
     padding: 0;
+    bottom: auto;
     transition: all 0.3s ease-in-out;
     border: none;
     border-radius: 12px;
