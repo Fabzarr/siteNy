@@ -23,30 +23,6 @@ const Karaoke = () => {
 
       <div className="karaoke-content container">
         <motion.section 
-          className="system-info"
-          {...fadeInUp}
-        >
-          <h2>Équipement Professionnel</h2>
-          <div className="features-grid">
-            <div className="feature-item">
-              <FaMicrophone className="icon" />
-              <h3>Micros Pro</h3>
-              <p>Micros Shure SM58 pour une qualité studio</p>
-            </div>
-            <div className="feature-item">
-              <FaMusic className="icon" />
-              <h3>Catalogue</h3>
-              <p>Plus de 50,000 titres en français et en anglais</p>
-            </div>
-            <div className="feature-item">
-              <FaStar className="icon" />
-              <h3>Son Premium</h3>
-              <p>Système audio JBL professionnel</p>
-            </div>
-          </div>
-        </motion.section>
-
-        <motion.section 
           className="horaires-tarifs"
           {...fadeInUp}
           transition={{ delay: 0.2 }}
@@ -56,18 +32,18 @@ const Karaoke = () => {
             <div className="horaires-grid">
               <div className="horaire-item">
                 <FaClock className="icon" />
-                <h3>Mercredi - Jeudi</h3>
-                <p>19h00 - 01h00</p>
+                <h3>Du dimanche au jeudi</h3>
+                <p>16h00 - 02h00</p>
               </div>
               <div className="horaire-item">
                 <FaUsers className="icon" />
-                <h3>Vendredi - Samedi</h3>
-                <p>19h00 - 02h00</p>
+                <h3>Vendredi & samedi</h3>
+                <p>16h00 - 05h00</p>
               </div>
               <div className="horaire-item">
                 <FaGlassCheers className="icon" />
-                <h3>Dimanche</h3>
-                <p>17h00 - 00h00</p>
+                <h3>Ouvert 7j/7j</h3>
+                <p>Toute l'année</p>
               </div>
             </div>
           </div>
@@ -105,6 +81,30 @@ const Karaoke = () => {
                   <li>Service dédié</li>
                 </ul>
               </div>
+            </div>
+          </div>
+        </motion.section>
+
+        <motion.section 
+          className="system-info"
+          {...fadeInUp}
+        >
+          <h2>Équipement Professionnel</h2>
+          <div className="features-grid">
+            <div className="feature-item">
+              <FaMicrophone className="icon" />
+              <h3>Micros Pro</h3>
+              <p>Micros Shure SM58 pour une qualité studio</p>
+            </div>
+            <div className="feature-item">
+              <FaMusic className="icon" />
+              <h3>Catalogue</h3>
+              <p>Plus de 50,000 titres en français et en anglais</p>
+            </div>
+            <div className="feature-item">
+              <FaStar className="icon" />
+              <h3>Son Premium</h3>
+              <p>Système audio JBL professionnel</p>
             </div>
           </div>
         </motion.section>

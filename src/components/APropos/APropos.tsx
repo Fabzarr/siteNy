@@ -21,8 +21,8 @@ const APropos = () => {
           <h3>Notre Concept</h3>
           <p>Le New York Café vous propose une expérience unique combinant :</p>
           <ul>
-            <li>Un restaurant italien authentique avec pizzas au four et desserts maison</li>
-            <li>Un pub musical avec une carte de cocktails premium</li>
+            <li>Une authentique cuisine italienne avec nos délicieuses pizzas et pâtes</li>
+            <li>Un bar à cocktails avec une carte de boissons premium</li>
             <li>Une scène de karaoké professionnelle ouverte tous les soirs</li>
           </ul>
         </div>

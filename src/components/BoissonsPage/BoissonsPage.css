@@ -5,6 +5,10 @@
   margin: 0 auto;
   padding: 40px 20px;
   color: white;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .boissons-content {
@@ -25,6 +29,18 @@
   margin-bottom: 30px;
   font-family: 'Playfair Display', serif;
   letter-spacing: 2px;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  cursor: default !important;
+  pointer-events: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -moz-window-dragging: none !important;
+  -moz-user-focus: none !important;
+  -moz-user-input: none !important;
+  -moz-user-modify: read-only !important;
 }
 
 .boissons-page .menu-selector {
@@ -46,7 +62,7 @@
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   position: relative;
   border-radius: 25px;
   text-transform: uppercase;
@@ -59,6 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
 }
 
 .boissons-page .menu-button:hover {
@@ -72,6 +89,11 @@
   background: linear-gradient(45deg, #D4AF37, #FFE169);
   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
   transform: translateY(-2px);
+}
+
+.boissons-page .menu-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4);
 }
 
 .happy-hour-info {

@@ -46,7 +46,7 @@ const Home = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            Un lieu unique à Paris où la culture américaine rencontre l'art de vivre à la française
+            Laissez-vous tenter par notre cuisine italienne authentique. Nos excellentes salades et nos pizzas réservent de belles surprises, même à nos visiteurs les plus exigeants.
           </motion.p>
           <motion.div
             className="hero-buttons"
@@ -67,24 +67,24 @@ const Home = () => {
         animate="visible"
       >
         <motion.div className="feature-card" variants={itemVariants}>
-          <FaMusic className="feature-icon" />
-          <h3>Karaoké</h3>
-          <p>Plus de 50 000 titres disponibles dans notre espace karaoké privatif</p>
-          <Link to="/karaoke" className="feature-link">En savoir plus</Link>
+          <FaUtensils className="feature-icon" />
+          <h3>Restaurant</h3>
+          <p>Une cuisine italienne authentique avec des produits de qualité</p>
+          <Link to="/carte" className="feature-link">Voir la carte</Link>
         </motion.div>
 
         <motion.div className="feature-card" variants={itemVariants}>
           <FaCocktail className="feature-icon" />
           <h3>Bar & Cocktails</h3>
           <p>Une carte de cocktails créatifs et une sélection de spiritueux premium</p>
-          <Link to="/carte" className="feature-link">Voir la carte</Link>
+          <Link to="/boissons" className="feature-link">Voir les boissons</Link>
         </motion.div>
 
         <motion.div className="feature-card" variants={itemVariants}>
-          <FaUtensils className="feature-icon" />
-          <h3>Restaurant</h3>
-          <p>Une cuisine fusion américaine-française préparée avec des produits frais</p>
-          <Link to="/carte" className="feature-link">Notre menu</Link>
+          <FaMusic className="feature-icon" />
+          <h3>Karaoké</h3>
+          <p>Plus de 50 000 titres disponibles dans notre espace karaoké privatif</p>
+          <Link to="/karaoke" className="feature-link">En savoir plus</Link>
         </motion.div>
 
         <motion.div className="feature-card" variants={itemVariants}>
