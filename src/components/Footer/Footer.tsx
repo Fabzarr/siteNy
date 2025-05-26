@@ -21,7 +21,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-section">
-          <p>&copy; {new Date().getFullYear()} New York Café - Tous droits réservés</p>
+          <p>&copy; {new Date().getFullYear()} - Tous droits réservés</p>
         </div>
 
         <div className="footer-section">

@@ -17,11 +17,13 @@
 
 .footer-content {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+  padding: 0 1rem;
 }
 
 .footer-section {
@@ -37,62 +39,121 @@
 }
 
 .footer-section p {
-  margin-bottom: 0.5rem;
+  margin: 0;
   opacity: 0.8;
-  line-height: 1.6;
+  line-height: 1.4;
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .social-links {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .social-links a {
   color: #D4AF37;
   font-size: 1.2rem;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .social-links a:hover {
   color: white;
 }
 
-.footer-section nav {
-  display: flex;
+.copyright {
+  text-align: right;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: flex-end;
+  gap: 0.25rem;
 }
 
-.footer-section nav a {
-  color: white;
-  text-decoration: none;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-}
-
-.footer-section nav a:hover {
-  color: #D4AF37;
-  opacity: 1;
-  transform: translateX(5px);
-}
-
-.footer-bottom {
-  font-size: 0.9rem;
-  opacity: 0.7;
+.contact {
+  text-align: left;
 }
 
 @media (max-width: 768px) {
   .footer {
-    padding: 0.5rem;
+    padding: 0.75rem 0;
+    height: auto;
   }
   
   .footer-content {
     flex-direction: column;
     gap: 0.5rem;
     text-align: center;
+    padding: 0.5rem;
   }
   
   .footer-section {
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
+    width: 100%;
+    margin: 0;
+    gap: 1rem;
+  }
+
+  .footer-section:first-child {
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-section:last-child {
+    margin-top: -0.25rem;
+  }
+
+  .footer-section h3 {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .footer-section p {
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  .social-links {
+    gap: 1.5rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .social-links a {
+    font-size: 1rem;
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 0.5rem 0;
+  }
+
+  .footer-content {
+    gap: 0.25rem;
+  }
+
+  .footer-section {
+    gap: 0.75rem;
+  }
+
+  .footer-section h3 {
+    font-size: 0.85rem;
+  }
+
+  .footer-section p {
+    font-size: 0.75rem;
+  }
+
+  .social-links {
+    gap: 1.25rem;
+  }
+
+  .social-links a {
+    font-size: 0.9rem;
   }
 } 

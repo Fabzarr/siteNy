@@ -1,81 +1,128 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import './SideMenu.css';
 
 const SideMenu = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [location.pathname]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const menuStructure = {
     entrées: [
-      { path: '/petites-faims', label: 'PETITES FAIMS' },
-      { path: '/a-partager', label: 'A PARTAGER' },
+      { id: 'petites-faims', label: 'PETITES FAIMS' },
+      { id: 'a-partager', label: 'A PARTAGER' },
     ],
     plats: [
-      { path: '/nos-pizzas', label: 'NOS PIZZAS' },
-      { path: '/nos-salades', label: 'NOS BELLES SALADES' },
-      { path: '/nos-pates', label: 'NOS PÂTES' },
-      { path: '/nos-burgers', label: 'NOS HAMBURGERS & TARTARE' },
-      { path: '/nos-viandes', label: 'NOS VIANDES & POISSON' },
+      { id: 'nos-pizzas', label: 'NOS PIZZAS' },
+      { id: 'nos-salades', label: 'NOS BELLES SALADES' },
+      { id: 'nos-pates', label: 'NOS PÂTES' },
+      { id: 'nos-burgers', label: 'NOS HAMBURGERS & TARTARE' },
+      { id: 'nos-viandes', label: 'NOS VIANDES & POISSON' },
     ],
     desserts_vins: [
-      { path: '/nos-desserts', label: 'NOS DESSERTS' },
-      { path: '/carte-des-vins', label: 'LA CARTE DES VINS' },
+      { id: 'nos-desserts', label: 'NOS DESSERTS' },
+      { id: 'carte-des-vins', label: 'LA CARTE DES VINS' },
     ],
   };
 
-  const handleCategoryClick = (path: string) => {
-    navigate(path);
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      // Ferme le menu sur mobile
+      setIsOpen(false);
+      
+      // Calcule la position de défilement
+      const navbarHeight = parseInt(getComputedStyle(document.documentElement)
+        .getPropertyValue('--navbar-height')
+        .trim());
+      
+      // Ajuste l'offset en fonction de la largeur de l'écran
+      let offset;
+      if (window.innerWidth <= 768) {
+        // Pour mobile et tablette, on prend en compte le header fixe (80px) et le bouton de menu (61px)
+        offset = navbarHeight + 141;
+      } else {
+        // Pour desktop, on garde l'offset original
+        offset = navbarHeight + 20;
+      }
+      
+      // Position de l'élément par rapport au haut de la page
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      
+      // Vérifie si c'est la dernière section
+      const isLastSection = id === 'carte-des-vins';
+      
+      if (isLastSection && window.innerWidth <= 768) {
+        const viewportHeight = window.innerHeight;
+        const elementHeight = element.offsetHeight;
+        const footerHeight = 100; // Hauteur approximative du footer
+        
+        // Calcule la position optimale pour la carte des vins
+        const scrollPosition = Math.min(
+          elementPosition - offset,
+          document.documentElement.scrollHeight - viewportHeight - footerHeight
+        );
+        
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        });
+      } else {
+        window.scrollTo({
+          top: elementPosition - offset,
+          behavior: 'smooth'
+        });
+      }
+    }
   };
 
   return (
-    <div className="side-menu">
-      <div className="menu-title">Notre Carte</div>
-      <div className="menu-sections">
-        <div className="menu-section">
-          <h3 className="section-title">Entrées</h3>
-          {menuStructure.entrées.map((item) => (
-            <button
-              key={item.path}
-              onClick={() => handleCategoryClick(item.path)}
-              className={location.pathname === item.path ? 'active' : ''}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
+    <>
+      <button className="mobile-menu-toggle" onClick={() => setIsOpen(!isOpen)}>
+        Menu Navigation
+        <span className={`arrow ${isOpen ? 'up' : 'down'}`}></span>
+      </button>
+      <div className={`side-menu ${isOpen ? 'open' : ''}`}>
+        <div className="menu-title">Notre Carte</div>
+        <div className="menu-sections">
+          <div className="menu-section">
+            <h3 className="section-title">Entrées</h3>
+            {menuStructure.entrées.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="menu-button"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
 
-        <div className="menu-section">
-          <h3 className="section-title">Plats</h3>
-          {menuStructure.plats.map((item) => (
-            <button
-              key={item.path}
-              onClick={() => handleCategoryClick(item.path)}
-              className={location.pathname === item.path ? 'active' : ''}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
+          <div className="menu-section">
+            <h3 className="section-title">Plats</h3>
+            {menuStructure.plats.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="menu-button"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
 
-        <div className="menu-section">
-          <h3 className="section-title">Desserts & Vins</h3>
-          {menuStructure.desserts_vins.map((item) => (
-            <button
-              key={item.path}
-              onClick={() => handleCategoryClick(item.path)}
-              className={location.pathname === item.path ? 'active' : ''}
-            >
-              {item.label}
-            </button>
-          ))}
+          <div className="menu-section">
+            <h3 className="section-title">Desserts & Vins</h3>
+            {menuStructure.desserts_vins.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="menu-button"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
