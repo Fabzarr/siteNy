@@ -122,14 +122,14 @@ const BoissonsPage = () => {
   );
 
   return (
-    <motion.div 
+      <motion.div 
       className="boissons-page"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+        transition={{ duration: 0.5 }}
+      >
       <div className="boissons-content">
-        <div className="boissons-header">
+          <div className="boissons-header">
           <h1>CARTE DES BOISSONS</h1>
           <div className="menu-selector">
             <button 
@@ -294,7 +294,7 @@ const BoissonsPage = () => {
                     <span className="boisson-description">{item.description}</span>
                   </div>
                 ))}
-              </div>
+          </div>
 
               <div className="boissons-section">
                 <h2>Bouteilles premium 70 cl</h2>
@@ -421,8 +421,8 @@ const BoissonsPage = () => {
         <div className="boissons-footer">
           <p>PRIX NETS EN EUROS - CB MINIMUM 10 € - L'ÉTABLISSEMENT N'ACCEPTE NI CHÈQUES NI TICKETS RESTAURANTS</p>
         </div>
-      </div>
-    </motion.div>
+        </div>
+      </motion.div>
   );
 };
 
