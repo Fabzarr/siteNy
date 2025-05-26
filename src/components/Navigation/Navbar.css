@@ -15,13 +15,15 @@
 }
 
 .navbar-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  color: #D4AF37;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.navbar-brand a {
+.navbar-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
   color: #D4AF37;
   text-decoration: none;
 }
@@ -32,30 +34,34 @@
   align-items: center;
 }
 
-.nav-link {
+.navbar-menu a {
   color: #fff;
   text-decoration: none;
   font-size: 1rem;
   transition: color 0.3s ease;
+  position: relative;
+  padding: 0.5rem 0;
   white-space: nowrap;
 }
 
-.nav-link:hover {
+.navbar-menu a:hover,
+.navbar-menu a.active {
   color: #D4AF37;
 }
 
-.nav-link::after {
+.navbar-menu a::after {
   content: '';
   position: absolute;
   width: 0;
   height: 2px;
-  bottom: -5px;
+  bottom: 0;
   left: 0;
   background-color: #D4AF37;
   transition: width 0.3s ease;
 }
 
-.nav-link:hover::after {
+.navbar-menu a:hover::after,
+.navbar-menu a.active::after {
   width: 100%;
 }
 
@@ -82,6 +88,18 @@
   transform-origin: 1px;
 }
 
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
 @media (max-width: 1024px) {
   .navbar {
     padding: 0 1rem;
@@ -94,29 +112,38 @@
   .navbar-menu {
     position: fixed;
     top: var(--navbar-height);
+    left: 0;
     right: 0;
     height: 0;
-    width: 100%;
     background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
     flex-direction: column;
     gap: 0;
     overflow: hidden;
-    transition: height 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
   }
 
-  .navbar-menu.active {
+  .navbar-menu.open {
     height: calc(100vh - var(--navbar-height));
+    opacity: 1;
+    visibility: visible;
     padding: 1rem 0;
   }
 
-  .nav-link {
+  .navbar-menu a {
     padding: 1rem 2rem;
     width: 100%;
     text-align: center;
     border-bottom: 1px solid rgba(212, 175, 55, 0.1);
   }
 
-  .nav-link:last-child {
+  .navbar-menu a:last-child {
     border-bottom: none;
+  }
+
+  .navbar-menu a::after {
+    display: none;
   }
 } 

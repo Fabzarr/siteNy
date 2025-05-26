@@ -1,43 +1,55 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleNavClick = (path: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
+  useEffect(() => {
     setIsOpen(false);
-    navigate(path);
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
-  };
+  }, [location]);
 
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/" onClick={handleNavClick('/')}>New York Café</Link>
+        <Link to="/" className="navbar-logo">
+          NEW YORK CAFÉ
+        </Link>
+        <button
+          className={`hamburger ${isOpen ? 'open' : ''}`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-      
-      <button 
-        className={`hamburger ${isOpen ? 'active' : ''}`}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <div className={`navbar-menu ${isOpen ? 'active' : ''}`}>
-        <Link to="/" className="nav-link" onClick={handleNavClick('/')}>Accueil</Link>
-        <Link to="/a-propos" className="nav-link" onClick={handleNavClick('/a-propos')}>À propos</Link>
-        <Link to="/carte" className="nav-link" onClick={handleNavClick('/carte')}>Notre Carte</Link>
-        <Link to="/karaoke" className="nav-link" onClick={handleNavClick('/karaoke')}>Karaoké</Link>
-        <Link to="/evenements" className="nav-link" onClick={handleNavClick('/evenements')}>Événements</Link>
-        <Link to="/galerie" className="nav-link" onClick={handleNavClick('/galerie')}>Galerie</Link>
-        <Link to="/contact" className="nav-link" onClick={handleNavClick('/contact')}>Contact</Link>
+      <div className={`navbar-menu ${isOpen ? 'open' : ''}`}>
+        <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+          ACCUEIL
+        </Link>
+        <Link to="/carte" className={location.pathname === '/carte' ? 'active' : ''}>
+          CARTE
+        </Link>
+        <Link to="/boissons" className={location.pathname === '/boissons' ? 'active' : ''}>
+          BOISSONS
+        </Link>
+        <Link to="/karaoke" className={location.pathname === '/karaoke' ? 'active' : ''}>
+          KARAOKÉ
+        </Link>
+        <Link to="/galerie" className={location.pathname === '/galerie' ? 'active' : ''}>
+          GALERIE
+        </Link>
+        <Link to="/evenements" className={location.pathname === '/evenements' ? 'active' : ''}>
+          ÉVÉNEMENTS
+        </Link>
+        <Link to="/a-propos" className={location.pathname === '/a-propos' ? 'active' : ''}>
+          A PROPOS
+        </Link>
+        <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>
+          CONTACT
+        </Link>
       </div>
     </nav>
   );

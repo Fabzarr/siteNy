@@ -10,6 +10,7 @@ import Galerie from './components/Galerie/Galerie';
 import Evenements from './components/Evenements/Evenements';
 import Footer from './components/Footer/Footer';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import BoissonsPage from './components/BoissonsPage/BoissonsPage';
 import './App.css';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
             <Route path="/karaoke" element={<Karaoke />} />
             <Route path="/galerie" element={<Galerie />} />
             <Route path="/evenements" element={<Evenements />} />
+            <Route path="/boissons" element={<BoissonsPage />} />
           </Routes>
         </div>
       </main>
