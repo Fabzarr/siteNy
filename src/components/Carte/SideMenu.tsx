@@ -122,7 +122,7 @@ const SideMenu = () => {
                 onClick={() => handleNavigation(item.id)}
                 className="menu-button"
               >
-                {item.label}
+                <span>{item.label}</span>
               </button>
             ))}
           </div>
@@ -135,7 +135,7 @@ const SideMenu = () => {
                 onClick={() => handleNavigation(item.id)}
                 className="menu-button"
               >
-                {item.label}
+                <span>{item.label}</span>
               </button>
             ))}
           </div>
@@ -148,25 +148,10 @@ const SideMenu = () => {
                 onClick={() => handleNavigation(item.id)}
                 className="menu-button"
               >
-                {item.label}
+                <span>{item.label}</span>
               </button>
             ))}
           </div>
-
-          {location.pathname === '/boissons' && (
-            <div className="menu-section">
-              <h3 className="section-title">Boissons</h3>
-              {menuStructure.boissons.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavigation(item.id)}
-                  className="menu-button"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </>

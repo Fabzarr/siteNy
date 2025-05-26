@@ -55,45 +55,108 @@
 }
 
 .boissons-page .menu-button {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   border: none;
-  color: #fff;
-  padding: 12px 0;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 12px 20px;
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
+  border-radius: 8px;
+  text-align: left;
+  white-space: normal;
+  line-height: 1.2;
   position: relative;
-  border-radius: 25px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 500;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  min-width: 160px;
-  width: 160px;
-  height: 45px;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: center;
-  outline: none;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.boissons-page .menu-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(212, 175, 55, 0.08);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+}
+
+.boissons-page .menu-button span {
+  position: relative;
+  z-index: 2;
+}
+
+.boissons-page .menu-button::after {
+  content: '›';
+  margin-left: auto;
+  opacity: 0.5;
+  font-size: 1.2rem;
+  transform: translateX(0);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgba(212, 175, 55, 0.5);
+  position: relative;
+  z-index: 2;
 }
 
 .boissons-page .menu-button:hover {
-  background: rgba(212, 175, 55, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+  color: #D4AF37;
+  transform: translateX(8px);
+  background: rgba(212, 175, 55, 0.08);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+              inset 0 1px 2px rgba(255, 255, 255, 0.15);
+}
+
+.boissons-page .menu-button:hover::before {
+  transform: scaleX(1);
+}
+
+.boissons-page .menu-button:hover::after {
+  opacity: 1;
+  transform: translateX(5px);
+  color: #D4AF37;
 }
 
 .boissons-page .menu-button.active {
-  color: #000;
-  background: linear-gradient(45deg, #D4AF37, #FFE169);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-  transform: translateY(-2px);
+  color: #D4AF37;
+  background: rgba(212, 175, 55, 0.15);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3),
+              inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
+  font-weight: 500;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.boissons-page .menu-button.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: #D4AF37;
+  border-radius: 2px;
+}
+
+.boissons-page .menu-button.active::after {
+  opacity: 1;
+  color: #D4AF37;
+  transform: translateX(5px);
 }
 
 .boissons-page .menu-button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4),
+              0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .happy-hour-info {

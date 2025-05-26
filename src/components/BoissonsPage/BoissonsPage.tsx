@@ -136,13 +136,13 @@ const BoissonsPage = () => {
               className={`menu-button ${activeMenu === 'boissons' ? 'active' : ''}`}
               onClick={() => setActiveMenu('boissons')}
             >
-              BOISSONS
+              <span>BOISSONS</span>
             </button>
             <button 
               className={`menu-button ${activeMenu === 'cocktails' ? 'active' : ''}`}
               onClick={() => setActiveMenu('cocktails')}
             >
-              COCKTAILS
+              <span>COCKTAILS</span>
             </button>
           </div>
           <InfoSection />
