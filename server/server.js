@@ -21,7 +21,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/newyorkca
 
 // Routes
 const pizzaRoutes = require('./routes/pizza.routes');
+const reservationRoutes = require('./routes/reservations');
+
 app.use('/api/pizzas', pizzaRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 // Port
 const PORT = process.env.PORT || 5000;

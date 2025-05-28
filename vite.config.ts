@@ -5,17 +5,17 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5174,
+    port: 5173,
     strictPort: false,
+    host: true,
     hmr: {
       overlay: true,
-      timeout: 30000
+      timeout: 60000
     },
     watch: {
       usePolling: true,
-      interval: 1000
+      interval: 100
     },
-    middlewareMode: false,
     cors: true
   },
   build: {

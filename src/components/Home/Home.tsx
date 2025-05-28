@@ -1,9 +1,13 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaMusic, FaCocktail, FaUtensils, FaCalendarAlt } from 'react-icons/fa';
+import { useState } from 'react';
+import ReservationModal from '../Reservation/ReservationModal';
 import './Home.css';
 
 const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -55,7 +59,7 @@ const Home = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <Link to="/carte" className="btn primary">Découvrir notre carte</Link>
-            <Link to="/karaoke" className="btn secondary">Réserver une session karaoké</Link>
+            <button onClick={() => setIsModalOpen(true)} className="btn secondary">Réserver une table</button>
           </motion.div>
         </div>
       </motion.section>
@@ -123,6 +127,11 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+
+      <ReservationModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
