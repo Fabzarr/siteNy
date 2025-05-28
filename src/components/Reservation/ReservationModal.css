@@ -10,7 +10,23 @@
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(5px);
-  padding: 60px 1rem 1rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+/* Style pour masquer toutes les barres de défilement */
+body.modal-open {
+  overflow: hidden !important;
+  padding-right: 0 !important; /* Empêche le décalage dû à la disparition de la scrollbar */
+}
+
+body.modal-open::-webkit-scrollbar {
+  display: none !important;
+}
+
+body.modal-open {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .modal-content {
@@ -26,7 +42,13 @@
   color: white;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   margin: auto;
-  overflow-y: auto;
+  overflow: hidden;
+  scrollbar-width: none; /* Pour Firefox */
+  -ms-overflow-style: none; /* Pour Internet Explorer et Edge */
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none; /* Pour Chrome, Safari et Opera */
 }
 
 .modal-header {
@@ -137,37 +159,32 @@
 
 .close-button {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 15px;
+  right: 15px;
   width: 32px;
   height: 32px;
-  background: none;
-  border: none;
+  background-color: transparent;
+  border: 2px solid #D4AF37;
+  border-radius: 50%;
+  color: #D4AF37;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 0;
+  z-index: 1001;
 }
 
-.close-button::before,
-.close-button::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 24px;
-  height: 2px;
+.close-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.close-button:hover {
   background-color: #D4AF37;
-}
-
-.close-button::before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.close-button::after {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-.close-button:hover::before,
-.close-button:hover::after {
-  background-color: white;
+  color: black;
+  transform: scale(1.1);
 }
 
 .reservation-form {
@@ -481,8 +498,8 @@
   }
 
   .close-button {
-    top: 15px;
-    right: 15px;
+    top: 12px;
+    right: 12px;
   }
 }
 
@@ -543,8 +560,41 @@
     height: 28px;
   }
   
-  .close-button::before,
-  .close-button::after {
-    width: 20px;
+  .close-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: 2px solid #D4AF37;
+  border-radius: 50%;
+  color: #D4AF37;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 9999;
+}
+
+.close-modal-btn:hover {
+  background-color: #D4AF37;
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .close-modal-btn {
+    width: 25px;
+    height: 25px;
+    font-size: 20px;
   }
 } 

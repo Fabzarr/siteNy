@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaMusic, FaCocktail, FaUtensils, FaCalendarAlt } from 'react-icons/fa';
-import { useState } from 'react';
 import ReservationModal from '../Reservation/ReservationModal';
+import { useModal } from '../../context/ModalContext';
 import './Home.css';
 
 const Home = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isModalOpen, openModal } = useModal();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -59,7 +59,7 @@ const Home = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <Link to="/carte" className="btn primary">Découvrir notre carte</Link>
-            <button onClick={() => setIsModalOpen(true)} className="btn secondary">Réserver une table</button>
+            <button onClick={openModal} className="btn secondary">Réserver une table</button>
           </motion.div>
         </div>
       </motion.section>
@@ -128,10 +128,7 @@ const Home = () => {
         </div>
       </section>
 
-      <ReservationModal 
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <ReservationModal isOpen={isModalOpen} />
     </div>
   );
 };

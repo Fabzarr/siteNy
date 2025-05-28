@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useScrollToTop } from './hooks/useScrollToTop';
+import { ModalProvider } from './context/ModalContext';
 import Navbar from './components/Navigation/Navbar';
 import Home from './components/Home/Home';
 import About from './components/About/About';
@@ -19,26 +20,28 @@ function App() {
   useScrollToTop();
 
   return (
-    <div className="app">
-      <Navbar />
-      <main className="main-container">
-        <div className="background-container"></div>
-        <div className="page-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/a-propos" element={<About />} />
-            <Route path="/carte" element={<CartePage />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/karaoke" element={<Karaoke />} />
-            <Route path="/galerie" element={<Galerie />} />
-            <Route path="/evenements" element={<Evenements />} />
-            <Route path="/boissons" element={<BoissonsPage />} />
-          </Routes>
-        </div>
-      </main>
-      <ScrollToTop />
-      <Footer />
-    </div>
+    <ModalProvider>
+      <div className="app">
+        <Navbar />
+        <main className="main-container">
+          <div className="background-container"></div>
+          <div className="page-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/a-propos" element={<About />} />
+              <Route path="/carte" element={<CartePage />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/karaoke" element={<Karaoke />} />
+              <Route path="/galerie" element={<Galerie />} />
+              <Route path="/evenements" element={<Evenements />} />
+              <Route path="/boissons" element={<BoissonsPage />} />
+            </Routes>
+          </div>
+        </main>
+        <ScrollToTop />
+        <Footer />
+      </div>
+    </ModalProvider>
   );
 }
 

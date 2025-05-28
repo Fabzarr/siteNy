@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { isHolidayEve } from '../../utils/holidays';
-import { FaPhone, FaCalendarAlt, FaUsers, FaGlassCheers } from 'react-icons/fa';
+import { FaPhone, FaCalendarAlt, FaUsers, FaGlassCheers, FaTimes } from 'react-icons/fa';
+import { useModal } from '../../context/ModalContext';
 import './ReservationModal.css';
 
 interface ReservationData {
@@ -15,7 +16,6 @@ interface ReservationData {
 
 interface ReservationModalProps {
   isOpen: boolean;
-  onClose: () => void;
 }
 
 interface TimeSlot {
@@ -23,7 +23,8 @@ interface TimeSlot {
   isAvailable: boolean;
 }
 
-const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onClose }) => {
+const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
+  const { closeModal } = useModal();
   const [step, setStep] = useState<'form' | 'recap'>('form');
   const [formData, setFormData] = useState<ReservationData>({
     prenom: '',
@@ -41,6 +42,23 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onClose }) 
       generateTimeSlots(formData.date);
     }
   }, [formData.date]);
+
+  // Bloquer le défilement du body quand la modale est ouverte
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.style.overflow = 'unset';
+      document.body.classList.remove('modal-open');
+    }
+
+    // Nettoyer l'effet quand le composant est démonté
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.classList.remove('modal-open');
+    };
+  }, [isOpen]);
 
   const generateTimeSlots = (selectedDate: string) => {
     const date = new Date(selectedDate);
@@ -103,7 +121,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onClose }) 
 
       if (response.ok) {
         alert('Réservation confirmée !');
-        onClose();
+        closeModal();
       } else {
         throw new Error('Erreur lors de la réservation');
       }
@@ -125,9 +143,10 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onClose }) 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
-        <button className="close-button" onClick={onClose} aria-label="Fermer">
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <button className="close-modal-btn" onClick={closeModal} aria-label="Fermer">
+          ×
         </button>
         
         {step === 'form' ? (
@@ -282,7 +301,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onClose }) 
             <div className="recap-buttons">
               <button onClick={handleEdit} className="edit-button">Modifier</button>
               <button onClick={handleConfirm} className="confirm-button">Confirmer</button>
-              <button onClick={onClose} className="cancel-button">Quitter</button>
+              <button onClick={closeModal} className="cancel-button">Quitter</button>
             </div>
           </div>
         )}
