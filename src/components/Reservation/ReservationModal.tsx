@@ -43,6 +43,23 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
     }
   }, [formData.date]);
 
+  // Réinitialiser le formulaire quand le modal s'ouvre
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        prenom: '',
+        nom: '',
+        email: '',
+        telephone: '',
+        date: '',
+        heure: '',
+        nombrePersonnes: ''
+      });
+      setStep('form');
+      setTimeSlots([]);
+    }
+  }, [isOpen]);
+
   // Bloquer le défilement du body quand la modale est ouverte
   useEffect(() => {
     if (isOpen) {
@@ -63,6 +80,10 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
   const generateTimeSlots = (selectedDate: string) => {
     const date = new Date(selectedDate);
     const dayOfWeek = date.getDay(); // 0 = Dimanche, 5 = Vendredi, 6 = Samedi
+    const today = new Date();
+    const isToday = date.toDateString() === today.toDateString();
+    const currentHour = today.getHours();
+    const currentMinute = today.getMinutes();
     
     // Vérifier si c'est un vendredi, samedi ou veille de jour férié
     const isLateClosing = dayOfWeek === 5 || dayOfWeek === 6 || isHolidayEve(date);
@@ -77,11 +98,31 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
         // Arrêter à 21h45 en semaine ou 1h45 les soirs spéciaux
         if (hour === (endHour - 1) && minute > endMinute) continue;
         
+        // Si c'est aujourd'hui, exclure les créneaux passés avec une marge de sécurité
+        if (isToday) {
+          // Convertir l'heure du créneau en heure réelle (gérer le passage de minuit)
+          const realSlotHour = hour >= 24 ? hour - 24 : hour;
+          
+          // Si le créneau est après minuit (0h, 1h, 2h...), on est le lendemain
+          const isSlotNextDay = hour >= 24;
+          
+          // Si le créneau n'est pas le lendemain, appliquer la validation normale
+          if (!isSlotNextDay) {
+            // Marge de 2h pour les créneaux du même jour
+            if (hour < currentHour + 2 || 
+                (hour === currentHour + 2 && minute <= currentMinute)) {
+              continue;
+            }
+          }
+          // Si le créneau est le lendemain (après minuit), il est toujours valide
+          // car il y a forcément plus de 2h entre maintenant et demain minuit
+        }
+        
         const displayHour = hour >= 24 ? hour - 24 : hour;
         const timeString = `${displayHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
         slots.push({
           time: timeString,
-          isAvailable: Math.random() > 0.3 // Simulation de disponibilité
+          isAvailable: true // Tous les créneaux sont disponibles par défaut
         });
       }
     }
@@ -111,7 +152,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
 
   const handleConfirm = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/reservations', {
+      const response = await fetch('http://localhost:4000/api/reservations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -177,6 +218,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
                       name="prenom"
                       value={formData.prenom}
                       onChange={handleChange}
+                      placeholder="ex: Jean"
                       required
                     />
                   </div>
@@ -189,6 +231,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
                       name="nom"
                       value={formData.nom}
                       onChange={handleChange}
+                      placeholder="ex: Dupont"
                       required
                     />
                   </div>
@@ -203,6 +246,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
+                      placeholder="ex: jean.dupont@gmail.com"
                       required
                     />
                   </div>
@@ -215,6 +259,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
                       name="telephone"
                       value={formData.telephone}
                       onChange={handleChange}
+                      placeholder="ex: 06 12 34 56 78"
                       required
                     />
                   </div>
@@ -244,11 +289,15 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
                       required
                     >
                       <option value="">Sélectionnez</option>
-                      {[...Array(20)].map((_, i) => (
-                        <option key={i + 1} value={i + 1}>
-                          {i + 1} {i + 1 === 1 ? 'personne' : 'personnes'}
-                        </option>
-                      ))}
+                      {/* Ordre décroissant : de 20 à 1 */}
+                      {[...Array(20)].map((_, i) => {
+                        const num = 20 - i; // 20, 19, 18... jusqu'à 1
+                        return (
+                          <option key={num} value={num}>
+                            {num} {num === 1 ? 'personne' : 'personnes'}
+                          </option>
+                        );
+                      })}
                     </select>
                   </div>
                 </div>
@@ -278,7 +327,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
               <button 
                 type="submit" 
                 className="submit-button"
-                disabled={!formData.heure}
+                disabled={!formData.heure || !formData.nombrePersonnes || !formData.prenom || !formData.nom || !formData.email || !formData.telephone || !formData.date}
               >
                 Valider
               </button>
