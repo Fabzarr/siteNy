@@ -1,104 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SideMenu from './SideMenu';
 import './CartePage.css';
 
-// Données du menu
-const menuData = {
-  petitesFaims: [
-    { name: "Bruschetta", price: 7, description: "Pain grillé, tomates, basilic, huile d'olive" },
-    { name: "Focaccia", price: 6, description: "Pain italien aux herbes et huile d'olive" },
-    { name: "Olives Marinées", price: 5, description: "Assortiment d'olives marinées aux herbes" },
-    { name: "Soupe du Jour", price: 8, description: "Préparée avec des légumes frais de saison" },
-    { name: "Carpaccio de Bœuf", price: 12, description: "Fines tranches de bœuf, parmesan, roquette" },
-    { name: "Arancini", price: 8, description: "Boulettes de risotto farcies, sauce tomate" }
-  ],
-  aPartager: [
-    { name: "Antipasti", price: 15, description: "Assortiment de charcuteries et fromages italiens" },
-    { name: "Fritto Misto", price: 14, description: "Assortiment de fruits de mer frits" },
-    { name: "Plateau de Fromages", price: 16, description: "Sélection de fromages italiens et français" },
-    { name: "Calamars Frits", price: 13, description: "Servis avec sauce tartare maison" },
-    { name: "Planche Mixte", price: 18, description: "Charcuterie, fromages, légumes grillés" }
-  ],
-  pizzas: [
-    { name: "Margherita", price: 12, description: "Sauce tomate, mozzarella, basilic frais" },
-    { name: "Regina", price: 14, description: "Sauce tomate, mozzarella, jambon, champignons" },
-    { name: "Quattro Formaggi", price: 15, description: "Mozzarella, gorgonzola, parmesan, chèvre" },
-    { name: "Diavola", price: 15, description: "Sauce tomate, mozzarella, salami piquant" },
-    { name: "Capricciosa", price: 16, description: "Sauce tomate, mozzarella, jambon, champignons, artichauts, olives" },
-    { name: "Napolitaine", price: 14, description: "Sauce tomate, mozzarella, anchois, câpres, olives" },
-    { name: "Calzone", price: 16, description: "Pizza soufflée farcie tomate, mozzarella, jambon" },
-    { name: "Végétarienne", price: 15, description: "Légumes grillés de saison, mozzarella" }
-  ],
-  salades: [
-    { name: "César", price: 12, description: "Laitue romaine, poulet grillé, parmesan, croûtons" },
-    { name: "Niçoise", price: 13, description: "Thon, olives, œufs, anchois, tomates" },
-    { name: "Chèvre Chaud", price: 14, description: "Mesclun, toasts de chèvre, miel, noix" },
-    { name: "Italienne", price: 13, description: "Roquette, tomates séchées, mozzarella, jambon cru" },
-    { name: "Grecque", price: 12, description: "Feta, concombre, olives, oignons rouges" }
-  ],
-  pates: [
-    { name: "Carbonara", price: 13, description: "Spaghetti, œuf, pecorino, guanciale" },
-    { name: "Bolognaise", price: 12, description: "Tagliatelles, sauce bolognaise maison" },
-    { name: "Arrabiata", price: 11, description: "Penne, sauce tomate piquante, ail" },
-    { name: "Frutti di Mare", price: 16, description: "Linguine aux fruits de mer" },
-    { name: "Pesto", price: 12, description: "Trofie au pesto de basilic frais" },
-    { name: "Quatre Fromages", price: 14, description: "Penne, crème, assortiment de fromages" }
-  ],
-  burgers: [
-    { name: "Classic Burger", price: 14, description: "Bœuf, cheddar, salade, tomate, oignon" },
-    { name: "Chicken Burger", price: 13, description: "Poulet croustillant, bacon, avocat" },
-    { name: "Veggie Burger", price: 13, description: "Steak végétal, légumes grillés" },
-    { name: "Italian Burger", price: 15, description: "Bœuf, mozzarella, pesto, tomates séchées" },
-    { name: "Double Cheese", price: 16, description: "Double steak, double cheddar" }
-  ],
-  viandes: [
-    { name: "Entrecôte", price: 22, description: "Entrecôte grillée, sauce au choix" },
-    { name: "Scaloppine", price: 18, description: "Escalope de veau à la milanaise" },
-    { name: "Tagliata", price: 24, description: "Fines tranches de bœuf, roquette, parmesan" },
-    { name: "Côte de Bœuf", price: 65, description: "Pour 2 personnes, environ 1kg" },
-    { name: "Filet de Bar", price: 20, description: "Filet de bar grillé, légumes de saison" }
-  ],
-  desserts: [
-    { name: "Tiramisu", price: 8, description: "Le classique italien au café et mascarpone" },
-    { name: "Panna Cotta", price: 7, description: "Crème vanille, coulis de fruits rouges" },
-    { name: "Fondant au Chocolat", price: 9, description: "Cœur coulant, glace vanille" },
-    { name: "Crème Brûlée", price: 8, description: "À la vanille de Madagascar" },
-    { name: "Café Gourmand", price: 9, description: "Café et assortiment de mignardises" },
-    { name: "Profiteroles", price: 9, description: "Choux, glace vanille, chocolat chaud" }
-  ],
-  vins: [
-    { name: "Champagne Moët & Chandon", price: 85, description: "Brut Impérial, notes de pomme verte et d'agrumes" },
-    { name: "Champagne Veuve Clicquot", price: 90, description: "Brut Carte Jaune, arômes de fruits blancs et brioche" },
-    { name: "Chianti Classico", price: 35, description: "Vin rouge toscan, notes de cerises et d'épices" },
-    { name: "Pinot Grigio", price: 28, description: "Vin blanc sec, arômes de fruits et minéralité" },
-    { name: "Prosecco", price: 32, description: "Vin pétillant, notes florales et de pomme" },
-    { name: "Bordeaux Saint-Émilion", price: 45, description: "Vin rouge corsé, notes de fruits noirs et de chêne" },
-    { name: "Chablis", price: 38, description: "Vin blanc sec, minéral avec notes d'agrumes" },
-    { name: "Côtes du Rhône", price: 30, description: "Vin rouge fruité et épicé" },
-    { name: "Sancerre", price: 36, description: "Vin blanc vif, notes d'agrumes et de pierre à fusil" },
-    { name: "Châteauneuf-du-Pape", price: 55, description: "Vin rouge puissant, notes de fruits mûrs et d'épices" },
-    { name: "Pouilly-Fumé", price: 34, description: "Vin blanc élégant, notes de fruits exotiques" },
-    { name: "Beaujolais Villages", price: 26, description: "Vin rouge léger et fruité" },
-    { name: "Margaux", price: 75, description: "Grand vin de Bordeaux, élégant et complexe" },
-    { name: "Meursault", price: 85, description: "Vin blanc de Bourgogne, beurré et minéral" },
-    { name: "Crozes-Hermitage", price: 42, description: "Vin rouge de la Vallée du Rhône, notes de poivre et fruits noirs" },
-    { name: "Gewurztraminer", price: 32, description: "Vin blanc d'Alsace, aromatique et légèrement sucré" },
-    { name: "Gigondas", price: 48, description: "Vin rouge généreux, notes de garrigue et fruits rouges" },
-    { name: "Muscadet", price: 24, description: "Vin blanc de Loire, frais et iodé" },
-    { name: "Pomerol", price: 65, description: "Vin rouge de Bordeaux, riche et velouté" },
-    { name: "Riesling", price: 29, description: "Vin blanc d'Alsace, vif et minéral" }
-  ]
-};
+// Interface pour typer les données de l'API
+interface Plat {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  photo_url?: string;
+  allergenes?: string[];
+}
 
-const MenuSection: React.FC<{ title: string, items: any[], id: string }> = ({ title, items, id }) => (
+interface Categorie {
+  id: number;
+  nom: string;
+  slug: string;
+  description: string;
+  ordre: number;
+  plats: Plat[];
+}
+
+interface MenuData {
+  [key: string]: Categorie;
+}
+
+const MenuSection: React.FC<{ title: string, items: Plat[], id: string }> = ({ title, items, id }) => (
   <div className="menu-section" id={id}>
     <div className="section-header">
       <h2>{title}</h2>
     </div>
     <div className="menu-grid">
       {items.map((item, index) => (
-        <div key={index} className="menu-item">
+        <div key={item.id || index} className="menu-item">
           <div className="item-name-price">
             <span className="item-name">{item.name}</span>
             <span className="item-price">{item.price}€</span>
@@ -107,10 +42,86 @@ const MenuSection: React.FC<{ title: string, items: any[], id: string }> = ({ ti
         </div>
       ))}
     </div>
+    {id === "nos-viandes" && (
+      <div className="garnitures-info" style={{ marginTop: '20px', textAlign: 'center' }}>
+        <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: '8px' }}>
+          GARNITURES AU CHOIX : spaghettis, riz, haricots verts, frites, pommes sautées
+        </p>
+        <p style={{ color: '#ff4444' }}>
+          GARNITURE SUPPLÉMENTAIRE +2€
+        </p>
+      </div>
+    )}
   </div>
 );
 
 const CartePage: React.FC = () => {
+  const [menuData, setMenuData] = useState<MenuData>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchMenuData = async () => {
+      try {
+        setLoading(true);
+        // Utilisation de l'URL complète du serveur backend
+        const response = await fetch('http://localhost:4000/api/menu/menu-complet');
+        
+        if (!response.ok) {
+          throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        setMenuData(data);
+        setError(null);
+      } catch (error) {
+        console.error('Erreur lors du chargement du menu:', error);
+        setError('Impossible de charger le menu. Veuillez réessayer plus tard.');
+        
+        // En cas d'erreur, on peut garder les données de base pour que le site reste fonctionnel
+        const fallbackData: MenuData = {
+          'petites-faims': {
+            id: 1,
+            nom: "PETITES FAIMS",
+            slug: "petites-faims",
+            description: "Entrées & Apéritifs",
+            ordre: 1,
+            plats: [
+              { id: 1, name: "Connexion au serveur...", description: "Chargement des données depuis le back office", price: 0 }
+            ]
+          }
+        };
+        setMenuData(fallbackData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMenuData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="page-with-menu">
+        <SideMenu />
+        <motion.div 
+          className="carte-page-container"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="carte-header">
+            <h1>New York Café</h1>
+            <h2>CHARGEMENT DE LA CARTE...</h2>
+          </div>
+          <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
+            <p>Chargement des plats depuis le back office...</p>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="page-with-menu">
       <SideMenu />
@@ -123,17 +134,32 @@ const CartePage: React.FC = () => {
         <div className="carte-header">
           <h1>New York Café</h1>
           <h2>NOTRE CARTE</h2>
+          {error && (
+            <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '10px' }}>
+              ⚠️ {error}
+            </p>
+          )}
         </div>
 
-        <MenuSection id="petites-faims" title="PETITES FAIMS" items={menuData.petitesFaims} />
-        <MenuSection id="a-partager" title="A PARTAGER" items={menuData.aPartager} />
-        <MenuSection id="nos-pizzas" title="NOS PIZZAS" items={menuData.pizzas} />
-        <MenuSection id="nos-salades" title="NOS BELLES SALADES" items={menuData.salades} />
-        <MenuSection id="nos-pates" title="NOS PÂTES" items={menuData.pates} />
-        <MenuSection id="nos-burgers" title="NOS HAMBURGERS & TARTARE" items={menuData.burgers} />
-        <MenuSection id="nos-viandes" title="NOS VIANDES & POISSON" items={menuData.viandes} />
-        <MenuSection id="nos-desserts" title="NOS DESSERTS" items={menuData.desserts} />
-        <MenuSection id="carte-des-vins" title="LA CARTE DES VINS" items={menuData.vins} />
+        {/* Affichage dynamique des catégories depuis l'API */}
+        {Object.entries(menuData)
+          .sort(([, a], [, b]) => a.ordre - b.ordre)
+          .map(([slug, categorie]) => (
+            <MenuSection 
+              key={slug}
+              id={slug} 
+              title={categorie.nom} 
+              items={categorie.plats} 
+            />
+          ))}
+
+        {/* Message si aucune donnée n'est disponible */}
+        {Object.keys(menuData).length === 0 && !loading && (
+          <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
+            <p>Aucun plat disponible pour le moment.</p>
+            <p>Vérifiez que le serveur backend est démarré sur le port 4000.</p>
+          </div>
+        )}
       </motion.div>
     </div>
   );
