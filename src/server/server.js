@@ -2,7 +2,11 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const reservationRoutes = require('./routes/reservationRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const menuRoutes = require('./routes/menuRoutes');
+const vinRoutes = require('./routes/vinRoutes');
 const db = require('./db');
 
 const app = express();
@@ -10,9 +14,18 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 // Routes
 app.use('/api/reservations', reservationRoutes);
+app.use('/api/menu', menuRoutes);
+app.use('/api', vinRoutes);
+app.use('/admin-nyc-2024-secret', adminRoutes);
+app.use('/admin-nyc-2024-secret/api/menu', menuRoutes);
+app.use('/admin-nyc-2024-secret/api', vinRoutes);
+
+// Servir les fichiers statiques du back-office
+app.use('/admin-nyc-2024-secret', express.static(path.join(__dirname, 'admin-dashboard')));
 
 // Gestion des erreurs
 app.use((err, req, res, next) => {
@@ -27,6 +40,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
+  console.log(`🔐 Back office disponible sur: http://localhost:${PORT}/admin-nyc-2024-secret`);
   console.log(`Variables d'environnement chargées:`);
   console.log(`- DB_HOST: ${process.env.DB_HOST}`);
   console.log(`- DB_USERNAME: ${process.env.DB_USERNAME}`);

@@ -1,0 +1,18 @@
+{
+  "nom": "Franck",
+  "origine_vin": "France",
+  "type_vin": "VINS BLANC",
+  "description": "Vin blanc français de qualité",
+  "variants": [
+    {
+      "volume_vin": "75cl",
+      "contenant_vin": "Bouteille",
+      "prix": 28.5
+    },
+    {
+      "volume_vin": "14cl",
+      "contenant_vin": "Verre",
+      "prix": 7.5
+    }
+  ]
+} 

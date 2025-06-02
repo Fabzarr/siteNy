@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion du Menu - New York Café</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: #3498db;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #ecf0f1;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+
+        .tab:hover {
+            color: #2980b9;
+        }
+
+        /* Content Panels */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Category Grid */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: #3498db;
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .add-dish-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-dish-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .dishes-list {
+            padding: 1rem;
+        }
+
+        .dish-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            border-bottom: 1px solid #ecf0f1;
+            transition: background-color 0.3s ease;
+        }
+
+        .dish-item:hover {
+            background: #f8f9fa;
+        }
+
+        .dish-item:last-child {
+            border-bottom: none;
+        }
+
+        .dish-info {
+            flex: 1;
+        }
+
+        .dish-name {
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .dish-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 0.25rem;
+        }
+
+        .dish-price {
+            font-weight: 600;
+            color: #27ae60;
+            font-size: 1.1rem;
+        }
+
+        .dish-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #2980b9;
+        }
+
+        .action-btn.danger {
+            background: #e74c3c;
+        }
+
+        .action-btn.danger:hover {
+            background: #c0392b;
+        }
+
+        .action-btn.warning {
+            background: #f39c12;
+        }
+
+        .action-btn.warning:hover {
+            background: #e67e22;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 6px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        /* Availability indicator */
+        .availability-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+        }
+
+        .availability-indicator.available {
+            background: #27ae60;
+        }
+
+        .availability-indicator.unavailable {
+            background: #e74c3c;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+
+        /* Search */
+        .search-bar {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.75rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">← Dashboard</a>
+            <h1>🍕 Gestion du Menu</h1>
+        </div>
+        <div>
+            <button class="action-btn" onclick="refreshData()">🔄 Actualiser</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="all-dishes">Tous les Plats</button>
+            <button class="tab" data-tab="by-category">Par Catégorie</button>
+            <button class="tab" data-tab="availability">Disponibilités</button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Rechercher un plat..." id="searchInput">
+        </div>
+
+        <!-- Tab Content: All Dishes -->
+        <div class="tab-content active" id="all-dishes">
+            <div class="action-buttons" style="margin-bottom: 2rem;">
+                <button class="btn btn-primary" onclick="openAddDishModal()">
+                    ➕ Ajouter un Nouveau Plat
+                </button>
+            </div>
+            <div id="allDishesList" class="loading">
+                Chargement des plats...
+            </div>
+        </div>
+
+        <!-- Tab Content: By Category -->
+        <div class="tab-content" id="by-category">
+            <div id="categoriesGrid" class="category-grid">
+                <div class="loading">Chargement des catégories...</div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Availability -->
+        <div class="tab-content" id="availability">
+            <div id="availabilityList">
+                <div class="loading">Chargement des disponibilités...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Dish -->
+    <div class="modal" id="dishModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Ajouter un Plat</h2>
+            </div>
+            <form id="dishForm">
+                <input type="hidden" id="dishId">
+                
+                <div class="form-group">
+                    <label class="form-label" for="dishName">Nom du plat</label>
+                    <input type="text" class="form-input" id="dishName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="dishDescription">Description / Ingrédients (optionnel)</label>
+                    <textarea class="form-textarea" id="dishDescription" placeholder="Ex: Tomate, mozzarella, basilic... (laisser vide pour les vins)"></textarea>
+                    <small style="color: #7f8c8d; font-size: 0.8rem;">
+                        💡 Conseil : Laissez vide pour les vins ou plats simples
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="dishPrice">Prix (€)</label>
+                    <input type="number" class="form-input" id="dishPrice" step="0.50" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="dishCategory">Catégorie</label>
+                    <select class="form-select" id="dishCategory" required>
+                        <option value="">Sélectionner une catégorie</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <input type="checkbox" id="dishAvailable" checked> 
+                        Plat disponible
+                    </label>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeDishModal()">
+                        Annuler
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let categories = [];
+        let dishes = [];
+        
+        // Vérification de l'authentification
+        async function checkAuth() {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = 'login.html';
+                return false;
+            }
+
+            try {
+                const response = await fetch('/admin-nyc-2024-secret/verify', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) throw new Error('Token invalide');
+                return true;
+            } catch (error) {
+                localStorage.removeItem('adminToken');
+                window.location.href = 'login.html';
+                return false;
+            }
+        }
+
+        // Charger les données
+        async function loadData() {
+            try {
+                const token = localStorage.getItem('adminToken');
+                
+                // Charger les catégories
+                const categoriesResponse = await fetch('/api/menu/categories', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                categories = await categoriesResponse.json();
+                
+                // Charger tous les plats
+                const dishesResponse = await fetch('/api/menu/plats', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                dishes = await dishesResponse.json();
+                
+                // Remplir le select des catégories
+                populateCategorySelect();
+                
+                // Afficher les données selon l'onglet actif
+                showTabContent(document.querySelector('.tab.active').dataset.tab);
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement:', error);
+            }
+        }
+
+        // Remplir le select des catégories
+        function populateCategorySelect() {
+            const select = document.getElementById('dishCategory');
+            select.innerHTML = '<option value="">Sélectionner une catégorie</option>';
+            
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                option.textContent = cat.nom;
+                select.appendChild(option);
+            });
+        }
+
+        // Afficher le contenu d'un onglet
+        function showTabContent(tabName) {
+            // Masquer tous les contenus
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Afficher le contenu sélectionné
+            document.getElementById(tabName).classList.add('active');
+            
+            // Charger les données selon l'onglet
+            switch(tabName) {
+                case 'all-dishes':
+                    displayAllDishes();
+                    break;
+                case 'by-category':
+                    displayByCategory();
+                    break;
+                case 'availability':
+                    displayAvailability();
+                    break;
+            }
+        }
+
+        // Afficher tous les plats
+        function displayAllDishes() {
+            const container = document.getElementById('allDishesList');
+            
+            if (dishes.length === 0) {
+                container.innerHTML = '<p>Aucun plat trouvé</p>';
+                return;
+            }
+
+            container.innerHTML = dishes.map(dish => `
+                <div class="dish-item">
+                    <div class="dish-info">
+                        <div class="dish-name">
+                            ${dish.nom}
+                            <span class="availability-indicator ${dish.disponible ? 'available' : 'unavailable'}"></span>
+                        </div>
+                        <div class="dish-description">${dish.description || '(Aucune description)'}</div>
+                        <div class="dish-price">${dish.prix}€</div>
+                    </div>
+                    <div class="dish-actions">
+                        <button class="action-btn" onclick="editDish(${dish.id})">✏️ Modifier</button>
+                        <button class="action-btn ${dish.disponible ? 'warning' : ''}" onclick="toggleAvailability(${dish.id}, ${!dish.disponible})">
+                            ${dish.disponible ? '❌ Indispo' : '✅ Dispo'}
+                        </button>
+                        <button class="action-btn danger" onclick="deleteDish(${dish.id})">🗑️ Supprimer</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Afficher par catégorie
+        function displayByCategory() {
+            const container = document.getElementById('categoriesGrid');
+            
+            container.innerHTML = categories.map(category => {
+                const categoryDishes = dishes.filter(dish => dish.categorie_id == category.id);
+                
+                return `
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-title">${category.nom}</div>
+                            <button class="add-dish-btn" onclick="openAddDishModal(${category.id})">
+                                ➕ Ajouter
+                            </button>
+                        </div>
+                        <div class="dishes-list">
+                            ${categoryDishes.length === 0 ? '<p>Aucun plat dans cette catégorie</p>' : 
+                              categoryDishes.map(dish => `
+                                <div class="dish-item">
+                                    <div class="dish-info">
+                                        <div class="dish-name">
+                                            ${dish.nom}
+                                            <span class="availability-indicator ${dish.disponible ? 'available' : 'unavailable'}"></span>
+                                        </div>
+                                        <div class="dish-description">${dish.description || '(Aucune description)'}</div>
+                                        <div class="dish-price">${dish.prix}€</div>
+                                    </div>
+                                    <div class="dish-actions">
+                                        <button class="action-btn" onclick="editDish(${dish.id})">✏️</button>
+                                        <button class="action-btn ${dish.disponible ? 'warning' : ''}" onclick="toggleAvailability(${dish.id}, ${!dish.disponible})">
+                                            ${dish.disponible ? '❌' : '✅'}
+                                        </button>
+                                        <button class="action-btn danger" onclick="deleteDish(${dish.id})">🗑️</button>
+                                    </div>
+                                </div>
+                              `).join('')
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Afficher les disponibilités
+        function displayAvailability() {
+            const container = document.getElementById('availabilityList');
+            const unavailableDishes = dishes.filter(dish => !dish.disponible);
+            
+            container.innerHTML = `
+                <h3>Plats actuellement indisponibles (${unavailableDishes.length})</h3>
+                ${unavailableDishes.length === 0 ? '<p>Tous les plats sont disponibles ✅</p>' :
+                  unavailableDishes.map(dish => `
+                    <div class="dish-item">
+                        <div class="dish-info">
+                            <div class="dish-name">${dish.nom}</div>
+                            <div class="dish-description">${dish.description || '(Aucune description)'}</div>
+                            <div class="dish-price">${dish.prix}€</div>
+                        </div>
+                        <div class="dish-actions">
+                            <button class="action-btn" onclick="toggleAvailability(${dish.id}, true)">
+                                ✅ Rendre Disponible
+                            </button>
+                        </div>
+                    </div>
+                  `).join('')
+                }
+            `;
+        }
+
+        // Gestion des onglets
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                // Retirer la classe active de tous les onglets
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                
+                // Ajouter la classe active à l'onglet cliqué
+                e.target.classList.add('active');
+                
+                // Afficher le contenu correspondant
+                showTabContent(e.target.dataset.tab);
+            });
+        });
+
+        // Ouvrir le modal d'ajout/modification
+        function openAddDishModal(categoryId = null) {
+            document.getElementById('modalTitle').textContent = 'Ajouter un Plat';
+            document.getElementById('dishForm').reset();
+            document.getElementById('dishId').value = '';
+            
+            if (categoryId) {
+                document.getElementById('dishCategory').value = categoryId;
+            }
+            
+            document.getElementById('dishModal').classList.add('active');
+        }
+
+        // Modifier un plat
+        async function editDish(dishId) {
+            try {
+                const token = localStorage.getItem('adminToken');
+                const response = await fetch(`/api/menu/plats/${dishId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const dish = await response.json();
+                
+                document.getElementById('modalTitle').textContent = 'Modifier le Plat';
+                document.getElementById('dishId').value = dish.id;
+                document.getElementById('dishName').value = dish.nom;
+                document.getElementById('dishDescription').value = dish.description;
+                document.getElementById('dishPrice').value = dish.prix;
+                document.getElementById('dishCategory').value = dish.categorie_id;
+                document.getElementById('dishAvailable').checked = dish.disponible;
+                
+                document.getElementById('dishModal').classList.add('active');
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement du plat:', error);
+                alert('Erreur lors du chargement du plat');
+            }
+        }
+
+        // Fermer le modal
+        function closeDishModal() {
+            document.getElementById('dishModal').classList.remove('active');
+        }
+
+        // Sauvegarder un plat
+        document.getElementById('dishForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const dishId = document.getElementById('dishId').value;
+            const dishData = {
+                nom: document.getElementById('dishName').value,
+                description: document.getElementById('dishDescription').value || '',
+                prix: parseFloat(document.getElementById('dishPrice').value),
+                categorie_id: parseInt(document.getElementById('dishCategory').value),
+                disponible: document.getElementById('dishAvailable').checked
+            };
+            
+            try {
+                const token = localStorage.getItem('adminToken');
+                const url = dishId ? 
+                    `/api/menu/admin/plats/${dishId}` : 
+                    '/api/menu/admin/plats';
+                const method = dishId ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method,
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dishData)
+                });
+                
+                if (response.ok) {
+                    closeDishModal();
+                    await loadData();
+                    alert(dishId ? 'Plat modifié avec succès' : 'Plat ajouté avec succès');
+                } else {
+                    throw new Error('Erreur lors de la sauvegarde');
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors de la sauvegarde:', error);
+                alert('Erreur lors de la sauvegarde du plat');
+            }
+        });
+
+        // Changer la disponibilité
+        async function toggleAvailability(dishId, available) {
+            try {
+                const token = localStorage.getItem('adminToken');
+                const response = await fetch(`/api/menu/admin/plats/${dishId}/disponibilite`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ disponible: available })
+                });
+                
+                if (response.ok) {
+                    await loadData();
+                } else {
+                    throw new Error('Erreur lors de la modification');
+                }
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la modification de la disponibilité');
+            }
+        }
+
+        // Supprimer un plat
+        async function deleteDish(dishId) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer ce plat ?')) {
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('adminToken');
+                const response = await fetch(`/api/menu/admin/plats/${dishId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    await loadData();
+                    alert('Plat supprimé avec succès');
+                } else {
+                    throw new Error('Erreur lors de la suppression');
+                }
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la suppression du plat');
+            }
+        }
+
+        // Actualiser les données
+        async function refreshData() {
+            await loadData();
+        }
+
+        // Recherche
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            // TODO: Implémenter la recherche
+        });
+
+        // Fermer le modal en cliquant à l'extérieur
+        document.getElementById('dishModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeDishModal();
+            }
+        });
+
+        // Initialisation
+        window.addEventListener('load', async () => {
+            if (await checkAuth()) {
+                await loadData();
+            }
+        });
+    </script>
+</body>
+</html> 

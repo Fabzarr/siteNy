@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍷 Gestion des Vins - New York Café</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1em;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+            padding: 20px 15px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-info {
+            background: #34495e;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #2c3e50;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .vins-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        @media (max-width: 768px) {
+            .vins-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vin-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .vin-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .vin-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .vin-title {
+            font-size: 1.5em;
+            font-weight: bold !important;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .vin-description {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .add-vin-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .add-vin-btn:hover {
+            background: #219a52;
+        }
+
+        .vin-info {
+            padding: 20px;
+        }
+
+        .vin-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .vin-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .badge-origine {
+            background: #e8f5e8;
+            color: #27ae60;
+        }
+
+        .badge-type {
+            background: #fef9e7;
+            color: #f39c12;
+        }
+
+        .variants-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .variants-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        .variant-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 4px solid #3498db;
+            transition: background-color 0.3s;
+        }
+
+        .variant-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .variant-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .variant-volume {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .variant-contenant {
+            color: #7f8c8d;
+        }
+
+        .variant-prix {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1em;
+        }
+
+        .vin-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn.edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .action-btn.edit:hover {
+            background: #2980b9;
+        }
+
+        .action-btn.delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .action-btn.delete:hover {
+            background: #c0392b;
+        }
+
+        .action-btn.toggle {
+            background: #f39c12;
+            color: white;
+        }
+
+        .action-btn.toggle:hover {
+            background: #e67e22;
+        }
+
+        .variant-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .variant-btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .variant-btn.edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .variant-btn.edit:hover {
+            background: #2980b9;
+        }
+
+        .variant-btn.delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .variant-btn.delete:hover {
+            background: #c0392b;
+        }
+
+        /* Styles pour les modales - repris de menu-manager.html */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: opacity 0.3s;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        .form-group label.required {
+            color: #e74c3c;
+        }
+
+        .form-group label .required-asterisk {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .form-group input:required,
+        .form-group select:required {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .form-group input:required:valid,
+        .form-group select:required:valid {
+            border-left: 4px solid #27ae60;
+        }
+
+        .form-group input.error,
+        .form-group select.error {
+            border-color: #e74c3c;
+            background-color: #fdf2f2;
+        }
+
+        .validation-message {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            padding: 20px 30px;
+            background-color: #f8f9fa;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .modal-buttons .btn {
+            min-width: 120px;
+        }
+
+        /* Messages */
+        .message {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            transition: all 0.5s ease;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Style des éléments de vin (harmonisé avec dish-item) */
+        .dish-item {
+            display: block;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .dish-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .dish-item:last-child {
+            border-bottom: none;
+        }
+
+        .dish-order {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            font-weight: bold;
+            color: #666;
+            font-size: 1.1em;
+            width: 30px;
+        }
+
+        .dish-price {
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1em;
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 5px;
+            border: 2px solid #e74c3c;
+        }
+
+        .dish-content {
+            margin-left: 50px;
+            margin-right: 100px;
+            padding-right: 10px;
+        }
+
+        .dish-name {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .dish-description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        .dish-controls {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dish-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.3s;
+        }
+
+        .action-btn.edit:hover {
+            background: #2980b9;
+        }
+
+        .action-btn.delete {
+            background: #e74c3c;
+        }
+
+        .action-btn.delete:hover {
+            background: #c0392b;
+        }
+
+        .action-btn.toggle {
+            background: #f39c12;
+        }
+
+        .action-btn.toggle:hover {
+            background: #e67e22;
+        }
+
+        .action-btn.unavailable {
+            background: #95a5a6;
+        }
+
+        .action-btn.unavailable:hover {
+            background: #7f8c8d;
+        }
+
+        /* Conteneur principal des vins */
+        .vins-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* État vide */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+
+        /* Styles pour les boutons d'ordre (harmonisés avec menu-manager) */
+        .order-btn {
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.7em;
+            min-width: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .order-btn:hover {
+            background: #2c3e50;
+        }
+
+        .order-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .order-controls {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        /* Styles pour la section des variants dans la modale */
+        .variants-form-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .variant-form-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+            align-items: end;
+            margin-bottom: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .btn-remove-variant {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-remove-variant:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍷 Gestion des Vins avec Variants</h1>
+            <p>Gérez vos vins avec plusieurs formats, contenants et prix</p>
+            <div style="margin-top: 15px;">
+                <button onclick="window.location.href='/admin-nyc-2024-secret/'" style="margin: 5px; padding: 10px 20px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    ← Retour au Dashboard
+                </button>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" onclick="openAddVinModal()">
+                ➕ Ajouter un Vin
+            </button>
+            <button class="btn btn-primary" onclick="loadVins()">
+                🔄 Actualiser
+            </button>
+            <button class="btn btn-warning" onclick="debugVins()">
+                🐛 Debug Vins
+            </button>
+        </div>
+
+        <div id="vins-container" class="vins-container">
+            <div class="loading">
+                <h3>🍷 Chargement des vins...</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ajouter/Modifier Vin -->
+    <div id="vinModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="modalTitle">Ajouter un Vin</span>
+                <span class="close" onclick="closeVinModal()">&times;</span>
+            </div>
+            
+            <div class="modal-body">
+                <form id="vinForm">
+                    <div class="form-group">
+                        <label for="vinNom">Nom du vin *</label>
+                        <input type="text" id="vinNom" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vinOrigine">Origine du vin *</label>
+                            <select id="vinOrigine" required>
+                                <option value="">-- Sélectionner l'origine --</option>
+                                <option value="France">🇫🇷 France</option>
+                                <option value="Italie">🇮🇹 Italie</option>
+                                <option value="Espagne">🇪🇸 Espagne</option>
+                                <option value="Portugal">🇵🇹 Portugal</option>
+                                <option value="Allemagne">🇩🇪 Allemagne</option>
+                                <option value="Autriche">🇦🇹 Autriche</option>
+                                <option value="Suisse">🇨🇭 Suisse</option>
+                                <option value="Argentine">🇦🇷 Argentine</option>
+                                <option value="Chili">🇨🇱 Chili</option>
+                                <option value="États-Unis">🇺🇸 États-Unis</option>
+                                <option value="Australie">🇦🇺 Australie</option>
+                                <option value="Nouvelle-Zélande">🇳🇿 Nouvelle-Zélande</option>
+                                <option value="Afrique du Sud">🇿🇦 Afrique du Sud</option>
+                                <option value="Grèce">🇬🇷 Grèce</option>
+                                <option value="Hongrie">🇭🇺 Hongrie</option>
+                                <option value="Autre">🌍 Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vinType">Type de vin *</label>
+                            <select id="vinType" required>
+                                <option value="">-- Sélectionner le type --</option>
+                                <option value="VINS ROUGE">🍷 Vins Rouge</option>
+                                <option value="VINS BLANC">🥂 Vins Blanc</option>
+                                <option value="VINS ROSÉ">🌹 Vins Rosé</option>
+                                <option value="CHAMPAGNE">🍾 Champagne</option>
+                                <option value="PÉTILLANT">✨ Pétillant / Crémant</option>
+                                <option value="VIN DOUX">🍯 Vin Doux / Liquoreux</option>
+                                <option value="FORTIFIÉ">🥃 Vin Fortifié / Porto</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vinDescription">Description</label>
+                        <textarea id="vinDescription" placeholder="Description du vin..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vinPhoto">URL Photo</label>
+                        <input type="url" id="vinPhoto" placeholder="https://...">
+                    </div>
+
+                    <div class="variants-section">
+                        <h3 class="variants-title">Formats disponibles *</h3>
+                        <p style="color: #7f8c8d; margin-bottom: 15px;">
+                            Ajoutez les différents formats (volume + contenant + prix) pour ce vin
+                        </p>
+                        
+                        <div id="variantsContainer">
+                            <!-- Les variants seront ajoutés ici dynamiquement -->
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary" onclick="addVariantRow()">
+                            ➕ Ajouter un format
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-buttons">
+                <button type="button" class="btn btn-info" onclick="closeVinModal()">
+                    Annuler
+                </button>
+                <button type="button" class="btn btn-success" onclick="submitVinForm()">
+                    💾 Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let vins = [];
+        let editingVinId = null;
+        let categorieVinsId = null;
+
+        // Variables pour les options
+        const volumes = ['14cl', '25cl', '37.5cl', '50cl', '75cl', '1L', '1.5L'];
+        const contenants = ['Verre', 'Pichet', 'Bouteille'];
+
+        // Charger les vins au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategories();
+            loadVins();
+        });
+
+        // Charger les catégories pour récupérer l'ID de la carte des vins
+        async function loadCategories() {
+            try {
+                const response = await fetch('/admin-nyc-2024-secret/api/menu/categories');
+                const categories = await response.json();
+                
+                const categorieVins = categories.find(cat => cat.slug === 'carte-des-vins');
+                if (categorieVins) {
+                    categorieVinsId = categorieVins.id;
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des catégories:', error);
+            }
+        }
+
+        // Charger les vins
+        async function loadVins() {
+            try {
+                const response = await fetch('/admin-nyc-2024-secret/api/admin/vins');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                vins = await response.json();
+                console.log(`Loaded ${vins.length} wines successfully`);
+                renderVins();
+            } catch (error) {
+                console.error('Erreur lors du chargement des vins:', error);
+                document.getElementById('vins-container').innerHTML = `
+                    <div class="empty-state">
+                        <h3>❌ Erreur de chargement</h3>
+                        <p>Impossible de charger les vins: ${error.message}</p>
+                        <button onclick="loadVins()" class="btn btn-primary">Réessayer</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Fonction de debug pour diagnostiquer les vins
+        async function debugVins() {
+            console.log('🐛 DEBUG: État actuel des vins');
+            
+            try {
+                // Test API publique
+                const publicResponse = await fetch('/api/vins');
+                const publicVins = await publicResponse.json();
+                console.log('📊 API publique (/api/vins):', publicVins.length, 'vins');
+                
+                // Test API admin
+                const adminResponse = await fetch('/admin-nyc-2024-secret/api/admin/vins');
+                const adminVins = await adminResponse.json();
+                console.log('📊 API admin (/admin-nyc-2024-secret/api/admin/vins):', adminVins.length, 'vins');
+                
+                // Chercher nos vins spécifiques
+                const cherches = ['Diane', 'Franck', 'Victor'];
+                cherches.forEach(nom => {
+                    const publicVin = publicVins.find(v => v.nom === nom);
+                    const adminVin = adminVins.find(v => v.nom === nom);
+                    
+                    console.log(`🔍 ${nom}:`);
+                    console.log(`   Public: ${publicVin ? `${publicVin.type_vin} ${publicVin.origine_vin}` : 'NON TROUVÉ'}`);
+                    console.log(`   Admin: ${adminVin ? `${adminVin.type_vin} ${adminVin.origine_vin}` : 'NON TROUVÉ'}`);
+                });
+                
+                // Forcer le rafraîchissement
+                await loadVins();
+                alert('Debug terminé - vérifiez la console pour les détails');
+                
+            } catch (error) {
+                console.error('❌ Erreur debug:', error);
+                alert('Erreur lors du debug: ' + error.message);
+            }
+        }
+
+        // Afficher les vins
+        function renderVins() {
+            const container = document.getElementById('vins-container');
+            
+            if (vins.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>🍷 Aucun vin</h3>
+                        <p>Commencez par ajouter votre premier vin</p>
+                        <button class="btn btn-success" onclick="openAddVinModal()">Ajouter un vin</button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Trier les vins par ordre d'affichage
+            const vinsSorted = [...vins].sort((a, b) => (a.ordre_affichage || 0) - (b.ordre_affichage || 0));
+
+            container.innerHTML = vinsSorted.map((vin, index) => `
+                <div class="dish-item ${!vin.disponible ? 'dish-unavailable' : ''}" data-vin-id="${vin.id}">
+                    <div class="dish-order">${vin.ordre_affichage || ''}</div>
+                    <div class="dish-price">
+                        ${vin.variants && vin.variants.length > 0 ? 
+                            vin.variants.map(variant => `${variant.prix} €`).join(' - ') : 
+                            'N/A'
+                        }
+                    </div>
+                    <div class="dish-content">
+                        <div class="dish-name">${vin.nom}</div>
+                        <div class="dish-description">
+                            ${vin.description || ''}
+                            ${vin.origine_vin ? `<br><small>🌍 ${vin.origine_vin}</small>` : ''}
+                            ${vin.type_vin ? `<br><small>🍷 ${vin.type_vin}</small>` : ''}
+                            ${vin.variants && vin.variants.length > 0 ? 
+                                `<br><small>📋 Formats: ${vin.variants.map(v => `${v.volume_vin} ${v.contenant_vin}`).join(', ')}</small>` : 
+                                ''
+                            }
+                        </div>
+                        <div class="dish-controls">
+                            <div class="dish-actions">
+                                <button class="action-btn edit" onclick="editVin(${vin.id})" title="Modifier">
+                                    Modifier
+                                </button>
+                                <button class="action-btn delete" onclick="deleteVin(${vin.id}, '${vin.nom}')" title="Supprimer">
+                                    Supprimer
+                                </button>
+                                <button class="action-btn ${vin.disponible ? 'toggle' : 'unavailable'}" 
+                                        onclick="toggleVinDisponibilite(${vin.id})" 
+                                        title="${vin.disponible ? 'Rendre indisponible' : 'Rendre disponible'}">
+                                    ${vin.disponible ? 'Indisponible' : 'Disponible'}
+                                </button>
+                            </div>
+                            <div class="order-controls">
+                                <button class="order-btn" 
+                                        onclick="moveVinUp(${vin.id})" 
+                                        ${index === 0 ? 'disabled' : ''}
+                                        title="Monter">
+                                    ↑
+                                </button>
+                                <button class="order-btn" 
+                                        onclick="moveVinDown(${vin.id})" 
+                                        ${index === vinsSorted.length - 1 ? 'disabled' : ''}
+                                        title="Descendre">
+                                    ↓
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Ouvrir modal d'ajout
+        function openAddVinModal() {
+            editingVinId = null;
+            document.getElementById('modalTitle').textContent = 'Ajouter un Vin';
+            document.getElementById('vinForm').reset();
+            document.getElementById('variantsContainer').innerHTML = '';
+            addVariantRow(); // Ajouter une ligne par défaut
+            document.getElementById('vinModal').style.display = 'block';
+        }
+
+        // Fermer modal
+        function closeVinModal() {
+            document.getElementById('vinModal').style.display = 'none';
+        }
+
+        // Ajouter une ligne de variant
+        function addVariantRow(variant = null) {
+            const container = document.getElementById('variantsContainer');
+            const index = container.children.length;
+            
+            const row = document.createElement('div');
+            row.className = 'variant-form-item';
+            row.innerHTML = `
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>Volume</label>
+                    <select class="variant-volume" required>
+                        <option value="">Sélectionner...</option>
+                        ${volumes.map(vol => `
+                            <option value="${vol}" ${variant && variant.volume_vin === vol ? 'selected' : ''}>${vol}</option>
+                        `).join('')}
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>Contenant</label>
+                    <select class="variant-contenant" required>
+                        <option value="">Sélectionner...</option>
+                        ${contenants.map(cont => `
+                            <option value="${cont}" ${variant && variant.contenant_vin === cont ? 'selected' : ''}>${cont}</option>
+                        `).join('')}
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>Prix (€)</label>
+                    <input type="number" class="variant-prix" step="0.01" min="0" value="${variant ? variant.prix : ''}" required>
+                </div>
+                <button type="button" class="btn-remove-variant" onclick="removeVariantRow(this)">
+                    🗑️
+                </button>
+            `;
+            
+            container.appendChild(row);
+        }
+
+        // Supprimer une ligne de variant
+        function removeVariantRow(button) {
+            button.parentElement.remove();
+        }
+
+        // Modifier un vin
+        function editVin(id) {
+            const vin = vins.find(v => v.id === id);
+            if (!vin) return;
+
+            editingVinId = id;
+            document.getElementById('modalTitle').textContent = 'Modifier le Vin';
+            
+            // Remplir le formulaire
+            document.getElementById('vinNom').value = vin.nom;
+            document.getElementById('vinOrigine').value = vin.origine_vin || '';
+            document.getElementById('vinType').value = vin.type_vin || '';
+            document.getElementById('vinDescription').value = vin.description || '';
+            document.getElementById('vinPhoto').value = vin.photo_url || '';
+            
+            // Remplir les variants
+            document.getElementById('variantsContainer').innerHTML = '';
+            vin.variants.forEach(variant => addVariantRow(variant));
+            
+            if (vin.variants.length === 0) {
+                addVariantRow(); // Ajouter une ligne vide si aucun variant
+            }
+            
+            document.getElementById('vinModal').style.display = 'block';
+        }
+
+        // Fonction pour soumettre le formulaire (appelée par le bouton Enregistrer)
+        async function submitVinForm() {
+            // Appeler directement la fonction de soumission au lieu d'utiliser dispatchEvent
+            await handleVinFormSubmit();
+        }
+
+        // Fonction de gestion de soumission du formulaire
+        async function handleVinFormSubmit() {
+            const nom = document.getElementById('vinNom').value.trim();
+            const origine_vin = document.getElementById('vinOrigine').value;
+            const type_vin = document.getElementById('vinType').value;
+            const description = document.getElementById('vinDescription').value;
+            const photo_url = document.getElementById('vinPhoto').value;
+            
+            // Validation des champs obligatoires
+            if (!nom) {
+                alert('❌ Le nom du vin est obligatoire!');
+                document.getElementById('vinNom').focus();
+                return;
+            }
+            
+            if (!origine_vin) {
+                alert('❌ L\'origine du vin est obligatoire!\n\nVeuillez sélectionner le pays d\'origine du vin.');
+                document.getElementById('vinOrigine').focus();
+                return;
+            }
+            
+            if (!type_vin) {
+                alert('❌ Le type de vin est obligatoire!\n\nVeuillez sélectionner si c\'est un vin rouge, blanc, rosé, champagne, etc.');
+                document.getElementById('vinType').focus();
+                return;
+            }
+            
+            console.log('🍷 Soumission du formulaire pour:', nom);
+            console.log('- Type:', type_vin);
+            console.log('- Origine:', origine_vin);
+            console.log('- editingVinId:', editingVinId);
+            
+            // Récupérer les variants
+            const variantRows = document.querySelectorAll('.variant-form-item');
+            const variants = [];
+            
+            for (let row of variantRows) {
+                const volume_vin = row.querySelector('.variant-volume').value;
+                const contenant_vin = row.querySelector('.variant-contenant').value;
+                const prix = parseFloat(row.querySelector('.variant-prix').value);
+                
+                if (volume_vin && contenant_vin && prix && prix > 0) {
+                    variants.push({ volume_vin, contenant_vin, prix });
+                }
+            }
+            
+            if (variants.length === 0) {
+                alert('❌ Veuillez ajouter au moins un format valide!\n\n' + 
+                      'Chaque format doit avoir:\n' +
+                      '• Un volume (ex: 75cl, 14cl)\n' +
+                      '• Un contenant (ex: Bouteille, Verre)\n' +
+                      '• Un prix valide (supérieur à 0)');
+                return;
+            }
+            
+            const vinData = {
+                nom,
+                origine_vin,
+                type_vin,
+                description,
+                photo_url,
+                categorie_id: categorieVinsId,
+                variants
+            };
+            
+            console.log('📤 Données envoyées:', JSON.stringify(vinData, null, 2));
+            
+            try {
+                const url = editingVinId 
+                    ? `/admin-nyc-2024-secret/api/admin/vins/${editingVinId}`
+                    : '/admin-nyc-2024-secret/api/admin/vins';
+                
+                const method = editingVinId ? 'PUT' : 'POST';
+                
+                console.log(`📡 Envoi ${method} vers ${url}`);
+                
+                const response = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(vinData)
+                });
+                
+                console.log('📥 Réponse reçue:', response.status, response.statusText);
+                
+                if (response.ok) {
+                    const responseData = await response.text();
+                    console.log('✅ Succès! Réponse:', responseData);
+                    
+                    closeVinModal();
+                    
+                    // Attendre un peu puis rafraîchir agressivement
+                    setTimeout(async () => {
+                        console.log('🔄 Rafraîchissement forcé...');
+                        await loadVins();
+                        
+                        // Double vérification
+                        setTimeout(async () => {
+                            console.log('🔄 Double vérification...');
+                            await loadVins();
+                        }, 500);
+                    }, 200);
+                    
+                    const action = editingVinId ? 'modifié' : 'créé';
+                    alert(`Vin ${action} avec succès!`);
+                    console.log(`Wine ${action} successfully: ${nom}`);
+                } else {
+                    const errorText = await response.text();
+                    console.error('❌ Erreur HTTP:', response.status, errorText);
+                    let errorMessage;
+                    try {
+                        const errorObj = JSON.parse(errorText);
+                        errorMessage = errorObj.error || errorObj.message || 'Erreur inconnue';
+                    } catch (e) {
+                        errorMessage = errorText || `Erreur HTTP ${response.status}`;
+                    }
+                    console.error('API Error:', errorMessage);
+                    alert('Erreur: ' + errorMessage);
+                }
+            } catch (error) {
+                console.error('❌ Erreur réseau:', error);
+                alert('Erreur lors de l\'enregistrement: ' + error.message);
+            }
+        }
+
+        // Gestion du formulaire
+        document.getElementById('vinForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await handleVinFormSubmit();
+        });
+
+        // Basculer disponibilité vin
+        async function toggleVinDisponibilite(id) {
+            try {
+                const response = await fetch(`/admin-nyc-2024-secret/api/admin/vins/${id}/toggle-disponibilite`, {
+                    method: 'PATCH'
+                });
+                
+                if (response.ok) {
+                    loadVins();
+                } else {
+                    alert('Erreur lors de la mise à jour');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la mise à jour');
+            }
+        }
+
+        // Basculer disponibilité variant
+        async function toggleVariantDisponibilite(id) {
+            try {
+                const response = await fetch(`/admin-nyc-2024-secret/api/admin/variants/${id}/toggle-disponibilite`, {
+                    method: 'PATCH'
+                });
+                
+                if (response.ok) {
+                    loadVins();
+                } else {
+                    alert('Erreur lors de la mise à jour');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la mise à jour');
+            }
+        }
+
+        // Supprimer un vin
+        async function deleteVin(id, nom) {
+            if (!confirm(`Êtes-vous sûr de vouloir supprimer le vin "${nom}" et tous ses formats ?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/admin-nyc-2024-secret/api/admin/vins/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    loadVins();
+                    alert('Vin supprimé avec succès!');
+                } else {
+                    alert('Erreur lors de la suppression');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la suppression');
+            }
+        }
+
+        // Déplacer un vin vers le haut
+        async function moveVinUp(id) {
+            try {
+                const response = await fetch(`/admin-nyc-2024-secret/api/admin/vins/${id}/move-up`, {
+                    method: 'PATCH'
+                });
+                
+                if (response.ok) {
+                    await loadVins();
+                } else {
+                    alert('Erreur lors du déplacement');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors du déplacement');
+            }
+        }
+
+        // Déplacer un vin vers le bas
+        async function moveVinDown(id) {
+            try {
+                const response = await fetch(`/admin-nyc-2024-secret/api/admin/vins/${id}/move-down`, {
+                    method: 'PATCH'
+                });
+                
+                if (response.ok) {
+                    await loadVins();
+                } else {
+                    alert('Erreur lors du déplacement');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors du déplacement');
+            }
+        }
+
+        // Fermer modal en cliquant à l'extérieur
+        window.onclick = function(event) {
+            const modal = document.getElementById('vinModal');
+            if (event.target === modal) {
+                closeVinModal();
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,75 @@
+.carte-des-vins {
+  padding: 20px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.carte-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #d4af37;
+  text-transform: uppercase;
+}
+
+.categorie-vins {
+  margin-bottom: 40px;
+}
+
+.categorie-title {
+  font-size: 1.5rem;
+  color: #d4af37;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.type-vins {
+  margin-bottom: 30px;
+}
+
+.type-title {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.vins-list {
+  display: grid;
+  gap: 15px;
+}
+
+.vin-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+}
+
+.vin-nom {
+  flex: 1;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.vin-prices {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  min-width: 200px;
+}
+
+.price-item {
+  color: #d4af37;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.error-message {
+  color: #ff6b6b;
+  text-align: center;
+  padding: 20px;
+  font-size: 1rem;
+} 

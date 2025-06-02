@@ -271,4 +271,167 @@ html {
     height: 1px;
     background: rgba(212, 175, 55, 0.1);
   }
-} 
+}
+
+/* Styles pour les vins avec variants */
+.vins-grid {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.vin-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.vin-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.vin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.vin-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.vin-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.vin-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.vin-badge.vin-origine {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.vin-badge.vin-type {
+  background: rgba(230, 126, 34, 0.2);
+  color: #e67e22;
+  border: 1px solid rgba(230, 126, 34, 0.3);
+}
+
+.vin-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.vin-variants {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+
+.vin-variant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+  transition: all 0.2s ease;
+}
+
+.vin-variant:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-left-color: #2980b9;
+}
+
+.variant-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.variant-volume {
+  font-weight: bold;
+  color: #3498db;
+}
+
+.variant-separator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.variant-contenant {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.variant-prix {
+  font-weight: bold;
+  color: #2ecc71;
+  font-size: 1.1rem;
+}
+
+/* Responsive pour les vins */
+@media (max-width: 1024px) {
+  .vins-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .vins-grid {
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+  
+  .vin-item {
+    padding: 1rem;
+  }
+  
+  .vin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .vin-badges {
+    margin-top: 0.5rem;
+  }
+  
+  .vin-variants {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .vin-variant {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .variant-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}

@@ -127,13 +127,13 @@ const getPlats = async (req, res) => {
       SELECT p.*, c.nom as categorie_nom, c.slug as categorie_slug
       FROM plats p
       LEFT JOIN categories c ON p.categorie_id = c.id
-      WHERE p.disponible = true
     `;
     
     const params = [];
+    let paramIndex = 1;
     
     if (categorie_id) {
-      query += ' AND p.categorie_id = $1';
+      query += ` WHERE p.categorie_id = $${paramIndex}`;
       params.push(categorie_id);
     }
     
@@ -190,7 +190,10 @@ const getPlatById = async (req, res) => {
 // Créer un nouveau plat
 const creerPlat = async (req, res) => {
   try {
-    const { nom, description, prix, categorie_id, disponible, photo_url, allergenes } = req.body;
+    const { 
+      nom, description, prix, categorie_id, disponible, photo_url, allergenes,
+      origine_vin, type_vin, volume_vin, contenant_vin 
+    } = req.body;
     
     if (!nom || !prix || !categorie_id) {
       return res.status(400).json({ error: 'Le nom, le prix et la catégorie sont requis' });
@@ -205,17 +208,44 @@ const creerPlat = async (req, res) => {
     const maxOrderResult = await db.query(maxOrderQuery, [categorie_id]);
     const newOrder = maxOrderResult.rows[0].max_ordre + 1;
     
-    const query = `
-      INSERT INTO plats (nom, description, prix, categorie_id, disponible, photo_url, ordre_affichage, allergenes)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-      RETURNING *
+    // Vérifier si les colonnes vins existent
+    const checkColumnsQuery = `
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'plats' 
+      AND column_name IN ('origine_vin', 'type_vin', 'volume_vin', 'contenant_vin')
     `;
+    const existingColumns = await db.query(checkColumnsQuery);
+    const hasWineColumns = existingColumns.rows.length > 0;
     
-    const result = await db.query(query, [
-      nom, description, prix, categorie_id, 
-      disponible !== false, photo_url, newOrder, allergenes
-    ]);
+    let query, params;
     
+    if (hasWineColumns) {
+      // Inclure les champs vins
+      query = `
+        INSERT INTO plats (nom, description, prix, categorie_id, disponible, photo_url, ordre_affichage, allergenes, origine_vin, type_vin, volume_vin, contenant_vin)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        RETURNING *
+      `;
+      params = [
+        nom, description, prix, categorie_id, 
+        disponible !== false, photo_url, newOrder, allergenes,
+        origine_vin, type_vin, volume_vin, contenant_vin
+      ];
+    } else {
+      // Utiliser l'ancienne structure sans les champs vins
+      query = `
+        INSERT INTO plats (nom, description, prix, categorie_id, disponible, photo_url, ordre_affichage, allergenes)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING *
+      `;
+      params = [
+        nom, description, prix, categorie_id, 
+        disponible !== false, photo_url, newOrder, allergenes
+      ];
+    }
+    
+    const result = await db.query(query, params);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Erreur lors de la création du plat:', error);
@@ -227,20 +257,54 @@ const creerPlat = async (req, res) => {
 const modifierPlat = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nom, description, prix, categorie_id, disponible, photo_url, ordre_affichage, allergenes } = req.body;
+    const { 
+      nom, description, prix, categorie_id, disponible, photo_url, ordre_affichage, allergenes,
+      origine_vin, type_vin, volume_vin, contenant_vin 
+    } = req.body;
     
-    const query = `
-      UPDATE plats 
-      SET nom = $1, description = $2, prix = $3, categorie_id = $4, 
-          disponible = $5, photo_url = $6, ordre_affichage = $7, allergenes = $8
-      WHERE id = $9
-      RETURNING *
+    // Vérifier si les colonnes vins existent
+    const checkColumnsQuery = `
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'plats' 
+      AND column_name IN ('origine_vin', 'type_vin', 'volume_vin', 'contenant_vin')
     `;
+    const existingColumns = await db.query(checkColumnsQuery);
+    const hasWineColumns = existingColumns.rows.length > 0;
     
-    const result = await db.query(query, [
-      nom, description, prix, categorie_id, disponible, 
-      photo_url, ordre_affichage, allergenes, id
-    ]);
+    let query, params;
+    
+    if (hasWineColumns) {
+      // Inclure les champs vins
+      query = `
+        UPDATE plats 
+        SET nom = $1, description = $2, prix = $3, categorie_id = $4, 
+            disponible = $5, photo_url = $6, ordre_affichage = $7, allergenes = $8,
+            origine_vin = $9, type_vin = $10, volume_vin = $11, contenant_vin = $12
+        WHERE id = $13
+        RETURNING *
+      `;
+      params = [
+        nom, description, prix, categorie_id, disponible, 
+        photo_url, ordre_affichage, allergenes,
+        origine_vin, type_vin, volume_vin, contenant_vin, id
+      ];
+    } else {
+      // Utiliser l'ancienne structure sans les champs vins
+      query = `
+        UPDATE plats 
+        SET nom = $1, description = $2, prix = $3, categorie_id = $4, 
+            disponible = $5, photo_url = $6, ordre_affichage = $7, allergenes = $8
+        WHERE id = $9
+        RETURNING *
+      `;
+      params = [
+        nom, description, prix, categorie_id, disponible, 
+        photo_url, ordre_affichage, allergenes, id
+      ];
+    }
+    
+    const result = await db.query(query, params);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Plat non trouvé' });
@@ -276,32 +340,77 @@ const supprimerPlat = async (req, res) => {
 // Récupérer le menu complet (toutes catégories avec leurs plats)
 const getMenuComplet = async (req, res) => {
   try {
-    const query = `
-      SELECT 
-        c.id as categorie_id,
-        c.nom as categorie_nom,
-        c.slug as categorie_slug,
-        c.description as categorie_description,
-        c.ordre_affichage as categorie_ordre,
-        p.id as plat_id,
-        p.nom as plat_nom,
-        p.description as plat_description,
-        p.prix as plat_prix,
-        p.photo_url as plat_photo,
-        p.allergenes as plat_allergenes,
-        p.ordre_affichage as plat_ordre
-      FROM categories c
-      LEFT JOIN plats p ON c.id = p.categorie_id AND p.disponible = true
-      WHERE c.actif = true
-      ORDER BY c.ordre_affichage ASC, p.ordre_affichage ASC, p.nom ASC
-    `;
+    console.log('Début de getMenuComplet');
     
+    // Vérifier si les colonnes vins existent
+    const checkColumnsQuery = `
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'plats' 
+      AND column_name IN ('origine_vin', 'type_vin', 'volume_vin', 'contenant_vin')
+    `;
+    const existingColumns = await db.query(checkColumnsQuery);
+    const hasWineColumns = existingColumns.rows.length > 0;
+    
+    let query;
+    if (hasWineColumns) {
+      query = `
+        SELECT 
+          c.id as categorie_id,
+          c.nom as categorie_nom,
+          c.slug as categorie_slug,
+          c.description as categorie_description,
+          c.ordre_affichage as categorie_ordre,
+          p.id as plat_id,
+          p.nom as plat_nom,
+          p.description as plat_description,
+          p.prix as plat_prix,
+          p.photo_url as plat_photo,
+          p.allergenes as plat_allergenes,
+          p.ordre_affichage as plat_ordre,
+          p.disponible as plat_disponible,
+          p.origine_vin as plat_origine_vin,
+          p.type_vin as plat_type_vin,
+          p.volume_vin as plat_volume_vin,
+          p.contenant_vin as plat_contenant_vin
+        FROM categories c
+        LEFT JOIN plats p ON c.id = p.categorie_id
+        WHERE c.actif = true
+        ORDER BY c.ordre_affichage ASC, p.ordre_affichage ASC, p.nom ASC
+      `;
+    } else {
+      query = `
+        SELECT 
+          c.id as categorie_id,
+          c.nom as categorie_nom,
+          c.slug as categorie_slug,
+          c.description as categorie_description,
+          c.ordre_affichage as categorie_ordre,
+          p.id as plat_id,
+          p.nom as plat_nom,
+          p.description as plat_description,
+          p.prix as plat_prix,
+          p.photo_url as plat_photo,
+          p.allergenes as plat_allergenes,
+          p.ordre_affichage as plat_ordre,
+          p.disponible as plat_disponible
+        FROM categories c
+        LEFT JOIN plats p ON c.id = p.categorie_id AND p.disponible = true
+        WHERE c.actif = true
+        ORDER BY c.ordre_affichage ASC, p.ordre_affichage ASC, p.nom ASC
+      `;
+    }
+    
+    console.log('Exécution de la requête SQL:', query);
     const result = await db.query(query);
+    console.log('Résultats bruts de la requête:', result.rows);
+    console.log(`Nombre de résultats: ${result.rows.length}`);
     
     // Restructurer les données par catégorie
     const menuStructure = {};
     
     result.rows.forEach(row => {
+      console.log('Traitement de la ligne:', row);
       const categoryKey = row.categorie_slug || row.categorie_id;
       
       if (!menuStructure[categoryKey]) {
@@ -316,21 +425,35 @@ const getMenuComplet = async (req, res) => {
       }
       
       if (row.plat_id) {
-        menuStructure[categoryKey].plats.push({
+        const plat = {
           id: row.plat_id,
           name: row.plat_nom,
           description: row.plat_description,
           price: parseFloat(row.plat_prix),
           photo_url: row.plat_photo,
           allergenes: row.plat_allergenes,
-          ordre: row.plat_ordre
-        });
+          ordre: row.plat_ordre,
+          disponible: row.plat_disponible
+        };
+        
+        // Ajouter les champs vins s'ils existent
+        if (hasWineColumns) {
+          plat.origine_vin = row.plat_origine_vin;
+          plat.type_vin = row.plat_type_vin;
+          plat.volume_vin = row.plat_volume_vin;
+          plat.contenant_vin = row.plat_contenant_vin;
+        }
+        
+        menuStructure[categoryKey].plats.push(plat);
       }
     });
+
+    console.log('Structure finale du menu:', menuStructure);
+    console.log('Nombre de catégories:', Object.keys(menuStructure).length);
     
     res.json(menuStructure);
   } catch (error) {
-    console.error('Erreur lors de la récupération du menu complet:', error);
+    console.error('Erreur détaillée lors de la récupération du menu:', error);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
