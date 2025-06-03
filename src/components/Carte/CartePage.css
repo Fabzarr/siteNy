@@ -198,25 +198,29 @@ html {
   }
 
   .carte-header h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 5px;
   }
 
   .carte-header h2 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .menu-section {
-    margin: 10px;
+    margin: 15px;
     padding: 15px;
+    border-radius: 10px;
+    scroll-margin-top: calc(var(--navbar-height) + 25px);
   }
 
   #carte-des-vins {
+    scroll-margin-top: calc(var(--navbar-height) + 25px);
     margin-bottom: 30px;
   }
 
   .section-header h2 {
     font-size: 1.3rem;
+    margin-bottom: 15px;
   }
 
   .menu-item {
@@ -248,7 +252,7 @@ html {
   display: none;
 }
 
-/* Styles pour améliorer la lisibilité mobile */
+/* Ajout d'une ombre pour améliorer la lisibilité */
 @media (max-width: 768px) {
   .menu-section {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -269,42 +273,42 @@ html {
   }
 }
 
-/* Styles pour les vins - compatibles avec tous les appareils */
+/* Styles pour les vins avec variants */
 .vins-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-top: 0;
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .vin-item {
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  border: none;
-  transition: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
 .vin-item:hover {
-  background: transparent;
-  border-color: transparent;
-  transform: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 .vin-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
-  gap: 0;
+  gap: 0.5rem;
 }
 
 .vin-name {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #D4AF37;
-  margin-bottom: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
 }
 
 .vin-badges {
@@ -336,30 +340,30 @@ html {
 .vin-description {
   color: rgba(255, 255, 255, 0.8);
   font-style: italic;
-  margin-bottom: 0;
+  margin-bottom: 1.5rem;
   line-height: 1.5;
 }
 
 .vin-variants {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
 }
 
 .vin-variant {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0;
-  background: transparent;
-  border-radius: 0;
-  border-left: none;
-  transition: none;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+  transition: all 0.2s ease;
 }
 
 .vin-variant:hover {
-  background: transparent;
-  border-left-color: transparent;
+  background: rgba(255, 255, 255, 0.15);
+  border-left-color: #2980b9;
 }
 
 .variant-info {
@@ -371,7 +375,7 @@ html {
 
 .variant-volume {
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.8);
+  color: #3498db;
 }
 
 .variant-separator {
@@ -385,83 +389,49 @@ html {
 
 .variant-prix {
   font-weight: bold;
-  color: #D4AF37;
-  font-size: 1rem;
+  color: #2ecc71;
+  font-size: 1.1rem;
 }
 
-/* Styles spécifiques pour les titres de catégories de vins */
-.wine-category-title {
-  width: 100%;
-  margin-bottom: 15px;
-  margin-top: 25px;
-  padding: 12px 20px;
-  background-color: rgba(212, 175, 55, 0.1);
-  border-radius: 12px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+/* Responsive pour les vins */
+@media (max-width: 1024px) {
+  .vins-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
-.wine-section-title {
-  width: 100%;
-  border-bottom: 2px solid #D4AF37;
-  margin-bottom: 15px;
-  padding-bottom: 8px;
-  text-align: center;
-}
-
-/* Media queries pour maintenir la compatibilité mobile parfaite */
 @media (max-width: 768px) {
   .vins-grid {
-    gap: 0;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
   }
   
   .vin-item {
-    padding: 0;
+    padding: 1rem;
   }
   
   .vin-header {
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
   }
   
   .vin-badges {
-    margin-top: 0;
+    margin-top: 0.5rem;
   }
   
   .vin-variants {
-    gap: 0;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
   
   .vin-variant {
-    padding: 4px 0;
+    padding: 0.5rem 0.75rem;
   }
   
   .variant-info {
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .wine-category-title {
-    margin: 20px 0 15px 0;
-    padding: 10px 15px;
-  }
-
-  .wine-section-title {
-    margin-bottom: 15px;
-    margin-top: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .wine-category-title {
-    margin: 15px 0 10px 0;
-    padding: 8px 12px;
-  }
-  
-  .wine-section-title {
-    margin-bottom: 10px;
-    margin-top: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
   }
 }

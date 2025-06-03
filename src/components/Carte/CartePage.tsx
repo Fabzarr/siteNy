@@ -288,8 +288,15 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
 
   // Composant pour afficher un sous-titre de catégorie de vin avec un meilleur design
   const WineCategoryTitle: React.FC<{ title: string, color: string, icon: string }> = ({ title, color, icon }) => (
-    <div className="wine-category-title" style={{
+    <div style={{ 
+      gridColumn: '1 / -1', 
+      marginBottom: '15px',
+      marginTop: '25px',
+      padding: '12px 20px',
+      backgroundColor: 'rgba(212, 175, 55, 0.1)',
       border: `2px solid ${color}`,
+      borderRadius: '12px',
+      textAlign: 'center',
       position: 'relative',
       overflow: 'hidden'
     }}>
@@ -328,11 +335,17 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
         {/* Vins Italiens */}
         {vinsItaliens.length > 0 && (
           <>
-            <div className="wine-section-title">
+            <div style={{ 
+              gridColumn: '1 / -1', 
+              borderBottom: '2px solid #D4AF37', 
+              marginBottom: '15px',
+              paddingBottom: '8px'
+            }}>
               <h3 style={{ 
                 color: '#D4AF37', 
                 fontSize: '1.3rem', 
-                margin: '0'
+                margin: '0',
+                textAlign: 'center'
               }}>
                 🇮🇹 VINS ITALIENS
               </h3>
@@ -375,38 +388,43 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
         {/* Vins Français */}
         {vinsFrancais.length > 0 && (
           <>
-            <div className="wine-section-title" style={{
-              marginTop: vinsItaliens.length > 0 ? '30px' : '0'
+            <div style={{ 
+              gridColumn: '1 / -1', 
+              borderBottom: '2px solid #D4AF37', 
+              marginBottom: '15px',
+              marginTop: vinsItaliens.length > 0 ? '30px' : '0',
+              paddingBottom: '8px'
             }}>
               <h3 style={{ 
                 color: '#D4AF37', 
                 fontSize: '1.3rem', 
-                margin: '0'
+                margin: '0',
+                textAlign: 'center'
               }}>
                 🇫🇷 VINS FRANÇAIS
               </h3>
             </div>
 
-            {/* Vins Rouges Français */}
+            {/* Vins Rouges */}
             {vinsFrancaisRouges.length > 0 && (
               <>
-                <WineCategoryTitle title="VINS ROUGES" color="#c0392b" icon="🍷" />
+                <WineCategoryTitle title="VINS ROUGES" color="#ff6b6b" icon="🍷" />
                 <VinGroup vins={vinsFrancaisRouges} showFlag={true} />
               </>
             )}
 
-            {/* Vins Rosés Français */}
+            {/* Vins Rosés */}
             {vinsFrancaisRoses.length > 0 && (
               <>
-                <WineCategoryTitle title="VINS ROSÉS" color="#e74c3c" icon="🌸" />
+                <WineCategoryTitle title="VINS ROSÉS" color="#ff9999" icon="🌸" />
                 <VinGroup vins={vinsFrancaisRoses} showFlag={true} />
               </>
             )}
 
-            {/* Vins Blancs Français */}
+            {/* Vins Blancs */}
             {vinsFrancaisBlancs.length > 0 && (
               <>
-                <WineCategoryTitle title="VINS BLANCS" color="#f39c12" icon="🥂" />
+                <WineCategoryTitle title="VINS BLANCS" color="#f1c40f" icon="🥂" />
                 <VinGroup vins={vinsFrancaisBlancs} showFlag={true} />
               </>
             )}
@@ -414,7 +432,7 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
             {/* Champagnes */}
             {champagnes.length > 0 && (
               <>
-                <WineCategoryTitle title="CHAMPAGNES" color="#d4af37" icon="🍾" />
+                <WineCategoryTitle title="CHAMPAGNES" color="#D4AF37" icon="🍾" />
                 <VinGroup vins={champagnes} showFlag={true} />
               </>
             )}
@@ -424,13 +442,18 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
         {/* Autres vins (si il y en a) */}
         {autresVins.length > 0 && (
           <>
-            <div className="wine-section-title" style={{
-              marginTop: (vinsItaliens.length > 0 || vinsFrancais.length > 0) ? '30px' : '0'
+            <div style={{ 
+              gridColumn: '1 / -1', 
+              borderBottom: '2px solid #D4AF37', 
+              marginBottom: '15px',
+              marginTop: '30px',
+              paddingBottom: '8px'
             }}>
               <h3 style={{ 
                 color: '#D4AF37', 
                 fontSize: '1.3rem', 
-                margin: '0'
+                margin: '0',
+                textAlign: 'center'
               }}>
                 🌍 AUTRES VINS
               </h3>
@@ -439,7 +462,7 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
             {/* Vins Rouges Autres */}
             {autresVins.filter(vin => getWineType(vin) === 'rouge').length > 0 && (
               <>
-                <WineCategoryTitle title="VINS ROUGES" color="#8e44ad" icon="🍷" />
+                <WineCategoryTitle title="VINS ROUGES" color="#ff6b6b" icon="🍷" />
                 <VinGroup vins={autresVins.filter(vin => getWineType(vin) === 'rouge')} showFlag={true} />
               </>
             )}
@@ -447,7 +470,7 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
             {/* Vins Rosés Autres */}
             {autresVins.filter(vin => getWineType(vin) === 'rosé').length > 0 && (
               <>
-                <WineCategoryTitle title="VINS ROSÉS" color="#e67e22" icon="🌸" />
+                <WineCategoryTitle title="VINS ROSÉS" color="#ff9999" icon="🌸" />
                 <VinGroup vins={autresVins.filter(vin => getWineType(vin) === 'rosé')} showFlag={true} />
               </>
             )}
@@ -455,7 +478,7 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
             {/* Vins Blancs Autres */}
             {autresVins.filter(vin => getWineType(vin) === 'blanc').length > 0 && (
               <>
-                <WineCategoryTitle title="VINS BLANCS" color="#27ae60" icon="🥂" />
+                <WineCategoryTitle title="VINS BLANCS" color="#f1c40f" icon="🥂" />
                 <VinGroup vins={autresVins.filter(vin => getWineType(vin) === 'blanc')} showFlag={true} />
               </>
             )}
@@ -463,7 +486,7 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
             {/* Vins Pétillants Autres */}
             {autresVins.filter(vin => getWineType(vin) === 'pétillant').length > 0 && (
               <>
-                <WineCategoryTitle title="VINS PÉTILLANTS" color="#3498db" icon="🥂" />
+                <WineCategoryTitle title="VINS PÉTILLANTS" color="#e67e22" icon="🥂" />
                 <VinGroup vins={autresVins.filter(vin => getWineType(vin) === 'pétillant')} showFlag={true} />
               </>
             )}
@@ -471,7 +494,7 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
             {/* Champagnes Autres */}
             {autresVins.filter(vin => getWineType(vin) === 'champagne').length > 0 && (
               <>
-                <WineCategoryTitle title="CHAMPAGNES" color="#f1c40f" icon="🍾" />
+                <WineCategoryTitle title="CHAMPAGNES" color="#D4AF37" icon="🍾" />
                 <VinGroup vins={autresVins.filter(vin => getWineType(vin) === 'champagne')} showFlag={true} />
               </>
             )}
