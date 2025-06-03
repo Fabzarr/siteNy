@@ -9,14 +9,86 @@
   flex: 1;
   margin-left: 280px;
   padding: 40px;
+  padding-top: calc(var(--navbar-height) + 30px);
   min-height: 100%;
   padding-bottom: 200px;
 }
 
+/* NOUVEAU DESIGN HEADER DESKTOP - Horizontal et compact */
+@media (min-width: 1025px) {
+  .carte-header {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    z-index: 80;
+    margin: 0;
+    padding: 15px 40px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+  }
+
+  .carte-header-left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 240px;
+  }
+
+  .carte-header-center {
+    flex: 1;
+    text-align: center;
+  }
+
+  .carte-header-right {
+    flex: 1;
+  }
+
+  .carte-header h1 {
+    color: #D4AF37;
+    font-size: 1.5rem;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    white-space: nowrap;
+  }
+
+  .carte-header h2 {
+    color: white;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    margin: 0;
+    margin-bottom: 4px;
+  }
+
+  .carte-header p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+}
+
+/* HEADER MOBILE ET TABLETTE - Inchangé */
 .carte-header {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  z-index: 80;
+  margin: 0;
+  padding: 15px 20px 20px 20px;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   text-align: center;
-  margin-bottom: 60px;
-  padding: 0 20px;
 }
 
 .carte-header h1 {
@@ -32,13 +104,22 @@
   letter-spacing: 3px;
 }
 
+.carte-header p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  margin: 5px 0 0 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
 .menu-section {
   margin-bottom: 40px;
   padding: 25px;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  scroll-margin-top: 100px;
+  scroll-margin-top: calc(var(--navbar-height) + 80px);
 }
 
 .section-header {
@@ -97,7 +178,7 @@
 /* Styles pour le défilement fluide */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--navbar-height) + 120px);
+  scroll-padding-top: calc(var(--navbar-height) + 80px);
 }
 
 /* Media Queries */
@@ -108,137 +189,135 @@ html {
   }
 }
 
+@media (max-width: 1024px) {
+  /* Tablette - retour à l'affichage vertical */
+  .carte-header {
+    display: block !important;
+    text-align: center;
+    height: auto !important;
+    padding: 15px 20px 20px 20px !important;
+  }
+
+  .carte-header-left,
+  .carte-header-center,
+  .carte-header-right {
+    display: block;
+    text-align: center;
+  }
+
+  .carte-header h1 {
+    font-size: 2rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  .carte-header h2 {
+    font-size: 1.6rem !important;
+  }
+
+  .carte-header p {
+    font-size: 0.85rem !important;
+    margin-top: 5px !important;
+  }
+
+  .menu-section {
+    scroll-margin-top: calc(var(--navbar-height) + 120px); /* Tablette garde l'ancien offset */
+  }
+
+  html {
+    scroll-padding-top: calc(var(--navbar-height) + 120px); /* Tablette garde l'ancien offset */
+  }
+}
+
 @media (max-width: 768px) {
   .page-with-menu {
-    flex-direction: column;
+    display: block;
   }
 
   .carte-page-container {
     margin-left: 0;
-    padding: 0;
-    max-width: 100%;
-    min-height: 100vh;
-    padding-bottom: 100px;
-    padding-top: calc(var(--navbar-height) + 30px);
+    padding: 20px;
+    padding-top: calc(var(--navbar-height) + 120px); /* Mobile garde l'ancien padding */
   }
 
   .carte-header {
-    margin: 0;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
     position: fixed;
     top: var(--navbar-height);
     left: 0;
     right: 0;
-    z-index: 90;
+    z-index: 80;
+    padding: 15px 15px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    text-align: center;
+    display: block !important; /* Force l'affichage bloc sur mobile */
+    height: auto !important;
+  }
+
+  .carte-header-left,
+  .carte-header-center,
+  .carte-header-right {
+    display: block;
+    text-align: center;
   }
 
   .carte-header h1 {
-    font-size: 2.2rem;
-    margin-bottom: 5px;
+    font-size: 2rem;
+    margin-bottom: 10px !important;
   }
 
   .carte-header h2 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 
   .menu-section {
     padding: 20px;
-    margin: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    scroll-margin-top: calc(var(--navbar-height) + 30px);
-  }
-
-  #carte-des-vins {
-    scroll-margin-top: calc(var(--navbar-height) + 30px);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    scroll-margin-top: calc(var(--navbar-height) + 100px);
   }
 
   .section-header h2 {
-    font-size: 1.4rem;
-    margin-bottom: 20px;
+    font-size: 1.3rem;
   }
 
-  .menu-item {
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  /* Mettre à jour le scroll-padding-top pour mobile */
+  html {
+    scroll-padding-top: calc(var(--navbar-height) + 100px);
   }
 
-  .item-name-price {
-    flex-wrap: wrap;
-    gap: 8px;
+  .mobile-navigation-button {
+    display: block !important;
   }
 
-  .item-name {
-    font-size: 1.1rem;
-    flex: 1;
-    min-width: 200px;
-  }
-
-  .item-price {
-    font-size: 1.1rem;
-    color: #D4AF37;
-    font-weight: 600;
-  }
-
-  .item-description {
-    font-size: 0.95rem;
-    margin-top: 8px;
-    line-height: 1.4;
-    color: rgba(255, 255, 255, 0.8);
+  .mobile-navigation-button:hover {
+    background: rgba(212, 175, 55, 0.2) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 }
 
 @media (max-width: 480px) {
-  .carte-header {
+  .carte-page-container {
     padding: 15px;
+    padding-top: calc(var(--navbar-height) + 120px);
   }
 
   .carte-header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
+    font-size: 1.7rem;
   }
 
   .carte-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .menu-section {
-    margin: 15px;
     padding: 15px;
-    border-radius: 10px;
-    scroll-margin-top: calc(var(--navbar-height) + 25px);
+    scroll-margin-top: calc(var(--navbar-height) + 100px);
   }
 
-  #carte-des-vins {
-    scroll-margin-top: calc(var(--navbar-height) + 25px);
-    margin-bottom: 30px;
-  }
-
-  .section-header h2 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-  }
-
-  .menu-item {
-    padding: 12px 0;
-  }
-
-  .item-name {
-    font-size: 1rem;
-  }
-
-  .item-price {
-    font-size: 1rem;
-  }
-
-  .item-description {
-    font-size: 0.9rem;
-    line-height: 1.3;
-    margin-top: 6px;
+  /* Mettre à jour le scroll-padding-top pour très petit mobile */
+  html {
+    scroll-padding-top: calc(var(--navbar-height) + 100px);
   }
 }
 
@@ -252,7 +331,7 @@ html {
   display: none;
 }
 
-/* Ajout d'une ombre pour améliorer la lisibilité */
+/* Styles pour améliorer la lisibilité mobile */
 @media (max-width: 768px) {
   .menu-section {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -273,42 +352,42 @@ html {
   }
 }
 
-/* Styles pour les vins avec variants */
+/* Styles pour les vins - compatibles avec tous les appareils */
 .vins-grid {
-  display: grid;
-  gap: 2rem;
-  margin-top: 2rem;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0;
 }
 
 .vin-item {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  border: none;
+  transition: none;
 }
 
 .vin-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+  background: transparent;
+  border-color: transparent;
+  transform: none;
 }
 
 .vin-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0;
 }
 
 .vin-name {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #D4AF37;
+  margin-bottom: 0;
 }
 
 .vin-badges {
@@ -340,30 +419,30 @@ html {
 .vin-description {
   color: rgba(255, 255, 255, 0.8);
   font-style: italic;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
   line-height: 1.5;
 }
 
 .vin-variants {
-  display: grid;
-  gap: 0.75rem;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .vin-variant {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  border-left: 4px solid #3498db;
-  transition: all 0.2s ease;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border-left: none;
+  transition: none;
 }
 
 .vin-variant:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-left-color: #2980b9;
+  background: transparent;
+  border-left-color: transparent;
 }
 
 .variant-info {
@@ -375,7 +454,7 @@ html {
 
 .variant-volume {
   font-weight: bold;
-  color: #3498db;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .variant-separator {
@@ -389,49 +468,61 @@ html {
 
 .variant-prix {
   font-weight: bold;
-  color: #2ecc71;
-  font-size: 1.1rem;
+  color: #D4AF37;
+  font-size: 1rem;
 }
 
-/* Responsive pour les vins */
-@media (max-width: 1024px) {
-  .vins-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+/* Styles spécifiques pour les titres de catégories de vins */
+.wine-category-title {
+  width: 100%;
+  margin-bottom: 15px;
+  margin-top: 25px;
+  padding: 12px 20px;
+  background-color: rgba(212, 175, 55, 0.1);
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.wine-section-title {
+  width: 100%;
+  border-bottom: 2px solid #D4AF37;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+/* Bouton Navigation Mobile dans le header */
+.mobile-navigation-button {
+  display: none;
+  margin: 20px auto 0 auto;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+  border: 2px solid #D4AF37;
+  border-radius: 12px;
+  color: #D4AF37;
+  font-size: 0.95rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.mobile-navigation-button:active {
+  transform: scale(0.98);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.2));
 }
 
 @media (max-width: 768px) {
-  .vins-grid {
-    gap: 1.5rem;
-    grid-template-columns: 1fr;
-  }
-  
-  .vin-item {
-    padding: 1rem;
-  }
-  
-  .vin-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .vin-badges {
-    margin-top: 0.5rem;
-  }
-  
-  .vin-variants {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-  
-  .vin-variant {
-    padding: 0.5rem 0.75rem;
-  }
-  
-  .variant-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
+  .mobile-navigation-button {
+    display: block !important;
   }
 }

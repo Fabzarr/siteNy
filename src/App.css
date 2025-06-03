@@ -100,7 +100,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /* Main content */
 .main-container {
-  margin-top: calc(var(--navbar-height) + 20px);
+  margin-top: var(--navbar-height);
   margin-bottom: var(--footer-height);
   flex: 1;
   position: relative;

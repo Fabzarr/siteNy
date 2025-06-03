@@ -15,9 +15,34 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location]);
 
+  // Gérer le scroll du body quand le menu est ouvert/fermé
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+    }
+
+    // Nettoyer au démontage
+    return () => {
+      document.body.classList.remove('menu-open');
+    };
+  }, [isOpen]);
+
   const handleNavClick = (path: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     closeModal();
+    
+    // Fermer le menu hamburger principal
+    setIsOpen(false);
+    
+    // Fermer le side menu mobile pour toutes les navigations
+    const sideMenu = document.querySelector('.side-menu') as HTMLElement;
+    if (sideMenu) {
+      sideMenu.classList.remove('open');
+    }
+    document.body.classList.remove('menu-open');
+    
     scrollToTop();
     navigate(path);
   };
@@ -28,14 +53,6 @@ const Navbar = () => {
         <Link to="/" className="navbar-logo" onClick={handleNavClick('/')}>
           NEW YORK CAFÉ
         </Link>
-        <button
-          className={`hamburger ${isOpen ? 'open' : ''}`}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
       </div>
       <div className={`navbar-menu ${isOpen ? 'open' : ''}`}>
         <Link to="/" className={location.pathname === '/' ? 'active' : ''} onClick={handleNavClick('/')}>
@@ -63,6 +80,14 @@ const Navbar = () => {
           CONTACT
         </Link>
       </div>
+      <button
+        className={`hamburger ${isOpen ? 'open' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
   );
 };

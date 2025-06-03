@@ -17,8 +17,6 @@
 .navbar-brand {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
 }
 
 .navbar-logo {
@@ -30,70 +28,75 @@
 
 .navbar-menu {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   align-items: center;
 }
 
 .navbar-menu a {
-  color: #fff;
+  color: white;
   text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
   position: relative;
-  padding: 0.5rem 0;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-.navbar-menu a:hover,
-.navbar-menu a.active {
-  color: #D4AF37;
 }
 
 .navbar-menu a::after {
   content: '';
   position: absolute;
   width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #D4AF37;
-  transition: width 0.3s ease;
+  height: 3px;
+  bottom: -2px;
+  left: 50%;
+  background: linear-gradient(90deg, #D4AF37, #F4D03F);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 2px;
 }
 
-.navbar-menu a:hover::after,
-.navbar-menu a.active::after {
-  width: 100%;
+.navbar-menu a:hover {
+  color: #D4AF37;
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.navbar-menu a:hover::after {
+  width: 80%;
+}
+
+/* Désactiver l'underline sur mobile et tablette */
+@media (max-width: 1024px) {
+  .navbar-menu a::after {
+    display: none !important;
+  }
+  
+  .navbar-menu a:hover::after {
+    display: none !important;
+  }
 }
 
 .hamburger {
   display: none;
   flex-direction: column;
-  justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
-  background: transparent;
-  border: none;
   cursor: pointer;
-  padding: 0;
-  z-index: 10;
+  padding: 10px;
+  background: none;
+  border: none;
+  z-index: 1001;
 }
 
 .hamburger span {
-  width: 2rem;
-  height: 0.25rem;
+  width: 25px;
+  height: 3px;
   background: #D4AF37;
-  border-radius: 10px;
-  transition: all 0.3s linear;
-  position: relative;
-  transform-origin: 1px;
+  margin: 3px 0;
+  transition: 0.3s;
+  display: block;
+  transform-origin: center;
 }
 
 .hamburger.open span:nth-child(1) {
-  transform: rotate(45deg);
+  transform: rotate(45deg) translate(6px, 6px);
 }
 
 .hamburger.open span:nth-child(2) {
@@ -101,54 +104,277 @@
 }
 
 .hamburger.open span:nth-child(3) {
-  transform: rotate(-45deg);
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
-@media (max-width: 1024px) {
-  .navbar {
-    padding: 0 1rem;
-  }
-
+@media (max-width: 768px) {
   .hamburger {
     display: flex;
+    position: relative;
   }
 
   .navbar-menu {
     position: fixed;
     top: var(--navbar-height);
-    left: 0;
-    right: 0;
-    height: 0;
-    background: rgba(0, 0, 0, 0.95);
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - var(--navbar-height));
+    background: rgba(0, 0, 0, 0.98);
     backdrop-filter: blur(10px);
     flex-direction: column;
-    gap: 0;
-    overflow: hidden;
-    transition: all 0.3s ease-in-out;
-    opacity: 0;
-    visibility: hidden;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 2rem;
+    transition: left 0.3s ease;
+    z-index: 1000;
   }
 
   .navbar-menu.open {
-    height: calc(100vh - var(--navbar-height));
-    opacity: 1;
-    visibility: visible;
-    padding: 1rem 0;
+    left: 0;
   }
 
   .navbar-menu a {
-    padding: 1rem 2rem;
-    width: 100%;
+    margin: 0.8rem 0;
+    font-size: 1.1rem;
+    padding: 16px 24px;
+    width: 85%;
     text-align: center;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    transition: all 0.2s ease;
+    position: relative;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.1);
+    backdrop-filter: blur(10px);
+    font-family: 'Playfair Display', serif;
+    overflow: hidden;
+    animation: buttonGlow 3s ease-in-out infinite alternate;
   }
 
-  .navbar-menu a:last-child {
-    border-bottom: none;
-  }
-
+  /* Indicateur tactile universel 2025 - petit point doré */
   .navbar-menu a::after {
-    display: none;
+    content: '○';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    color: rgba(212, 175, 55, 0.6);
+    animation: touchIndicator 2.5s ease-in-out infinite;
+  }
+
+  @keyframes touchIndicator {
+    0%, 100% {
+      opacity: 0.6;
+      transform: translateY(-50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.1);
+    }
+  }
+
+  /* Animation de lueur dorée subtile */
+  @keyframes buttonGlow {
+    0% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 5px rgba(212, 175, 55, 0.1);
+    }
+    100% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+  }
+
+  /* Bordure animée */
+  .navbar-menu a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(45deg, 
+      transparent, 
+      rgba(212, 175, 55, 0.8), 
+      transparent, 
+      rgba(244, 208, 63, 0.6),
+      transparent
+    );
+    background-size: 300% 300%;
+    animation: borderMove 4s ease infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+  }
+
+  /* Animation de la bordure */
+  @keyframes borderMove {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Animation de pulsation de la flèche */
+  @keyframes arrowPulse {
+    0%, 100% {
+      transform: translateY(-50%) scale(1);
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+    }
+    50% {
+      transform: translateY(-50%) scale(1.1);
+      text-shadow: 0 0 12px rgba(212, 175, 55, 0.9);
+    }
+  }
+
+  /* Suppression de tous les effets hover sur mobile */
+  .navbar-menu a:hover {
+    /* Pas d'effet hover sur mobile */
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    border-color: rgba(212, 175, 55, 0.4);
+    color: white;
+    transform: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .navbar-menu a:hover::after {
+    transform: translateY(-50%);
+    color: #D4AF37;
+  }
+
+  /* Effet tactile avec animation spéciale */
+  .navbar-menu a:active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.15));
+    border-color: #D4AF37;
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.6);
+    animation: none; /* Stop l'animation pendant le touch */
+  }
+
+  .navbar-menu a:active::after {
+    transform: translateY(-50%) translateX(5px) scale(1.2);
+    color: #F4D03F;
+    text-shadow: 0 0 15px rgba(244, 208, 63, 1);
+    animation: none; /* Stop l'animation pendant le touch */
+  }
+
+  .navbar-menu a:active::before {
+    animation: none; /* Stop l'animation pendant le touch */
+    background: linear-gradient(45deg, 
+      rgba(212, 175, 55, 0.8), 
+      rgba(244, 208, 63, 1), 
+      rgba(212, 175, 55, 0.8)
+    );
+  }
+
+  /* Suppression de l'état active sur mobile - pas de sens */
+  .navbar-menu a.active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    border-color: rgba(212, 175, 55, 0.4);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .navbar-menu a.active::after {
+    color: #D4AF37;
+  }
+}
+
+/* Styles simplifiés pour tablette avec effets spéciaux */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar-menu a {
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    width: 80%;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    animation: buttonGlowTablet 4s ease-in-out infinite alternate;
+  }
+
+  /* Animation plus subtile pour tablette */
+  @keyframes buttonGlowTablet {
+    0% {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+    100% {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(212, 175, 55, 0.2);
+    }
+  }
+
+  /* Bordure animée pour tablette */
+  .navbar-menu a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    padding: 2px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(212, 175, 55, 0.4), 
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: borderMoveTablet 3s ease infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+  }
+
+  @keyframes borderMoveTablet {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Suppression hover tablette */
+  .navbar-menu a:hover {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 3px rgba(212, 175, 55, 0.1);
+  }
+
+  /* Suppression état active tablette */
+  .navbar-menu a.active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
+    border-color: rgba(212, 175, 55, 0.3);
+    color: white;
+  }
+
+  /* Effet tactile tablette */
+  .navbar-menu a:active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+    transform: scale(0.97);
+    box-shadow: 0 1px 4px rgba(212, 175, 55, 0.3);
+    animation: none;
+  }
+
+  .navbar-menu a:active::before {
+    animation: none;
+    background: linear-gradient(90deg, 
+      rgba(212, 175, 55, 0.6), 
+      rgba(244, 208, 63, 0.8), 
+      rgba(212, 175, 55, 0.6)
+    );
   }
 }
 

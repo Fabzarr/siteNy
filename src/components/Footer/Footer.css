@@ -93,16 +93,17 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin: 0;
-    gap: 1rem;
+    margin: -5px;
+    margin-bottom: -5px;
+    gap: 2rem;
   }
 
   .footer-section:first-child {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
   }
 
   .footer-section:last-child {
-    margin-top: -0.25rem;
+    margin-top: 0;
   }
 
   .footer-section h3 {
@@ -113,6 +114,7 @@
   .footer-section p {
     font-size: 0.8rem;
     margin: 0;
+    white-space: normal;
   }
 
   .social-links {
@@ -120,9 +122,10 @@
     margin: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
-  .social-links a {
+  .footer-section a {
     font-size: 1rem;
     padding: 0;
   }

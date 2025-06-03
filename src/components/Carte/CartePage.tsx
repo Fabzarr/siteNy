@@ -615,11 +615,65 @@ const CartePage: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          style={{ flex: 1, marginLeft: '280px', padding: '40px' }}
         >
           <div className="carte-header">
-            <h1>New York Café</h1>
-            <h2>CHARGEMENT DE LA CARTE...</h2>
+            <div className="carte-header-left">
+              <h1>New York Café</h1>
+            </div>
+            <div className="carte-header-center">
+              <h2>CHARGEMENT DE LA CARTE...</h2>
+            </div>
+            <div className="carte-header-right">
+              {/* Espace réservé pour équilibrer */}
+            </div>
+            
+            {/* Bouton Navigation Mobile */}
+            <button 
+              className="mobile-navigation-button"
+              onClick={() => {
+                const sideMenu = document.querySelector('.side-menu') as HTMLElement;
+                if (sideMenu) {
+                  const isOpen = sideMenu.classList.contains('open');
+                  if (isOpen) {
+                    sideMenu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                  } else {
+                    sideMenu.classList.add('open');
+                    document.body.classList.add('menu-open');
+                  }
+                }
+              }}
+              style={{
+                display: 'none',
+                marginTop: '20px',
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1))',
+                border: '2px solid #D4AF37',
+                borderRadius: '12px',
+                color: '#D4AF37',
+                fontSize: '0.95rem',
+                fontFamily: 'Playfair Display, serif',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              <span style={{ position: 'relative', zIndex: 2 }}>
+                NAVIGATION MENU ▼
+              </span>
+            </button>
+            
+            {error && (
+              <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '10px' }}>
+                ⚠️ {error}
+              </p>
+            )}
           </div>
           <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
             <p>Chargement des plats depuis le back office...</p>
@@ -637,11 +691,63 @@ const CartePage: React.FC = () => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        style={{ flex: 1, marginLeft: '280px', padding: '40px', minHeight: '100%', paddingBottom: '200px' }}
       >
         <div className="carte-header">
-          <h1>New York Café</h1>
-          <h2>NOTRE CARTE</h2>
+          <div className="carte-header-left">
+            <h1>New York Café</h1>
+          </div>
+          <div className="carte-header-center">
+            <h2>NOTRE CARTE</h2>
+            <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.75rem', margin: '0', letterSpacing: '1px' }}>
+              ENTRÉES, PLATS, DESSERTS & VINS
+            </p>
+          </div>
+          <div className="carte-header-right">
+            {/* Espace réservé pour équilibrer */}
+          </div>
+          
+          {/* Bouton Navigation Mobile */}
+          <button 
+            className="mobile-navigation-button"
+            onClick={() => {
+              const sideMenu = document.querySelector('.side-menu') as HTMLElement;
+              if (sideMenu) {
+                const isOpen = sideMenu.classList.contains('open');
+                if (isOpen) {
+                  sideMenu.classList.remove('open');
+                  document.body.classList.remove('menu-open');
+                } else {
+                  sideMenu.classList.add('open');
+                  document.body.classList.add('menu-open');
+                }
+              }
+            }}
+            style={{
+              display: 'none',
+              marginTop: '20px',
+              padding: '12px 24px',
+              background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1))',
+              border: '2px solid #D4AF37',
+              borderRadius: '12px',
+              color: '#D4AF37',
+              fontSize: '0.95rem',
+              fontFamily: 'Playfair Display, serif',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+          >
+            <span style={{ position: 'relative', zIndex: 2 }}>
+              NAVIGATION MENU ▼
+            </span>
+          </button>
+          
           {error && (
             <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '10px' }}>
               ⚠️ {error}
