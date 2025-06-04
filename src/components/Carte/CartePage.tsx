@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { motion } from 'framer-motion';
 import SideMenu from './SideMenu';
 import './CartePage.css';
@@ -43,6 +43,12 @@ interface Categorie {
 
 interface MenuData {
   [key: string]: Categorie;
+}
+
+// Props interface pour le SideMenu
+interface SideMenuProps {
+  isOpen: boolean;
+  toggleMenu: () => void;
 }
 
 // Fonction pour convertir les volumes en centilitres pour le tri
@@ -157,7 +163,7 @@ const getCountryFlag = (origine: string): string => {
 };
 
 // Composant spécialisé pour l'affichage des vins avec le même style que le reste
-const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ title, vins, id }) => {
+const VinSection = memo<{ title: string, vins: Vin[], id: string }>(({ title, vins, id }) => {
   // Fonction pour déterminer si un vin est italien
   const isItalianWine = (vin: Vin): boolean => {
     if (!vin.origine_vin) return false;
@@ -503,9 +509,9 @@ const VinSection: React.FC<{ title: string, vins: Vin[], id: string }> = ({ titl
       </div>
     </div>
   );
-};
+});
 
-const MenuSection: React.FC<{ title: string, items: Plat[], id: string }> = ({ title, items, id }) => (
+const MenuSection = memo<{ title: string, items: Plat[], id: string }>(({ title, items, id }) => (
   <div className="menu-section" id={id}>
     <div className="section-header">
       <h2>{title}</h2>
@@ -532,62 +538,83 @@ const MenuSection: React.FC<{ title: string, items: Plat[], id: string }> = ({ t
       </div>
     )}
   </div>
-);
+));
 
 const CartePage: React.FC = () => {
   const [menuData, setMenuData] = useState<MenuData>({});
   const [vinsData, setVinsData] = useState<Vin[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const hasFetched = useRef(false); // Protection contre les doubles appels React Strict Mode
+
+  // Fonction pour gérer l'ouverture/fermeture du menu mobile
+  const toggleMobileMenu = () => {
+    const newIsOpen = !isMobileMenuOpen;
+    setIsMobileMenuOpen(newIsOpen);
+    
+    if (newIsOpen) {
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+    }
+  };
 
   useEffect(() => {
+    // Protection contre les doubles appels en mode développement
+    if (hasFetched.current) {
+      console.log('🚫 Double appel useEffect détecté et ignoré');
+      return;
+    }
+    
+    hasFetched.current = true;
+    
     const fetchMenuData = async () => {
       try {
         setLoading(true);
-        console.log('🔄 Début du chargement du menu');
+        const startTimestamp = performance.now();
+        console.log('⚡ Chargement optimisé démarré');
         
-        // Charger le menu traditionnel
-        console.log('🌐 URL appelée:', '/api/menu/menu-complet');
-        const menuResponse = await fetch('/api/menu/menu-complet');
-        console.log('📡 Réponse menu reçue:', menuResponse.status, menuResponse.statusText);
+        // Promesses parallèles simples sans AbortController
+        const [menuResponse, vinsResponse] = await Promise.all([
+          fetch('/api/menu/menu-complet', { 
+            cache: 'force-cache' // Cache navigateur agressif
+          }),
+          fetch('/api/vins', { 
+            cache: 'force-cache'
+          }).catch(() => null)
+        ]);
         
         if (!menuResponse.ok) {
-          throw new Error(`Erreur menu ${menuResponse.status}: ${menuResponse.statusText}`);
+          throw new Error(`Erreur menu ${menuResponse.status}`);
         }
         
-        const menuDataResponse = await menuResponse.json();
-        console.log('✅ Données menu reçues du serveur:', menuDataResponse);
+        // Parsing parallèle optimisé
+        const [menuDataResponse, vinsDataResponse] = await Promise.all([
+          menuResponse.json(),
+          vinsResponse && vinsResponse.ok ? vinsResponse.json().catch(() => []) : Promise.resolve([])
+        ]);
         
-        // Charger les vins avec variants
-        console.log('🍷 Chargement des vins...');
-        try {
-          const vinsResponse = await fetch('/api/vins');
-          if (vinsResponse.ok) {
-            const vinsDataResponse = await vinsResponse.json();
-            console.log('✅ Données vins reçues:', vinsDataResponse);
-            setVinsData(vinsDataResponse);
-          } else {
-            console.log('ℹ️ Pas de données vins disponibles (système traditionnel utilisé)');
-            setVinsData([]);
-          }
-        } catch (vinsError) {
-          console.log('ℹ️ Erreur lors du chargement des vins, utilisation du système traditionnel:', vinsError);
-          setVinsData([]);
-        }
-        
+        // Mise à jour d'état groupée optimisée
         setMenuData(menuDataResponse);
+        setVinsData(vinsDataResponse);
         setError(null);
-        console.log('✅ Menu data mis à jour avec succès');
-      } catch (error) {
-        console.error('❌ Erreur détaillée lors du chargement du menu:', error);
+        setLoading(false);
+        
+        const endTimestamp = performance.now();
+        console.log(`✅ Chargement terminé en ${(endTimestamp - startTimestamp).toFixed(0)}ms`);
+        
+      } catch (error: any) {
+        console.error('❌ Erreur chargement:', error.message);
+        
         setError('Impossible de charger le menu. Veuillez réessayer plus tard.');
         
-        // En cas d'erreur, on peut garder les données de base pour que le site reste fonctionnel
+        // Données de fallback minimalistes
         const fallbackData: MenuData = {
           'petites-faims': {
             id: 1,
             nom: "PETITES FAIMS",
-            slug: "petites-faims",
+            slug: "petites-faims", 
             description: "Entrées & Apéritifs",
             ordre: 1,
             plats: [
@@ -596,87 +623,68 @@ const CartePage: React.FC = () => {
           }
         };
         setMenuData(fallbackData);
-        console.log('🔄 Données de fallback appliquées');
-      } finally {
-        console.log('🏁 Fin du chargement, loading=false');
+        setVinsData([]);
         setLoading(false);
       }
     };
 
     fetchMenuData();
-  }, []);
+    
+    // Cleanup simple
+    return () => {
+      // Pas d'abort pour éviter l'annulation prématurée
+    };
+  }, []); // Dépendances vides
 
   if (loading) {
     return (
       <div className="page-with-menu">
-        <SideMenu />
+        <SideMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
         <motion.div 
-          className="carte-page-container"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
         >
-          <div className="carte-header">
-            <div className="carte-header-left">
-              <h1>New York Café</h1>
+          <div className="carte-page-container">
+            <div className="carte-header">
+              <div className="carte-header-left">
+                <h1>New York Café</h1>
+              </div>
+              <div className="carte-header-center">
+                <h2>CHARGEMENT DE LA CARTE...</h2>
+                {/* Bouton navigation mobile intégré dans le header */}
+                <button 
+                  className="mobile-nav-button" 
+                  onClick={toggleMobileMenu}
+                >
+                  NAVIGATION MENU ▼
+                </button>
+              </div>
+              <div className="carte-header-right">
+                {/* Espace réservé pour équilibrer */}
+              </div>
+              
+              {error && (
+                <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '10px' }}>
+                  ⚠️ {error}
+                </p>
+              )}
             </div>
-            <div className="carte-header-center">
-              <h2>CHARGEMENT DE LA CARTE...</h2>
-            </div>
-            <div className="carte-header-right">
-              {/* Espace réservé pour équilibrer */}
-            </div>
-            
-            {/* Bouton Navigation Mobile */}
-            <button 
-              className="mobile-navigation-button"
-              onClick={() => {
-                const sideMenu = document.querySelector('.side-menu') as HTMLElement;
-                if (sideMenu) {
-                  const isOpen = sideMenu.classList.contains('open');
-                  if (isOpen) {
-                    sideMenu.classList.remove('open');
-                    document.body.classList.remove('menu-open');
-                  } else {
-                    sideMenu.classList.add('open');
-                    document.body.classList.add('menu-open');
-                  }
-                }
-              }}
-              style={{
-                display: 'none',
-                marginTop: '20px',
-                padding: '12px 24px',
-                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1))',
-                border: '2px solid #D4AF37',
-                borderRadius: '12px',
-                color: '#D4AF37',
-                fontSize: '0.95rem',
-                fontFamily: 'Playfair Display, serif',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                backdropFilter: 'blur(10px)',
-                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              <span style={{ position: 'relative', zIndex: 2 }}>
-                NAVIGATION MENU ▼
-              </span>
-            </button>
-            
-            {error && (
-              <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '10px' }}>
-                ⚠️ {error}
+            <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
+              <p>🚀 API optimisée - Chargement ultra-rapide...</p>
+              <div style={{ 
+                margin: '20px auto',
+                width: '40px',
+                height: '40px',
+                border: '3px solid rgba(212, 175, 55, 0.3)',
+                borderTop: '3px solid #D4AF37',
+                borderRadius: '50%',
+                animation: 'spin 0.8s linear infinite'
+              }}></div>
+              <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)' }}>
+                Backend cache actif ⚡
               </p>
-            )}
-          </div>
-          <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
-            <p>Chargement des plats depuis le back office...</p>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -685,110 +693,76 @@ const CartePage: React.FC = () => {
 
   return (
     <div className="page-with-menu">
-      <SideMenu />
+      <SideMenu isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
       <motion.div 
-        className="carte-page-container"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
-        <div className="carte-header">
-          <div className="carte-header-left">
-            <h1>New York Café</h1>
+        <div className="carte-page-container">
+          <div className="carte-header">
+            <div className="carte-header-left">
+              <h1>New York Café</h1>
+            </div>
+            <div className="carte-header-center">
+              <h2>NOTRE CARTE</h2>
+              <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.75rem', margin: '0', letterSpacing: '1px' }}>
+                ENTRÉES, PLATS, DESSERTS & VINS
+              </p>
+              {/* Bouton navigation mobile intégré dans le header */}
+              <button 
+                className="mobile-nav-button" 
+                onClick={toggleMobileMenu}
+              >
+                NAVIGATION MENU ▼
+              </button>
+            </div>
+            <div className="carte-header-right">
+              {/* Espace réservé pour équilibrer */}
+            </div>
+            
+            {error && (
+              <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '10px' }}>
+                ⚠️ {error}
+              </p>
+            )}
           </div>
-          <div className="carte-header-center">
-            <h2>NOTRE CARTE</h2>
-            <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.75rem', margin: '0', letterSpacing: '1px' }}>
-              ENTRÉES, PLATS, DESSERTS & VINS
-            </p>
-          </div>
-          <div className="carte-header-right">
-            {/* Espace réservé pour équilibrer */}
-          </div>
-          
-          {/* Bouton Navigation Mobile */}
-          <button 
-            className="mobile-navigation-button"
-            onClick={() => {
-              const sideMenu = document.querySelector('.side-menu') as HTMLElement;
-              if (sideMenu) {
-                const isOpen = sideMenu.classList.contains('open');
-                if (isOpen) {
-                  sideMenu.classList.remove('open');
-                  document.body.classList.remove('menu-open');
-                } else {
-                  sideMenu.classList.add('open');
-                  document.body.classList.add('menu-open');
-                }
-              }
-            }}
-            style={{
-              display: 'none',
-              marginTop: '20px',
-              padding: '12px 24px',
-              background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1))',
-              border: '2px solid #D4AF37',
-              borderRadius: '12px',
-              color: '#D4AF37',
-              fontSize: '0.95rem',
-              fontFamily: 'Playfair Display, serif',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              backdropFilter: 'blur(10px)',
-              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-          >
-            <span style={{ position: 'relative', zIndex: 2 }}>
-              NAVIGATION MENU ▼
-            </span>
-          </button>
-          
-          {error && (
-            <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '10px' }}>
-              ⚠️ {error}
-            </p>
-          )}
-        </div>
 
-        {/* Affichage dynamique des catégories depuis l'API */}
-        {Object.entries(menuData)
-          .sort(([, a], [, b]) => a.ordre - b.ordre)
-          .map(([slug, categorie]) => {
-            // Affichage spécialisé pour les vins
-            if (slug === 'carte-des-vins' && vinsData.length > 0) {
+          {/* Affichage dynamique des catégories depuis l'API */}
+          {Object.entries(menuData)
+            .sort(([, a], [, b]) => a.ordre - b.ordre)
+            .map(([slug, categorie]) => {
+              // Affichage spécialisé pour les vins
+              if (slug === 'carte-des-vins' && vinsData.length > 0) {
+                return (
+                  <VinSection 
+                    key={slug}
+                    id={slug} 
+                    title={categorie.nom} 
+                    vins={vinsData} 
+                  />
+                );
+              }
+              
+              // Affichage normal pour les autres catégories
               return (
-                <VinSection 
+                <MenuSection 
                   key={slug}
                   id={slug} 
                   title={categorie.nom} 
-                  vins={vinsData} 
+                  items={categorie.plats} 
                 />
               );
-            }
-            
-            // Affichage normal pour les autres catégories
-            return (
-              <MenuSection 
-                key={slug}
-                id={slug} 
-                title={categorie.nom} 
-                items={categorie.plats} 
-              />
-            );
-          })}
+            })}
 
-        {/* Message si aucune donnée n'est disponible */}
-        {Object.keys(menuData).length === 0 && (
-          <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
-            <p>Aucun plat disponible pour le moment.</p>
-            <p>Vérifiez que le serveur backend est démarré sur le port 4000.</p>
-          </div>
-        )}
+          {/* Message si aucune donnée n'est disponible */}
+          {Object.keys(menuData).length === 0 && (
+            <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
+              <p>Aucun plat disponible pour le moment.</p>
+              <p>Vérifiez que le serveur backend est démarré sur le port 4000.</p>
+            </div>
+          )}
+        </div>
       </motion.div>
     </div>
   );

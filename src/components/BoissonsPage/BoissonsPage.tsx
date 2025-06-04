@@ -112,8 +112,7 @@ const BoissonsPage = () => {
   const InfoSection = () => (
     <>
       <div className="happy-hour-info">
-        <p>Happy Hours de 16h à 21h</p>
-        <p>Pinte blonde Herrenbräu 4 € - Cocktails 5 €</p>
+        <p>Happy Hours de 16h à 21h - Pinte blonde Herrenbräu 4 € - Cocktails 5 €</p>
       </div>
       <div className="karaoke-info">
         <p>Pour participer au karaoké, une consommation hors happy hours est obligatoire.</p>
@@ -122,31 +121,41 @@ const BoissonsPage = () => {
   );
 
   return (
-      <motion.div 
+    <motion.div 
       className="boissons-page"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
+      transition={{ duration: 0.5 }}
+    >
       <div className="boissons-content">
-          <div className="boissons-header">
-          <h1>CARTE DES BOISSONS</h1>
-          <div className="menu-selector">
-            <button 
-              className={`menu-button ${activeMenu === 'boissons' ? 'active' : ''}`}
-              onClick={() => setActiveMenu('boissons')}
-            >
-              <span>BOISSONS</span>
-            </button>
-            <button 
-              className={`menu-button ${activeMenu === 'cocktails' ? 'active' : ''}`}
-              onClick={() => setActiveMenu('cocktails')}
-            >
-              <span>COCKTAILS</span>
-            </button>
+        <div className="boissons-header">
+          <div className="boissons-header-left">
+            <h1>New York Café</h1>
           </div>
-          <InfoSection />
+          <div className="boissons-header-center">
+            <h2>CARTE DES BOISSONS</h2>
+            <p>BOISSONS, COCKTAILS & MOCKTAILS</p>
+          </div>
+          <div className="boissons-header-right">
+          </div>
         </div>
+
+        <div className="menu-selector">
+          <button 
+            className={`menu-button ${activeMenu === 'boissons' ? 'active' : ''}`}
+            onClick={() => setActiveMenu('boissons')}
+          >
+            <span>BOISSONS</span>
+          </button>
+          <button 
+            className={`menu-button ${activeMenu === 'cocktails' ? 'active' : ''}`}
+            onClick={() => setActiveMenu('cocktails')}
+          >
+            <span>COCKTAILS</span>
+          </button>
+        </div>
+        
+        <InfoSection />
 
         {activeMenu === 'boissons' ? (
           <div className="boissons-columns">
@@ -294,7 +303,7 @@ const BoissonsPage = () => {
                     <span className="boisson-description">{item.description}</span>
                   </div>
                 ))}
-          </div>
+              </div>
 
               <div className="boissons-section">
                 <h2>Bouteilles premium 70 cl</h2>
@@ -421,8 +430,8 @@ const BoissonsPage = () => {
         <div className="boissons-footer">
           <p>PRIX NETS EN EUROS - CB MINIMUM 10 € - L'ÉTABLISSEMENT N'ACCEPTE NI CHÈQUES NI TICKETS RESTAURANTS</p>
         </div>
-        </div>
-      </motion.div>
+      </div>
+    </motion.div>
   );
 };
 

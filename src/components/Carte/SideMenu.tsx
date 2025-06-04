@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './SideMenu.css';
 
-const SideMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface SideMenuProps {
+  isOpen: boolean;
+  toggleMenu: () => void;
+}
+
+const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
@@ -57,9 +61,9 @@ const SideMenu = () => {
         let offset;
         
         if (window.innerWidth <= 768) {
-          offset = navbarHeight + 220; // Mobile : même offset que handleNavigation
+          offset = 250; // Mobile : encore augmenté de 80px (170→250)
         } else {
-          offset = navbarHeight + 100; // Desktop : même offset que handleNavigation
+          offset = 180; // Desktop : +20px (160→180)
         }
         
         // Parcourir les sections pour trouver celle qui est visible
@@ -118,7 +122,9 @@ const SideMenu = () => {
 
   const handleNavigation = (id: string) => {
     // FERMETURE IMMÉDIATE DE LA MODAL
-    setIsOpen(false);
+    if (isOpen) {
+      toggleMenu();
+    }
     document.body.classList.remove('menu-open');
     
     // FORCER LA FERMETURE VISUELLE DE LA MODAL
@@ -162,11 +168,11 @@ const SideMenu = () => {
           
           let offset;
           if (window.innerWidth <= 768) {
-            // Mobile : augmenter l'offset pour arriver pile sur le titre
-            offset = navbarHeight + 220; // 220px pour mobile
+            // Mobile : encore augmenté de 80px (170→250)
+            offset = 250;
           } else {
-            // Desktop : ajuster l'offset pour correspondre au nouveau positionnement
-            offset = navbarHeight + 100;
+            // Desktop : +20px (160→180)
+            offset = 180;
           }
           
           const elementPosition = element.getBoundingClientRect().top + window.scrollY;
@@ -180,18 +186,6 @@ const SideMenu = () => {
     }, 10);
   };
 
-  // Fonction simple pour toggle
-  const toggleMenu = () => {
-    const newIsOpen = !isOpen;
-    setIsOpen(newIsOpen);
-    
-    if (newIsOpen) {
-      document.body.classList.add('menu-open');
-    } else {
-      document.body.classList.remove('menu-open');
-    }
-  };
-
   // Nettoyer au démontage
   useEffect(() => {
     return () => {
@@ -201,9 +195,6 @@ const SideMenu = () => {
 
   return (
     <>
-      <button className="mobile-menu-toggle" onClick={toggleMenu}>
-        NAVIGATION MENU ▼
-      </button>
       <div className={`side-menu ${isOpen ? 'open' : ''}`}>
         {/* Bouton de fermeture - Style du formulaire de réservation */}
         <button className="close-menu-btn" onClick={toggleMenu} aria-label="Fermer le menu">
@@ -252,6 +243,17 @@ const SideMenu = () => {
                 <span>{item.label}</span>
               </button>
             ))}
+          </div>
+
+          <div className="menu-section">
+            <h3 className="section-title">Boissons</h3>
+            <button
+              onClick={() => handleNavigation('boissons')}
+              className={`menu-button ${activeSection === 'boissons' ? 'active' : ''}`}
+              data-section-id="boissons"
+            >
+              <span>TOUTES LES BOISSONS</span>
+            </button>
           </div>
         </div>
       </div>

@@ -2,14 +2,14 @@ Write-Host "🔧 Export de la base de données PostgreSQL..." -ForegroundColor Y
 
 # Configuration
 $pgDumpPath = "C:\Program Files\PostgreSQL\17\bin\pg_dump.exe"
-$host = "localhost"
+$dbHost = "localhost"
 $username = "postgres"
 $database = "newyorkcafe"
 $timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm"
 $backupFile = "backup_complete_$timestamp.sql"
 
 Write-Host "📝 Paramètres:" -ForegroundColor Cyan
-Write-Host "   Host: $host"
+Write-Host "   Host: $dbHost"
 Write-Host "   Database: $database"
 Write-Host "   User: $username"
 Write-Host "   Fichier: $backupFile"
@@ -21,7 +21,7 @@ $env:PGPASSWORD = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.In
 try {
     Write-Host "🚀 Démarrage de l'export..." -ForegroundColor Green
     
-    & $pgDumpPath -h $host -U $username -d $database > $backupFile
+    & $pgDumpPath -h $dbHost -U $username -d $database > $backupFile
     
     if ($LASTEXITCODE -eq 0) {
         $fileSize = (Get-Item $backupFile).Length / 1KB

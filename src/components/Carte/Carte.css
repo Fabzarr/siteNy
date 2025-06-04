@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
+
 .carte {
   padding: 40px 20px;
   text-align: center;
@@ -9,7 +11,8 @@
 .carte h2 {
   color: #D4AF37;
   font-size: 3rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
   margin-bottom: 40px;
 }
 
@@ -32,7 +35,7 @@
 .category-title {
   color: white;
   font-size: 1.5rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Courgette', cursive;
   margin-bottom: 20px;
   text-transform: uppercase;
 }
@@ -101,7 +104,7 @@
 }
 
 .menu-header h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Courgette', cursive;
   color: #D4AF37;
   font-size: 1.8em;
   font-weight: 600;

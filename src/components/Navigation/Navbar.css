@@ -11,7 +11,7 @@
   align-items: center;
   padding: 0 2rem;
   z-index: 1000;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
 }
 
 .navbar-brand {
@@ -124,9 +124,10 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 2rem;
+    padding-top: 1rem;
     transition: left 0.3s ease;
     z-index: 1000;
+    overflow-y: auto;
   }
 
   .navbar-menu.open {
@@ -134,9 +135,9 @@
   }
 
   .navbar-menu a {
-    margin: 0.8rem 0;
-    font-size: 1.1rem;
-    padding: 16px 24px;
+    margin: 0.4rem 0;
+    font-size: 1rem;
+    padding: 12px 20px;
     width: 85%;
     text-align: center;
     border: 2px solid rgba(212, 175, 55, 0.4);
@@ -148,12 +149,17 @@
     color: white;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 1.2px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.1);
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.1);
     backdrop-filter: blur(10px);
     font-family: 'Playfair Display', serif;
     overflow: hidden;
     animation: buttonGlow 3s ease-in-out infinite alternate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    min-height: 44px;
   }
 
   /* Indicateur tactile universel 2025 - petit point doré */
@@ -291,10 +297,37 @@
 
 /* Styles simplifiés pour tablette avec effets spéciaux */
 @media (min-width: 769px) and (max-width: 1024px) {
+  .hamburger {
+    display: flex;
+    position: relative;
+  }
+
+  .navbar-menu {
+    position: fixed;
+    top: var(--navbar-height);
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - var(--navbar-height));
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 1.5rem;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .navbar-menu.open {
+    left: 0;
+  }
+
   .navbar-menu a {
-    padding: 14px 20px;
+    margin: 0.5rem 0;
+    padding: 12px 18px;
     border-radius: 10px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     width: 80%;
     background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
     border: 2px solid rgba(212, 175, 55, 0.3);
@@ -302,6 +335,12 @@
     position: relative;
     overflow: hidden;
     animation: buttonGlowTablet 4s ease-in-out infinite alternate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+    min-height: 42px;
   }
 
   /* Animation plus subtile pour tablette */

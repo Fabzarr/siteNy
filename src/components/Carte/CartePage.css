@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
 
 .page-with-menu {
   display: flex;
@@ -9,36 +9,81 @@
   flex: 1;
   margin-left: 280px;
   padding: 40px;
-  padding-top: calc(var(--navbar-height) + 30px);
+  padding-top: calc(var(--navbar-height) + 60px);
   min-height: 100%;
   padding-bottom: 200px;
 }
 
-/* NOUVEAU DESIGN HEADER DESKTOP - Horizontal et compact */
+/* NOUVEAU DESIGN HEADER DESKTOP - Horizontal et compact + scrollbar masquée */
 @media (min-width: 1025px) {
+  .carte-page-container {
+    /* RETOUR AU LAYOUT AVEC MENU LATÉRAL */
+    flex: 1;
+    margin-left: 280px;
+    padding: 0; /* Retire le padding par défaut */
+    padding-top: calc(var(--navbar-height) + 30px);
+    min-height: 100%;
+    padding-bottom: 200px;
+    /* Centrage du contenu dans l'espace disponible */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* Assure le centrage parfait */
+    width: calc(100vw - 280px);
+    /* Masquer la scrollbar mais garder le défilement */
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  /* Masquer la scrollbar WebKit (Chrome, Safari, Edge) */
+  .carte-page-container::-webkit-scrollbar {
+    display: none;
+  }
+
   .carte-header {
     position: fixed;
     top: var(--navbar-height);
-    left: 0;
+    left: 280px; /* Aligné après le menu latéral */
     right: 0;
     z-index: 80;
     margin: 0;
     padding: 15px 40px;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15); /* Bordure délimitatrice */
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Restaure la structure 3 colonnes */
     align-items: center;
     height: 70px;
+    border: none; /* Suppression de toutes les bordures */
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.1); /* Ombre très réduite */
+    /* Optimisations GPU pour éliminer les artefacts */
+    transform: translateZ(0);
+    will-change: auto;
+    contain: layout style paint;
+    isolation: isolate;
+  }
+
+  .carte-header::before {
+    display: none;
+  }
+
+  .carte-header-left,
+  .carte-header-center,
+  .carte-header-right {
+    position: relative;
+    z-index: 2;
   }
 
   .carte-header-left {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    padding-left: 240px;
+    padding-right: 20px;
   }
 
   .carte-header-center {
@@ -48,13 +93,18 @@
 
   .carte-header-right {
     flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px;
   }
 
   .carte-header h1 {
     color: #D4AF37;
     font-size: 1.5rem;
     margin: 0;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
     white-space: nowrap;
   }
 
@@ -64,6 +114,8 @@
     letter-spacing: 2px;
     margin: 0;
     margin-bottom: 4px;
+    font-family: 'Caveat', cursive;
+    font-weight: 500;
   }
 
   .carte-header p {
@@ -74,9 +126,20 @@
     text-transform: uppercase;
     font-weight: 400;
   }
+
+  /* CENTRAGE DES SECTIONS DE MENU SUR DESKTOP */
+  .menu-section {
+    width: 90%;
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    position: relative;
+    left: 0;
+    right: 0;
+    scroll-margin-top: 120px !important;
+  }
 }
 
-/* HEADER MOBILE ET TABLETTE - Inchangé */
+/* HEADER MOBILE ET TABLETTE - Design original propre */
 .carte-header {
   position: fixed;
   top: var(--navbar-height);
@@ -87,21 +150,29 @@
   padding: 15px 20px 20px 20px;
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15); /* Bordure délimitatrice */
   text-align: center;
 }
 
+.carte-header::before {
+  display: none;
+}
+
+/* Styles du header mobile/tablette - Design propre */
 .carte-header h1 {
   color: #D4AF37;
   font-size: 2.5rem;
   margin-bottom: 10px;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
 }
 
 .carte-header h2 {
   color: white;
   font-size: 1.8rem;
   letter-spacing: 3px;
+  font-family: 'Caveat', cursive;
+  font-weight: 500;
 }
 
 .carte-header p {
@@ -113,13 +184,22 @@
   font-weight: 400;
 }
 
+/* RÈGLE .menu-section SIMPLIFIÉ - Sans backdrop-filter pour éliminer les artefacts */
 .menu-section {
   margin-bottom: 40px;
   padding: 25px;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.85); /* Background plus opaque pour compenser */
   border-radius: 15px;
-  scroll-margin-top: calc(var(--navbar-height) + 80px);
+  border: none; /* Pas de bordure extérieure */
+  /* SCROLL OFFSET MOBILE/TABLET - ENCORE AUGMENTÉ DE 80PX */
+  scroll-margin-top: 250px !important;
+}
+
+/* SCROLL OFFSET DESKTOP - RÈGLE SÉPARÉE */
+@media (min-width: 1025px) {
+  .menu-section {
+    scroll-margin-top: 180px !important;
+  }
 }
 
 .section-header {
@@ -130,7 +210,7 @@
 .section-header h2 {
   color: #D4AF37;
   font-size: 1.5rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Courgette', cursive;
   letter-spacing: 2px;
 }
 
@@ -144,8 +224,12 @@
 
 .menu-item {
   padding: 12px 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2); /* Bordure comme BoissonsPage */
   width: 100%;
+}
+
+.menu-item:last-child {
+  border-bottom: none; /* Pas de bordure sur le dernier élément */
 }
 
 .item-name-price {
@@ -175,10 +259,10 @@
   line-height: 1.2;
 }
 
-/* Styles pour le défilement fluide */
+/* ======= RÈGLES DE DÉFILEMENT NETTOYÉES ET SIMPLIFIÉES ======= */
+/* Défilement fluide pour tous */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--navbar-height) + 80px);
 }
 
 /* Media Queries */
@@ -190,53 +274,8 @@ html {
 }
 
 @media (max-width: 1024px) {
-  /* Tablette - retour à l'affichage vertical */
-  .carte-header {
-    display: block !important;
-    text-align: center;
-    height: auto !important;
-    padding: 15px 20px 20px 20px !important;
-  }
-
-  .carte-header-left,
-  .carte-header-center,
-  .carte-header-right {
-    display: block;
-    text-align: center;
-  }
-
-  .carte-header h1 {
-    font-size: 2rem !important;
-    margin-bottom: 10px !important;
-  }
-
-  .carte-header h2 {
-    font-size: 1.6rem !important;
-  }
-
-  .carte-header p {
-    font-size: 0.85rem !important;
-    margin-top: 5px !important;
-  }
-
-  .menu-section {
-    scroll-margin-top: calc(var(--navbar-height) + 120px); /* Tablette garde l'ancien offset */
-  }
-
-  html {
-    scroll-padding-top: calc(var(--navbar-height) + 120px); /* Tablette garde l'ancien offset */
-  }
-}
-
-@media (max-width: 768px) {
   .page-with-menu {
-    display: block;
-  }
-
-  .carte-page-container {
-    margin-left: 0;
-    padding: 20px;
-    padding-top: calc(var(--navbar-height) + 120px); /* Mobile garde l'ancien padding */
+    flex-direction: column;
   }
 
   .carte-header {
@@ -245,79 +284,100 @@ html {
     left: 0;
     right: 0;
     z-index: 80;
-    padding: 15px 15px;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-    text-align: center;
-    display: block !important; /* Force l'affichage bloc sur mobile */
-    height: auto !important;
   }
 
   .carte-header-left,
-  .carte-header-center,
   .carte-header-right {
-    display: block;
-    text-align: center;
+    display: none;
+  }
+
+  .carte-header-left h1 {
+    display: none;
   }
 
   .carte-header h1 {
     font-size: 2rem;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px;
   }
 
   .carte-header h2 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 
-  .menu-section {
-    padding: 20px;
-    margin-bottom: 30px;
-    scroll-margin-top: calc(var(--navbar-height) + 100px);
+  .carte-header p {
+    font-size: 0.8rem;
+  }
+
+  .mobile-navigation-button {
+    display: block;
+  }
+
+  .mobile-nav-button {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-with-menu {
+    flex-direction: column;
+  }
+
+  .carte-page-container {
+    margin-left: 0;
+    padding: 15px;
+    padding-top: calc(var(--navbar-height) + 90px);
+  }
+
+  .carte-header {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    z-index: 80;
+    margin: 0;
+    padding: 15px 20px 20px 20px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15); /* Bordure délimitatrice */
+    text-align: center;
+  }
+
+  .carte-header-left,
+  .carte-header-right {
+    display: none;
+  }
+
+  .carte-header-left h1 {
+    display: none;
+  }
+
+  .carte-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+  }
+
+  .carte-header h2 {
+    font-size: 1.3rem;
   }
 
   .section-header h2 {
     font-size: 1.3rem;
-  }
-
-  /* Mettre à jour le scroll-padding-top pour mobile */
-  html {
-    scroll-padding-top: calc(var(--navbar-height) + 100px);
-  }
-
-  .mobile-navigation-button {
-    display: block !important;
-  }
-
-  .mobile-navigation-button:hover {
-    background: rgba(212, 175, 55, 0.2) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
   }
 }
 
 @media (max-width: 480px) {
   .carte-page-container {
-    padding: 15px;
-    padding-top: calc(var(--navbar-height) + 120px);
+    padding: 10px;
+    padding-top: calc(var(--navbar-height) + 90px);
   }
 
   .carte-header h1 {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 
   .carte-header h2 {
     font-size: 1.2rem;
-  }
-
-  .menu-section {
-    padding: 15px;
-    scroll-margin-top: calc(var(--navbar-height) + 100px);
-  }
-
-  /* Mettre à jour le scroll-padding-top pour très petit mobile */
-  html {
-    scroll-padding-top: calc(var(--navbar-height) + 100px);
   }
 }
 
@@ -331,24 +391,14 @@ html {
   display: none;
 }
 
-/* Styles pour améliorer la lisibilité mobile */
+/* Styles pour améliorer la lisibilité mobile - BORDURES SUPPRIMÉES */
 @media (max-width: 768px) {
-  .menu-section {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
   .item-name-price {
     position: relative;
   }
 
   .item-name-price::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: rgba(212, 175, 55, 0.1);
+    display: none; /* Suppression complète des lignes */
   }
 }
 
@@ -405,15 +455,15 @@ html {
 }
 
 .vin-badge.vin-origine {
-  background: rgba(46, 204, 113, 0.2);
+  background: rgba(46, 204, 113, 0.05); /* Background très réduit */
   color: #2ecc71;
-  border: 1px solid rgba(46, 204, 113, 0.3);
+  border: none; /* Suppression complète des bordures */
 }
 
 .vin-badge.vin-type {
-  background: rgba(230, 126, 34, 0.2);
+  background: rgba(230, 126, 34, 0.05); /* Background très réduit */
   color: #e67e22;
-  border: 1px solid rgba(230, 126, 34, 0.3);
+  border: none; /* Suppression complète des bordures */
 }
 
 .vin-description {
@@ -472,13 +522,14 @@ html {
   font-size: 1rem;
 }
 
-/* Styles spécifiques pour les titres de catégories de vins */
+/* Styles spécifiques pour les titres de catégories de vins - COMPLÈTEMENT NETTOYÉS */
 .wine-category-title {
   width: 100%;
   margin-bottom: 15px;
   margin-top: 25px;
   padding: 12px 20px;
-  background-color: rgba(212, 175, 55, 0.1);
+  background-color: rgba(0, 0, 0, 0.6); /* Background simple sans effets */
+  border: none; /* Suppression complète des bordures */
   border-radius: 12px;
   text-align: center;
   position: relative;
@@ -487,23 +538,29 @@ html {
 
 .wine-section-title {
   width: 100%;
-  border-bottom: 2px solid #D4AF37;
+  border-bottom: none; /* Suppression des bordures */
   margin-bottom: 15px;
   padding-bottom: 8px;
   text-align: center;
 }
 
-/* Bouton Navigation Mobile dans le header */
-.mobile-navigation-button {
-  display: none;
-  margin: 20px auto 0 auto;
+/* Animation de chargement */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mobile Navigation Button dans le header */
+.mobile-nav-button {
+  display: block;
+  margin: 15px auto 0 auto;
   padding: 12px 24px;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
   border: 2px solid #D4AF37;
   border-radius: 12px;
   color: #D4AF37;
-  font-size: 0.95rem;
-  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  font-family: 'Caveat', cursive;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -511,18 +568,23 @@ html {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
   letter-spacing: 1px;
-  position: relative;
-  overflow: hidden;
+  white-space: nowrap;
   width: fit-content;
 }
 
-.mobile-navigation-button:active {
-  transform: scale(0.98);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.2));
+.mobile-nav-button:hover {
+  background: rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 768px) {
-  .mobile-navigation-button {
-    display: block !important;
+.mobile-nav-button:active {
+  transform: scale(0.95);
+}
+
+/* Cacher sur desktop uniquement */
+@media (min-width: 1025px) {
+  .mobile-nav-button {
+    display: none !important;
   }
 }

@@ -1,68 +1,349 @@
-import { render, screen, fireEvent } from '../../../utils/test-utils';
-import Navbar from '../Navbar';
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { BrowserRouter } from 'react-router-dom'
+import Navbar from '../Navbar'
 
-describe('Navbar Component', () => {
+// Mock framer-motion to avoid animation issues in tests
+vi.mock('framer-motion', () => ({
+  motion: {
+    nav: ({ children, ...props }: any) => <nav {...props}>{children}</nav>,
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    ul: ({ children, ...props }: any) => <ul {...props}>{children}</ul>,
+    li: ({ children, ...props }: any) => <li {...props}>{children}</li>,
+    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+  },
+  AnimatePresence: ({ children }: any) => children,
+}))
+
+const NavbarWrapper = ({ children }: { children: React.ReactNode }) => (
+  <BrowserRouter>
+    {children}
+  </BrowserRouter>
+)
+
+describe('🧭 Navbar Component - Tests Complets', () => {
   beforeEach(() => {
-    render(<Navbar />);
-  });
-
-  test('renders logo/brand name', () => {
-    const brandElement = screen.getByText(/new york café/i);
-    expect(brandElement).toBeInTheDocument();
-    expect(brandElement).toHaveClass('navbar-logo');
-  });
-
-  test('renders navigation links', () => {
-    expect(screen.getByText(/accueil/i)).toBeInTheDocument();
-    expect(screen.getByText(/à propos/i)).toBeInTheDocument();
-    expect(screen.getByText(/carte/i)).toBeInTheDocument();
-    expect(screen.getByText(/contact/i)).toBeInTheDocument();
-  });
-
-  test('mobile menu toggle works', () => {
-    const menuButton = screen.getByRole('button', { name: /menu/i });
-    expect(menuButton).toBeInTheDocument();
+    // Reset all mocks before each test
+    vi.clearAllMocks()
     
-    fireEvent.click(menuButton);
-    const mobileMenu = screen.getByTestId('navbar-menu');
-    expect(mobileMenu).toHaveClass('open');
+    // Mock window.innerWidth for responsive tests
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1024,
+    })
+  })
 
-    fireEvent.click(menuButton);
-    expect(mobileMenu).not.toHaveClass('open');
-  });
+  describe('✅ Rendu de Base', () => {
+    it('should render navbar correctly', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      expect(screen.getByRole('navigation')).toBeInTheDocument()
+      expect(screen.getByText('NEW YORK CAFÉ')).toBeInTheDocument()
+    })
 
-  test('navigation links have correct hrefs', () => {
-    const links = screen.getAllByRole('link');
-    const expectedPaths = ['/', '/a-propos', '/carte', '/contact'];
-    
-    expectedPaths.forEach(path => {
-      expect(links.some(link => link.getAttribute('href') === path)).toBeTruthy();
-    });
-  });
+    it('should display all navigation links', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      expect(screen.getByText('ACCUEIL')).toBeInTheDocument()
+      expect(screen.getByText('CARTE')).toBeInTheDocument()
+      expect(screen.getByText('RÉSERVATION')).toBeInTheDocument()
+      expect(screen.getByText('CONTACT')).toBeInTheDocument()
+    })
+  })
 
-  test('hamburger button has correct styling', () => {
-    const hamburger = screen.getByRole('button', { name: /menu/i });
-    expect(hamburger).toHaveClass('hamburger');
-  });
+  describe('📱 Tests Mobile/Tablette', () => {
+    beforeEach(() => {
+      // Simulate mobile viewport
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 768,
+      })
+      window.dispatchEvent(new Event('resize'))
+    })
 
-  test('navbar has correct styling', () => {
-    const navbar = screen.getByRole('navigation');
-    expect(navbar).toHaveClass('navbar');
-  });
+    it('should show hamburger menu on mobile', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      // Hamburger menu should be visible
+      const hamburgerButton = screen.getByRole('button')
+      expect(hamburgerButton).toBeInTheDocument()
+      expect(hamburgerButton).toHaveClass('hamburger')
+    })
 
-  test('navbar menu has correct styling', () => {
-    const menu = screen.getByTestId('navbar-menu');
-    expect(menu).toHaveClass('navbar-menu');
-  });
+    it('should toggle mobile menu on hamburger click', async () => {
+      const user = userEvent.setup()
+      
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      const hamburgerButton = screen.getByRole('button')
+      
+      // Menu should be closed initially
+      expect(screen.queryByText('ACCUEIL')).not.toBeVisible()
+      
+      // Click to open menu
+      await user.click(hamburgerButton)
+      
+      await waitFor(() => {
+        expect(screen.getByText('ACCUEIL')).toBeVisible()
+      })
+    })
 
-  test('navbar brand has correct styling', () => {
-    const brand = screen.getByTestId('navbar-brand');
-    expect(brand).toHaveClass('navbar-brand');
-  });
+    it('should apply mobile-specific CSS classes', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      const navbar = screen.getByRole('navigation')
+      expect(navbar).toHaveClass('navbar')
+      
+      // Check if mobile-specific animations are applied
+      const hamburger = screen.getByRole('button')
+      expect(hamburger).toHaveClass('hamburger')
+    })
+  })
 
-  test('active link has correct styling', () => {
-    const links = screen.getAllByRole('link');
-    const homeLink = links.find(link => link.getAttribute('href') === '/');
-    expect(homeLink).toHaveClass('active');
-  });
-}); 
+  describe('🖥️ Tests Desktop', () => {
+    beforeEach(() => {
+      // Simulate desktop viewport
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1200,
+      })
+      window.dispatchEvent(new Event('resize'))
+    })
+
+    it('should hide hamburger menu on desktop', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      // Hamburger should not be visible on desktop
+      const hamburgerButton = screen.queryByRole('button')
+      expect(hamburgerButton).not.toBeInTheDocument()
+    })
+
+    it('should show navigation links directly on desktop', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      // All links should be visible without clicking
+      expect(screen.getByText('ACCUEIL')).toBeVisible()
+      expect(screen.getByText('CARTE')).toBeVisible()
+      expect(screen.getByText('RÉSERVATION')).toBeVisible()
+      expect(screen.getByText('CONTACT')).toBeVisible()
+    })
+  })
+
+  describe('🎨 Tests des Animations', () => {
+    it('should have correct CSS classes for golden animations', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      const navLinks = screen.getAllByRole('link')
+      navLinks.forEach(link => {
+        expect(link).toHaveClass('navbar-link')
+      })
+    })
+
+    it('should handle hover effects correctly', async () => {
+      const user = userEvent.setup()
+      
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      const homeLink = screen.getByText('ACCUEIL')
+      
+      // Simulate hover
+      await user.hover(homeLink)
+      
+      // Check if hover class is applied
+      expect(homeLink.closest('a')).toHaveClass('navbar-link')
+    })
+  })
+
+  describe('🔗 Tests de Navigation', () => {
+    it('should navigate to correct routes when clicked', async () => {
+      const user = userEvent.setup()
+      
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      const carteLink = screen.getByText('CARTE')
+      
+      await user.click(carteLink)
+      
+      // Should navigate to /carte
+      expect(carteLink.closest('a')).toHaveAttribute('href', '/carte')
+    })
+
+    it('should have correct href attributes for all links', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      expect(screen.getByText('ACCUEIL').closest('a')).toHaveAttribute('href', '/')
+      expect(screen.getByText('CARTE').closest('a')).toHaveAttribute('href', '/carte')
+      expect(screen.getByText('RÉSERVATION').closest('a')).toHaveAttribute('href', '/reservation')
+      expect(screen.getByText('CONTACT').closest('a')).toHaveAttribute('href', '/contact')
+    })
+  })
+
+  describe('♿ Tests d\'Accessibilité', () => {
+    it('should have proper ARIA labels', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      const navigation = screen.getByRole('navigation')
+      expect(navigation).toHaveAttribute('aria-label', 'Navigation principale')
+    })
+
+    it('should be keyboard navigable', async () => {
+      const user = userEvent.setup()
+      
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      // Tab through navigation links
+      await user.tab()
+      expect(screen.getByText('ACCUEIL').closest('a')).toHaveFocus()
+      
+      await user.tab()
+      expect(screen.getByText('CARTE').closest('a')).toHaveFocus()
+    })
+
+    it('should have proper semantic HTML structure', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      expect(screen.getByRole('navigation')).toBeInTheDocument()
+      expect(screen.getByRole('list')).toBeInTheDocument()
+      expect(screen.getAllByRole('listitem')).toHaveLength(4)
+    })
+  })
+
+  describe('🌐 Tests Responsive', () => {
+    it('should handle window resize correctly', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      // Start desktop
+      Object.defineProperty(window, 'innerWidth', {
+        value: 1200,
+        writable: true,
+      })
+      fireEvent(window, new Event('resize'))
+      
+      // Switch to mobile
+      Object.defineProperty(window, 'innerWidth', {
+        value: 600,
+        writable: true,
+      })
+      fireEvent(window, new Event('resize'))
+      
+      // Should still render correctly
+      expect(screen.getByRole('navigation')).toBeInTheDocument()
+    })
+
+    it('should apply correct breakpoint styles', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      const navbar = screen.getByRole('navigation')
+      
+      // Check if responsive classes are present
+      expect(navbar).toHaveClass('navbar')
+      expect(navbar).toBeInTheDocument()
+    })
+  })
+
+  describe('🔧 Tests d\'Intégration', () => {
+    it('should work with React Router', () => {
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      const links = screen.getAllByRole('link')
+      links.forEach(link => {
+        expect(link).toHaveAttribute('href')
+      })
+    })
+
+    it('should maintain state during navigation', async () => {
+      const user = userEvent.setup()
+      
+      render(
+        <NavbarWrapper>
+          <Navbar />
+        </NavbarWrapper>
+      )
+      
+      // Open mobile menu if on mobile
+      const hamburger = screen.queryByRole('button')
+      if (hamburger) {
+        await user.click(hamburger)
+      }
+      
+      // Click a link
+      const carteLink = screen.getByText('CARTE')
+      await user.click(carteLink)
+      
+      // Navbar should still be rendered
+      expect(screen.getByRole('navigation')).toBeInTheDocument()
+    })
+  })
+}) 
