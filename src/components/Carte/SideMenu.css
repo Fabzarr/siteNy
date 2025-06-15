@@ -2,7 +2,7 @@
   position: fixed;
   left: 0;
   top: var(--navbar-height);
-  bottom: calc(var(--footer-height) + 20px);
+  bottom: 0; /* Prendre toute la hauteur jusqu'en bas */
   width: 280px;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(10px);
@@ -494,29 +494,32 @@ body.menu-open {
   .side-menu .menu-sections {
     display: flex;
     flex-direction: column;
-    gap: 0; /* Sections collées les unes aux autres */
+    justify-content: flex-start; /* Commence en haut */
     flex: 1;
     overflow: hidden;
-    padding: 10px 10px 10px 30px; /* Compenser le décalage gauche */
+    padding: 30px 10px 30px 30px; /* Padding raisonnable */
+    height: 100%; /* Prendre toute la hauteur disponible */
+    gap: 30px; /* Espacement encore plus réduit entre les 3 sections */
   }
 
   .side-menu .menu-section {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    margin-bottom: 0; /* Pas d'espace entre les sections */
+    gap: 8px; /* Espace entre les boutons */
+    /* Pas de flex: 1 pour éviter l'étirement excessif */
+    justify-content: flex-start; /* Aligne les boutons en haut de chaque section */
   }
 
   .side-menu h3.section-title {
     color: #D4AF37;
-    font-size: 0.75rem;
+    font-size: 1.1rem; /* Plus grand que les boutons (1rem) */
     font-family: 'Playfair Display', serif;
-    margin: 0 0 4px 0;
+    margin: 0 0 8px 0; /* Plus d'espace en bas */
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: 700; /* Plus gras */
     text-align: center;
-    padding-bottom: 3px;
+    padding-bottom: 5px; /* Plus de padding */
     border-bottom: 1px solid rgba(212, 175, 55, 0.3);
   }
 

@@ -14,19 +14,31 @@
   overflow: hidden;
 }
 
-/* Style pour masquer toutes les barres de défilement */
+/* Style pour masquer toutes les barres de défilement - MODIFIÉ */
 body.modal-open {
   overflow: hidden !important;
   padding-right: 0 !important; /* Empêche le décalage dû à la disparition de la scrollbar */
+  /* Ne pas masquer la scrollbar complètement */
 }
 
+/* Conserver la scrollbar stylisée même quand modal ouverte */
 body.modal-open::-webkit-scrollbar {
-  display: none !important;
+  width: 8px !important; /* Garder la scrollbar visible */
+}
+
+body.modal-open::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+body.modal-open::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.6) !important;
+  border-radius: 4px !important;
 }
 
 body.modal-open {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
+  scrollbar-width: thin !important; /* Garder scrollbar Firefox */
+  scrollbar-color: rgba(212, 175, 55, 0.6) rgba(0, 0, 0, 0.3) !important;
 }
 
 .modal-content {
@@ -505,14 +517,19 @@ body.modal-open {
 
 @media (max-width: 768px) {
   .modal-overlay {
-    padding: 15px 0.75rem 0.75rem;
+    padding: 10px 0.75rem 60px;
+    overflow-y: auto;
+    align-items: flex-start;
   }
 
   .modal-content {
     width: 95%;
     max-width: none;
-    padding: 1rem;
+    padding: 1rem 1rem 2rem;
     margin-top: calc(var(--navbar-height) + 5px);
+    margin-bottom: 60px;
+    max-height: none;
+    overflow-y: visible;
   }
 
   .modal-content h2 {
@@ -546,6 +563,8 @@ body.modal-open {
   .submit-button {
     height: 38px;
     font-size: 0.9rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .phone-numbers {

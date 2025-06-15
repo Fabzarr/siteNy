@@ -219,8 +219,8 @@ const creerPlat = async (req, res) => {
     const query = `
       INSERT INTO plats (nom, description, prix, categorie_id, photo_url, allergenes, ordre_affichage, disponible)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-      RETURNING *
-    `;
+        RETURNING *
+      `;
     
     const result = await db.query(query, [
       nom, 
@@ -242,7 +242,7 @@ const creerPlat = async (req, res) => {
     if (error.code === '23503') {
       res.status(400).json({ error: 'Catégorie non trouvée' });
     } else {
-      res.status(500).json({ error: 'Erreur serveur' });
+    res.status(500).json({ error: 'Erreur serveur' });
     }
   }
 };
@@ -258,12 +258,12 @@ const modifierPlat = async (req, res) => {
     }
     
     const query = `
-      UPDATE plats 
+        UPDATE plats 
       SET nom = $1, description = $2, prix = $3, categorie_id = $4, photo_url = $5, 
           allergenes = $6, ordre_affichage = $7, disponible = $8
-      WHERE id = $9
-      RETURNING *
-    `;
+        WHERE id = $9
+        RETURNING *
+      `;
     
     const result = await db.query(query, [
       nom, description, prix, categorie_id, photo_url, allergenes, ordre_affichage, disponible, id
@@ -282,7 +282,7 @@ const modifierPlat = async (req, res) => {
     if (error.code === '23503') {
       res.status(400).json({ error: 'Catégorie non trouvée' });
     } else {
-      res.status(500).json({ error: 'Erreur serveur' });
+    res.status(500).json({ error: 'Erreur serveur' });
     }
   }
 };
@@ -325,12 +325,12 @@ const getMenuComplet = async (req, res) => {
     
     // Requête optimisée unique avec agrégation JSON
     const query = `
-      SELECT 
-        c.id as categorie_id,
-        c.nom as categorie_nom,
-        c.slug as categorie_slug,
-        c.description as categorie_description,
-        c.ordre_affichage as categorie_ordre,
+        SELECT 
+          c.id as categorie_id,
+          c.nom as categorie_nom,
+          c.slug as categorie_slug,
+          c.description as categorie_description,
+          c.ordre_affichage as categorie_ordre,
         COALESCE(
           json_agg(
             CASE 
@@ -351,12 +351,12 @@ const getMenuComplet = async (req, res) => {
           ) FILTER (WHERE p.id IS NOT NULL AND p.disponible = true),
           '[]'::json
         ) as plats
-      FROM categories c
-      LEFT JOIN plats p ON c.id = p.categorie_id
-      WHERE c.actif = true
+        FROM categories c
+        LEFT JOIN plats p ON c.id = p.categorie_id
+        WHERE c.actif = true
       GROUP BY c.id, c.nom, c.slug, c.description, c.ordre_affichage
       ORDER BY c.ordre_affichage ASC
-    `;
+      `;
     
     const result = await db.query(query);
     
@@ -364,12 +364,12 @@ const getMenuComplet = async (req, res) => {
     const menuStructure = {};
     result.rows.forEach(row => {
       const categoryKey = row.categorie_slug || row.categorie_id;
-      menuStructure[categoryKey] = {
-        id: row.categorie_id,
-        nom: row.categorie_nom,
-        slug: row.categorie_slug,
-        description: row.categorie_description,
-        ordre: row.categorie_ordre,
+        menuStructure[categoryKey] = {
+          id: row.categorie_id,
+          nom: row.categorie_nom,
+          slug: row.categorie_slug,
+          description: row.categorie_description,
+          ordre: row.categorie_ordre,
         plats: row.plats || []
       };
     });

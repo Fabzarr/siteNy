@@ -2,7 +2,8 @@
 
 .page-with-menu {
   display: flex;
-  min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+  min-height: 100vh; /* Prendre toute la hauteur de l'écran */
+  overflow-x: hidden; /* SUPPRIMER ABSOLUMENT LE SCROLL HORIZONTAL */
 }
 
 .carte-page-container {
@@ -12,6 +13,7 @@
   padding-top: calc(var(--navbar-height) + 60px);
   min-height: 100%;
   padding-bottom: 200px;
+  overflow-x: hidden; /* SUPPRIMER LE SCROLL HORIZONTAL */
 }
 
 /* NOUVEAU DESIGN HEADER DESKTOP - Horizontal et compact + scrollbar masquée */
@@ -20,26 +22,16 @@
     /* RETOUR AU LAYOUT AVEC MENU LATÉRAL */
     flex: 1;
     margin-left: 280px;
-    padding: 0; /* Retire le padding par défaut */
-    padding-top: calc(var(--navbar-height) + 30px);
-    min-height: 100%;
+    padding: 40px; /* Remettre le padding pour espacer le contenu */
+    padding-top: calc(var(--navbar-height) + 60px);
+    min-height: 100vh; /* Forcer la hauteur minimale pour créer du scroll */
     padding-bottom: 200px;
-    /* Centrage du contenu dans l'espace disponible */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    /* Assure le centrage parfait */
-    width: calc(100vw - 280px);
-    /* Masquer la scrollbar mais garder le défilement */
+    /* Pas de flexbox qui interfère avec le scroll naturel */
+    width: 100%;
+    max-width: calc(100vw - 280px);
+    /* Garder le défilement normal avec scrollbar visible */
     overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-  }
-
-  /* Masquer la scrollbar WebKit (Chrome, Safari, Edge) */
-  .carte-page-container::-webkit-scrollbar {
-    display: none;
+    overflow-x: hidden; /* Empêcher le scroll horizontal */
   }
 
   .carte-header {
@@ -84,6 +76,7 @@
     justify-content: flex-end;
     align-items: center;
     padding-right: 20px;
+    padding-left: 30px;
   }
 
   .carte-header-center {
@@ -103,7 +96,7 @@
     color: #D4AF37;
     font-size: 1.5rem;
     margin: 0;
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Playfair Display', serif;
     font-weight: 600;
     white-space: nowrap;
   }
@@ -114,7 +107,7 @@
     letter-spacing: 2px;
     margin: 0;
     margin-bottom: 4px;
-    font-family: 'Caveat', cursive;
+    font-family: 'Playfair Display', serif;
     font-weight: 500;
   }
 
@@ -128,13 +121,11 @@
   }
 
   /* CENTRAGE DES SECTIONS DE MENU SUR DESKTOP */
-  .menu-section {
+  .carte-page-container .menu-section {
     width: 90%;
     max-width: 700px;
     margin: 0 auto 40px auto;
     position: relative;
-    left: 0;
-    right: 0;
     scroll-margin-top: 120px !important;
   }
 }
@@ -163,7 +154,7 @@
   color: #D4AF37;
   font-size: 2.5rem;
   margin-bottom: 10px;
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Playfair Display', serif;
   font-weight: 600;
 }
 
@@ -171,7 +162,7 @@
   color: white;
   font-size: 1.8rem;
   letter-spacing: 3px;
-  font-family: 'Caveat', cursive;
+  font-family: 'Playfair Display', serif;
   font-weight: 500;
 }
 
@@ -185,7 +176,8 @@
 }
 
 /* RÈGLE .menu-section SIMPLIFIÉ - Sans backdrop-filter pour éliminer les artefacts */
-.menu-section {
+/* Sections du contenu principal de la carte */
+.carte-page-container .menu-section {
   margin-bottom: 40px;
   padding: 25px;
   background: rgba(0, 0, 0, 0.85); /* Background plus opaque pour compenser */
@@ -193,11 +185,14 @@
   border: none; /* Pas de bordure extérieure */
   /* SCROLL OFFSET MOBILE/TABLET - ENCORE AUGMENTÉ DE 80PX */
   scroll-margin-top: 250px !important;
+  overflow-x: hidden; /* EMPÊCHER LE DÉBORDEMENT HORIZONTAL */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* SCROLL OFFSET DESKTOP - RÈGLE SÉPARÉE */
 @media (min-width: 1025px) {
-  .menu-section {
+  .carte-page-container .menu-section {
     scroll-margin-top: 180px !important;
   }
 }
@@ -210,7 +205,7 @@
 .section-header h2 {
   color: #D4AF37;
   font-size: 1.5rem;
-  font-family: 'Courgette', cursive;
+  font-family: 'Playfair Display', serif;
   letter-spacing: 2px;
 }
 
@@ -263,6 +258,11 @@
 /* Défilement fluide pour tous */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden; /* SUPPRIMER ABSOLUMENT LE SCROLL HORIZONTAL GLOBAL */
+}
+
+body {
+  overflow-x: hidden; /* SUPPRIMER ABSOLUMENT LE SCROLL HORIZONTAL GLOBAL */
 }
 
 /* Media Queries */
@@ -298,10 +298,12 @@ html {
   .carte-header h1 {
     font-size: 2rem;
     margin-bottom: 8px;
+    font-family: 'Playfair Display', serif;
   }
 
   .carte-header h2 {
     font-size: 1.5rem;
+    font-family: 'Playfair Display', serif;
   }
 
   .carte-header p {
@@ -326,6 +328,7 @@ html {
     margin-left: 0;
     padding: 15px;
     padding-top: calc(var(--navbar-height) + 90px);
+    overflow-x: hidden; /* Empêcher le scroll horizontal */
   }
 
   .carte-header {
@@ -354,15 +357,18 @@ html {
   .carte-header h1 {
     font-size: 1.8rem;
     margin-bottom: 5px;
+    font-family: 'Playfair Display', serif;
   }
 
   .carte-header h2 {
     font-size: 1.3rem;
+    font-family: 'Playfair Display', serif;
   }
 
   .section-header h2 {
     font-size: 1.3rem;
     letter-spacing: 1px;
+    font-family: 'Playfair Display', serif;
   }
 }
 
@@ -370,14 +376,17 @@ html {
   .carte-page-container {
     padding: 10px;
     padding-top: calc(var(--navbar-height) + 90px);
+    overflow-x: hidden; /* Empêcher le scroll horizontal */
   }
 
   .carte-header h1 {
     font-size: 1.6rem;
+    font-family: 'Playfair Display', serif;
   }
 
   .carte-header h2 {
     font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
   }
 }
 
@@ -560,7 +569,7 @@ html {
   border-radius: 12px;
   color: #D4AF37;
   font-size: 0.9rem;
-  font-family: 'Caveat', cursive;
+  font-family: 'Playfair Display', serif;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
