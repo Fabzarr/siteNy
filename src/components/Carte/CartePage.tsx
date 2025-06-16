@@ -728,6 +728,20 @@ const CartePage: React.FC = () => {
             )}
           </div>
 
+          {/* Élément invisible pour la navigation - DESKTOP SEULEMENT */}
+          <div 
+            id="page-top-anchor" 
+            style={{ 
+              position: 'absolute',
+              top: '-180px', // Offset desktop
+              left: 0,
+              width: '1px',
+              height: '1px',
+              visibility: 'hidden',
+              display: window.innerWidth > 1024 ? 'block' : 'none'
+            }}
+          ></div>
+
           {/* Affichage dynamique des catégories depuis l'API */}
           {Object.entries(menuData)
             .sort(([, a], [, b]) => a.ordre - b.ordre)

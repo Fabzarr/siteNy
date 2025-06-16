@@ -2,65 +2,51 @@
 
 .page-with-menu {
   display: flex;
-  min-height: 100vh; /* Prendre toute la hauteur de l'écran */
-  overflow-x: hidden; /* SUPPRIMER ABSOLUMENT LE SCROLL HORIZONTAL */
+  min-height: 100vh;
 }
 
 .carte-page-container {
   flex: 1;
   margin-left: 280px;
-  padding: 40px;
-  padding-top: calc(var(--navbar-height) + 60px);
-  min-height: 100%;
-  padding-bottom: 200px;
-  overflow-x: hidden; /* SUPPRIMER LE SCROLL HORIZONTAL */
+  padding: 40px 0 200px 0;
+  padding-top: var(--navbar-height);
+  min-height: 100vh;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
-/* NOUVEAU DESIGN HEADER DESKTOP - Horizontal et compact + scrollbar masquée */
+/* DESIGN HEADER DESKTOP */
 @media (min-width: 1025px) {
   .carte-page-container {
-    /* RETOUR AU LAYOUT AVEC MENU LATÉRAL */
     flex: 1;
     margin-left: 280px;
-    padding: 40px; /* Remettre le padding pour espacer le contenu */
-    padding-top: calc(var(--navbar-height) + 60px);
-    min-height: 100vh; /* Forcer la hauteur minimale pour créer du scroll */
-    padding-bottom: 200px;
-    /* Pas de flexbox qui interfère avec le scroll naturel */
-    width: 100%;
-    max-width: calc(100vw - 280px);
-    /* Garder le défilement normal avec scrollbar visible */
-    overflow-y: auto;
-    overflow-x: hidden; /* Empêcher le scroll horizontal */
+    padding: 40px 0 200px 0;
+    padding-top: var(--navbar-height);
+    min-height: 100vh;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .carte-header {
     position: fixed;
     top: var(--navbar-height);
-    left: 280px; /* Aligné après le menu latéral */
+    left: 280px;
     right: 0;
     z-index: 80;
     margin: 0;
     padding: 15px 40px;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15); /* Bordure délimitatrice */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
     display: flex;
-    justify-content: space-between; /* Restaure la structure 3 colonnes */
+    justify-content: space-between;
     align-items: center;
     height: 70px;
-    border: none; /* Suppression de toutes les bordures */
-    box-shadow: 
-      0 2px 8px rgba(0, 0, 0, 0.1); /* Ombre très réduite */
-    /* Optimisations GPU pour éliminer les artefacts */
-    transform: translateZ(0);
-    will-change: auto;
-    contain: layout style paint;
-    isolation: isolate;
-  }
-
-  .carte-header::before {
-    display: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .carte-header-left,
@@ -119,18 +105,9 @@
     text-transform: uppercase;
     font-weight: 400;
   }
-
-  /* CENTRAGE DES SECTIONS DE MENU SUR DESKTOP */
-  .carte-page-container .menu-section {
-    width: 90%;
-    max-width: 700px;
-    margin: 0 auto 40px auto;
-    position: relative;
-    scroll-margin-top: 120px !important;
-  }
 }
 
-/* HEADER MOBILE ET TABLETTE - Design original propre */
+/* HEADER MOBILE ET TABLETTE */
 .carte-header {
   position: fixed;
   top: var(--navbar-height);
@@ -141,15 +118,10 @@
   padding: 15px 20px 20px 20px;
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.15); /* Bordure délimitatrice */
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
   text-align: center;
 }
 
-.carte-header::before {
-  display: none;
-}
-
-/* Styles du header mobile/tablette - Design propre */
 .carte-header h1 {
   color: #D4AF37;
   font-size: 2.5rem;
@@ -175,101 +147,141 @@
   font-weight: 400;
 }
 
-/* RÈGLE .menu-section SIMPLIFIÉ - Sans backdrop-filter pour éliminer les artefacts */
-/* Sections du contenu principal de la carte */
+/* Sections du contenu principal de la carte - CENTRAGE PARFAIT */
 .carte-page-container .menu-section {
-  margin-bottom: 40px;
+  width: calc(100vw - 280px - 80px);
+  max-width: 700px;
+  margin: 0 0 40px 0;
   padding: 25px;
-  background: rgba(0, 0, 0, 0.85); /* Background plus opaque pour compenser */
+  background: rgba(0, 0, 0, 0.85);
   border-radius: 15px;
-  border: none; /* Pas de bordure extérieure */
-  /* SCROLL OFFSET MOBILE/TABLET - ENCORE AUGMENTÉ DE 80PX */
-  scroll-margin-top: 250px !important;
-  overflow-x: hidden; /* EMPÊCHER LE DÉBORDEMENT HORIZONTAL */
-  width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
-/* SCROLL OFFSET DESKTOP - RÈGLE SÉPARÉE */
+/* MOBILE/TABLETTE - Styles spécifiques */
+@media (max-width: 1024px) {
+  .carte-page-container .menu-section {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 30px 0;
+    padding: 20px;
+    position: static;
+    left: auto;
+    transform: none;
+  }
+}
+
+/* CENTRAGE DESKTOP - Méthode professionnelle avec transform */
 @media (min-width: 1025px) {
   .carte-page-container .menu-section {
-    scroll-margin-top: 180px !important;
+    width: calc(100vw - 280px - 120px);
+    max-width: 700px;
+    margin: 0 0 40px 0;
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 15px;
+    box-sizing: border-box;
+    position: relative;
+    left: calc((100vw - 280px) / 2);
+    transform: translateX(-50%);
   }
 }
 
 .section-header {
-  text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .section-header h2 {
   color: #D4AF37;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  margin-bottom: 10px;
   font-family: 'Playfair Display', serif;
-  letter-spacing: 2px;
+  font-weight: 600;
 }
 
 .menu-grid {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+  display: grid;
+  gap: 15px;
+  grid-template-columns: 1fr;
 }
 
 .menu-item {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2); /* Bordure comme BoissonsPage */
-  width: 100%;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .menu-item:last-child {
-  border-bottom: none; /* Pas de bordure sur le dernier élément */
+  border-bottom: none;
 }
 
 .item-name-price {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 4px;
+  align-items: flex-start;
+  margin-bottom: 8px;
 }
 
 .item-name {
-  color: #D4AF37;
+  color: white;
+  font-size: 1.1rem;
   font-weight: 500;
-  font-size: 0.95rem;
+  flex: 1;
 }
 
 .item-price {
-  color: white;
-  font-weight: 500;
-  font-size: 0.95rem;
-  margin-left: 10px;
+  color: #D4AF37;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-left: 15px;
   white-space: nowrap;
 }
 
 .item-description {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.85rem;
-  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-style: italic;
 }
 
-/* ======= RÈGLES DE DÉFILEMENT NETTOYÉES ET SIMPLIFIÉES ======= */
-/* Défilement fluide pour tous */
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden; /* SUPPRIMER ABSOLUMENT LE SCROLL HORIZONTAL GLOBAL */
+  /* SOLUTION MODERNE: scroll-padding-top pour offset navbar fixe */
+  scroll-padding-top: var(--navbar-height); /* Desktop: navbar seulement */
+}
+
+/* Responsive scroll-padding pour mobile */
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: calc(var(--navbar-height) + 250px); /* Mobile: navbar + offset */
+  }
+}
+
+/* Élément invisible pour navigation - DESKTOP SEULEMENT */
+#page-top-anchor {
+  position: absolute;
+  top: 0px; /* Desktop: pas d'offset */
+  left: 0;
+  width: 1px;
+  height: 1px;
+  visibility: hidden;
+}
+
+/* MOBILE/TABLETTE - Désactiver l'élément invisible */
+@media (max-width: 1024px) {
+  #page-top-anchor {
+    display: none;
+  }
 }
 
 body {
-  overflow-x: hidden; /* SUPPRIMER ABSOLUMENT LE SCROLL HORIZONTAL GLOBAL */
+  overflow-x: hidden;
 }
 
-/* Media Queries */
 @media (max-width: 1200px) {
   .menu-grid {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
@@ -278,12 +290,25 @@ body {
     flex-direction: column;
   }
 
+  .carte-page-container {
+    margin-left: 0;
+    padding: 20px;
+    padding-top: calc(var(--navbar-height) + 80px);
+    display: block;
+    align-items: stretch;
+  }
+
   .carte-header {
     position: fixed;
     top: var(--navbar-height);
     left: 0;
     right: 0;
-    z-index: 80;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
   }
 
   .carte-header-left,
@@ -291,31 +316,55 @@ body {
     display: none;
   }
 
+  .carte-header-center {
+    display: block;
+    text-align: center;
+  }
+
   .carte-header-left h1 {
     display: none;
   }
 
   .carte-header h1 {
-    font-size: 2rem;
-    margin-bottom: 8px;
-    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: white;
   }
 
   .carte-header h2 {
-    font-size: 1.5rem;
-    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: #D4AF37;
+    margin: 5px 0;
   }
 
   .carte-header p {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 5px 0;
   }
 
   .mobile-navigation-button {
     display: block;
+    background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
   }
 
-  .mobile-nav-button {
-    display: block;
+  .mobile-navigation-button:hover {
+    background: linear-gradient(135deg, #E5C158 0%, #D4AF37 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
   }
 }
 
@@ -326,22 +375,15 @@ body {
 
   .carte-page-container {
     margin-left: 0;
-    padding: 15px;
-    padding-top: calc(var(--navbar-height) + 90px);
-    overflow-x: hidden; /* Empêcher le scroll horizontal */
+    padding: 20px;
+    padding-top: calc(var(--navbar-height) + 80px);
+    display: block;
+    align-items: stretch;
   }
 
   .carte-header {
-    position: fixed;
-    top: var(--navbar-height);
     left: 0;
-    right: 0;
-    z-index: 80;
-    margin: 0;
-    padding: 15px 20px 20px 20px;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15); /* Bordure délimitatrice */
+    padding: 20px;
     text-align: center;
   }
 
@@ -350,248 +392,251 @@ body {
     display: none;
   }
 
+  /* GARDER carte-header-center VISIBLE pour le bouton ! */
+  .carte-header-center {
+    display: block !important;
+    text-align: center;
+  }
+
   .carte-header-left h1 {
     display: none;
   }
 
   .carte-header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 8px;
   }
 
   .carte-header h2 {
-    font-size: 1.3rem;
-    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
   }
 
   .section-header h2 {
-    font-size: 1.3rem;
-    letter-spacing: 1px;
-    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 15px;
   }
 }
 
 @media (max-width: 480px) {
   .carte-page-container {
-    padding: 10px;
-    padding-top: calc(var(--navbar-height) + 90px);
-    overflow-x: hidden; /* Empêcher le scroll horizontal */
+    padding: 15px;
+    padding-top: calc(var(--navbar-height) + 80px);
   }
 
   .carte-header h1 {
-    font-size: 1.6rem;
-    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
   }
 
   .carte-header h2 {
     font-size: 1.2rem;
-    font-family: 'Playfair Display', serif;
+    letter-spacing: 1px;
   }
 }
 
 .section-container {
-  padding-top: 0;
-  margin-top: 0;
   position: relative;
+  scroll-margin-top: 0px;
 }
 
 .section-anchor {
-  display: none;
+  position: absolute;
+  top: 0px;
 }
 
-/* Styles pour améliorer la lisibilité mobile - BORDURES SUPPRIMÉES */
 @media (max-width: 768px) {
   .item-name-price {
-    position: relative;
+    flex-direction: column;
   }
 
   .item-name-price::after {
-    display: none; /* Suppression complète des lignes */
+    content: '';
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.3);
+    margin: 5px 0;
   }
 }
 
-/* Styles pour les vins - compatibles avec tous les appareils */
 .vins-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-top: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .vin-item {
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  border: none;
-  transition: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  transition: all 0.3s ease;
 }
 
 .vin-item:hover {
-  background: transparent;
-  border-color: transparent;
-  transform: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
 }
 
 .vin-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0;
+  margin-bottom: 12px;
   flex-wrap: wrap;
-  gap: 0;
+  gap: 10px;
 }
 
 .vin-name {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #D4AF37;
-  margin-bottom: 0;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
 }
 
 .vin-badges {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .vin-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
-  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .vin-badge.vin-origine {
-  background: rgba(46, 204, 113, 0.05); /* Background très réduit */
-  color: #2ecc71;
-  border: none; /* Suppression complète des bordures */
+  background: rgba(212, 175, 55, 0.2);
+  color: #D4AF37;
+  border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .vin-badge.vin-type {
-  background: rgba(230, 126, 34, 0.05); /* Background très réduit */
-  color: #e67e22;
-  border: none; /* Suppression complète des bordures */
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .vin-description {
   color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 15px;
   font-style: italic;
-  margin-bottom: 0;
-  line-height: 1.5;
 }
 
 .vin-variants {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 8px;
 }
 
 .vin-variant {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0;
-  background: transparent;
-  border-radius: 0;
-  border-left: none;
-  transition: none;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
 }
 
 .vin-variant:hover {
-  background: transparent;
-  border-left-color: transparent;
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(212, 175, 55, 0.3);
 }
 
 .variant-info {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: rgba(255, 255, 255, 0.9);
+  gap: 8px;
+  flex: 1;
 }
 
 .variant-volume {
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
 }
 
 .variant-separator {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .variant-contenant {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
 }
 
 .variant-prix {
-  font-weight: bold;
   color: #D4AF37;
+  font-weight: 600;
   font-size: 1rem;
+  margin-left: 15px;
 }
 
-/* Styles spécifiques pour les titres de catégories de vins - COMPLÈTEMENT NETTOYÉS */
 .wine-category-title {
-  width: 100%;
-  margin-bottom: 15px;
-  margin-top: 25px;
-  padding: 12px 20px;
-  background-color: rgba(0, 0, 0, 0.6); /* Background simple sans effets */
-  border: none; /* Suppression complète des bordures */
-  border-radius: 12px;
+  color: #D4AF37;
+  font-size: 1.8rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
   text-align: center;
+  margin: 20px 0 30px 0;
+  padding: 20px 0;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
   position: relative;
-  overflow: hidden;
 }
 
 .wine-section-title {
-  width: 100%;
-  border-bottom: none; /* Suppression des bordures */
-  margin-bottom: 15px;
-  padding-bottom: 8px;
-  text-align: center;
+  color: white;
+  font-size: 1.4rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  margin: 30px 0 20px 0;
+  padding-left: 15px;
+  border-left: 3px solid #D4AF37;
 }
 
-/* Animation de chargement */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* Mobile Navigation Button dans le header */
+/* Styles du bouton mobile intégré dans le header */
 .mobile-nav-button {
-  display: block;
-  margin: 15px auto 0 auto;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
-  border: 2px solid #D4AF37;
-  border-radius: 12px;
-  color: #D4AF37;
-  font-size: 0.9rem;
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  width: fit-content;
+  display: none; /* Caché par défaut sur desktop */
 }
 
-.mobile-nav-button:hover {
-  background: rgba(212, 175, 55, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+/* Affichage du bouton mobile sur tablette et mobile */
+@media (max-width: 1024px) {
+  .mobile-nav-button {
+    display: inline-block !important;
+    background: rgba(212, 175, 55, 0.2);
+    color: #D4AF37;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .mobile-nav-button:hover {
+    background: rgba(212, 175, 55, 0.3);
+    border-color: rgba(212, 175, 55, 0.5);
+    color: #E5C158;
+  }
 }
 
-.mobile-nav-button:active {
-  transform: scale(0.95);
-}
-
-/* Cacher sur desktop uniquement */
 @media (min-width: 1025px) {
   .mobile-nav-button {
     display: none !important;

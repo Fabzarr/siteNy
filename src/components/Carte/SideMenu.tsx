@@ -23,7 +23,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Détection de section active - Version simplifiée et robuste
+  // Détection de section active - Version unifiée et simplifiée
   useEffect(() => {
     const path = location.pathname.replace('/', '');
     
@@ -37,8 +37,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
       'nos-burgers': 'nos-burgers',
       'nos-viandes': 'nos-viandes',
       'nos-desserts': 'nos-desserts',
-      'carte-des-vins': 'carte-des-vins',
-      'boissons': 'boissons'
+      'carte-des-vins': 'carte-des-vins'
     };
 
     if (pathToSection[path]) {
@@ -46,7 +45,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
       return;
     }
     
-    // Page carte principale
+    // Page carte principale - Logique unifiée pour desktop et mobile
     if (path === 'carte' || path === '') {
       const sections = [
         'petites-faims', 'a-partager', 'nos-pizzas', 'nos-salades', 
@@ -55,15 +54,16 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
       
       const detectActiveSection = () => {
         const offset = window.innerWidth <= 768 ? 250 : 180;
+        const scrollPosition = window.scrollY;
         
         for (const sectionId of sections) {
           const element = document.getElementById(sectionId);
           if (element) {
             const rect = element.getBoundingClientRect();
-            const elementTop = rect.top + window.scrollY;
-            const scrollPos = window.scrollY + offset;
+            const elementPosition = rect.top + window.scrollY;
             
-            if (scrollPos >= elementTop - 50 && scrollPos < elementTop + rect.height) {
+            if (scrollPosition + offset >= elementPosition - 50 && 
+                scrollPosition + offset < elementPosition + rect.height) {
               setActiveSection(sectionId);
               return;
             }
@@ -71,7 +71,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
         }
         
         // Fallback: si en haut de page, activer la première section
-        if (window.scrollY < 200) {
+        if (scrollPosition < 200) {
           setActiveSection('petites-faims');
         }
       };
@@ -89,14 +89,15 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
         }
       };
 
-      // Démarrer l'initialisation
       setTimeout(initDetection, 50);
       
-      return () => window.removeEventListener('scroll', detectActiveSection);
+      return () => {
+        window.removeEventListener('scroll', detectActiveSection);
+      };
     } else {
       setActiveSection(null);
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
   const menuStructure = {
     entrées: [
@@ -117,9 +118,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
   };
 
   const handleNavigation = (id: string) => {
-    console.log('🔍 Clic détecté sur:', id);
-    
-    // FERMETURE DU MENU MOBILE SEULEMENT
+    // Fermeture du menu mobile seulement
     if (isOpen && isMobile) {
       toggleMenu();
       document.body.classList.remove('menu-open');
@@ -130,79 +129,17 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
       }
     }
     
-    // Pour les boissons, naviguer vers la page boissons
-    if (id === 'boissons') {
-      navigate('/boissons');
-      return;
-    }
-    
-    // Scroll immédiat vers la section
+    // Scroll vers la section
     const element = document.getElementById(id);
-    console.log('🎯 Élément trouvé:', element ? 'OUI' : 'NON', 'pour ID:', id);
     
     if (element) {
       const offset = window.innerWidth <= 768 ? 250 : 180;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY - offset;
       
-      // Sur desktop, le scroll se fait sur le container, pas sur window
-      if (window.innerWidth > 768) {
-        const container = document.querySelector('.carte-page-container') as HTMLElement;
-        if (container) {
-          const containerRect = container.getBoundingClientRect();
-          const elementRect = element.getBoundingClientRect();
-          const scrollTarget = container.scrollTop + (elementRect.top - containerRect.top) - offset;
-          
-          console.log('📍 Container scroll:', container.scrollTop, 'Element top:', elementRect.top, 'Container top:', containerRect.top, 'Target:', scrollTarget);
-          console.log('🚀 Tentative de scroll vers:', scrollTarget);
-          
-          // Essayer d'abord scrollIntoView qui est plus fiable
-          try {
-            element.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-            console.log('✅ ScrollIntoView exécuté');
-            
-            // Ajuster la position après le scroll pour tenir compte de l'offset
-            setTimeout(() => {
-              const currentScroll = container.scrollTop;
-              const adjustedTarget = currentScroll - offset;
-              console.log('🔧 Ajustement offset - Current:', currentScroll, 'Target:', adjustedTarget);
-              
-              container.scrollTo({
-                top: adjustedTarget,
-                behavior: 'smooth'
-              });
-            }, 300);
-            
-          } catch (error) {
-            console.log('❌ ScrollIntoView échoué, fallback vers scrollTo');
-            container.scrollTo({
-              top: scrollTarget,
-              behavior: 'smooth'
-            });
-          }
-          
-          // Vérifier si le scroll a eu lieu après un délai
-          setTimeout(() => {
-            console.log('✅ Scroll final:', container.scrollTop);
-          }, 500);
-        } else {
-          console.log('❌ Container .carte-page-container non trouvé');
-        }
-      } else {
-        // Mobile: scroll sur window
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        const scrollTarget = elementPosition - offset;
-        
-        console.log('📍 Mobile - Position élément:', elementPosition, 'Offset:', offset, 'Target:', scrollTarget);
-        
-        window.scrollTo({
-          top: scrollTarget,
-          behavior: 'smooth'
-        });
-      }
-    } else {
-      console.log('❌ Élément non trouvé pour ID:', id);
+      window.scrollTo({
+        top: Math.max(0, elementPosition),
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -215,6 +152,15 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
 
   return (
     <>
+      {/* Overlay pour mobile */}
+      {isOpen && isMobile && (
+        <div 
+          className="menu-overlay" 
+          onClick={toggleMenu}
+        />
+      )}
+      
+      {/* Menu latéral */}
       <div className={`side-menu ${isOpen ? 'open' : ''}`}>
         {/* Bouton de fermeture - Style du formulaire de réservation */}
         <button className="close-menu-btn" onClick={toggleMenu} aria-label="Fermer le menu">
