@@ -20,7 +20,7 @@ describe('Menu Routes', () => {
     pool = new Pool();
     
     // Mock cache
-    let menuCache = { data: null, timestamp: null };
+    app.locals.menuCache = { data: null, timestamp: null };
     const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
     
     // Mock route menu-complet
@@ -29,8 +29,8 @@ describe('Menu Routes', () => {
         const now = Date.now();
         
         // Vérifier le cache
-        if (menuCache.data && menuCache.timestamp && (now - menuCache.timestamp) < CACHE_DURATION) {
-          return res.json(menuCache.data);
+        if (app.locals.menuCache.data && app.locals.menuCache.timestamp && (now - app.locals.menuCache.timestamp) < CACHE_DURATION) {
+          return res.json(app.locals.menuCache.data);
         }
         
         const result = await pool.query(`
@@ -75,7 +75,7 @@ describe('Menu Routes', () => {
         const menuData = Array.from(categoriesMap.values());
         
         // Mettre en cache
-        menuCache = {
+        app.locals.menuCache = {
           data: menuData,
           timestamp: now
         };
@@ -132,6 +132,8 @@ describe('Menu Routes', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     pool.query = jest.fn();
+    // Clear cache before each test
+    app.locals.menuCache = { data: null, timestamp: null };
   });
 
   describe('GET /api/menu/menu-complet', () => {
@@ -235,6 +237,8 @@ describe('Menu Routes', () => {
     });
 
     test('should handle database errors', async () => {
+      // Clear cache to force database call
+      app.locals.menuCache = { data: null, timestamp: null };
       pool.query.mockRejectedValueOnce(new Error('Database connection failed'));
 
       const response = await request(app).get('/api/menu/menu-complet');
@@ -244,6 +248,8 @@ describe('Menu Routes', () => {
     });
 
     test('should return empty array when no categories found', async () => {
+      // Clear cache to force database call
+      app.locals.menuCache = { data: null, timestamp: null };
       pool.query.mockResolvedValueOnce({ rows: [] });
 
       const response = await request(app).get('/api/menu/menu-complet');
@@ -253,6 +259,9 @@ describe('Menu Routes', () => {
     });
 
     test('should order categories by ordre field', async () => {
+      // Clear cache to force database call
+      app.locals.menuCache = { data: null, timestamp: null };
+      
       const mockRows = [
         {
           categorie_id: 2,
@@ -392,6 +401,9 @@ describe('Menu Routes', () => {
 
   describe('Cache Functionality', () => {
     test('should use cache on subsequent requests', async () => {
+      // Clear cache to start fresh
+      app.locals.menuCache = { data: null, timestamp: null };
+      
       const mockRows = [
         {
           categorie_id: 1,
