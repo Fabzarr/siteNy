@@ -24,8 +24,12 @@ const Footer = () => {
           <p>&copy; {new Date().getFullYear()} - Tous droits réservés</p>
         </div>
 
-        <div className="footer-section">
+        <div className="footer-section contact">
           <p>01 23 45 67 89 - contact@newyorkcafe.fr</p>
+        </div>
+
+        <div className="footer-section artist-signature">
+          <img src="/images/sign.png" alt="Signature de l'artiste" className="signature-image" />
         </div>
       </div>
     </footer>

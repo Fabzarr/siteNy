@@ -159,4 +159,47 @@
   .social-links a {
     font-size: 0.9rem;
   }
+}
+
+/* Signature artistique */
+.artist-signature {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  padding-right: 10px;
+}
+
+.signature-image {
+  height: 35px;
+  width: auto;
+  opacity: 0.8;
+  filter: brightness(0) invert(1) sepia(1) saturate(1000%) hue-rotate(15deg) brightness(1.1) contrast(1.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.signature-image:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  filter: brightness(0) invert(1) sepia(1) saturate(1000%) hue-rotate(15deg) brightness(1.1) contrast(1.3) drop-shadow(0 2px 8px rgba(212, 175, 55, 0.8));
+}
+
+/* Responsive signature */
+@media (max-width: 768px) {
+  .artist-signature {
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  
+  .signature-image {
+    height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signature-image {
+    height: 25px;
+  }
 } 
