@@ -262,6 +262,24 @@
     background: color-mix(in oklch, transparent 5%, oklch(0.08 0.02 240) 95%);
     backdrop-filter: blur(16px) saturate(150%);
   }
+  
+  /* Prix plus haut, presque au niveau du nom */
+  .item-name-price {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: -2px;
+  }
+  
+  /* Remonter le prix visuellement */
+  .item-price {
+    margin-top: -3px;
+  }
+  
+  /* Petit espace entre nom et ingrédients */
+  .item-description {
+    margin-top: 5px;
+  }
 }
 
 /* CENTRAGE DESKTOP - Approche 2025 moderne */
@@ -373,7 +391,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-block-end: clamp(6px, 1.5vw, 8px);
+  /* ESPACEMENT ULTRA-MINIMAL */
+  margin-bottom: 1px;
   gap: clamp(12px, 3vw, 15px);
 }
 
@@ -418,6 +437,9 @@
   font-size: clamp(0.85rem, 2vw, 0.9rem);
   line-height: 1.4;
   font-style: italic;
+  
+  /* REMONTER LES INGRÉDIENTS */
+  margin-top: -1px;
   
   /* 2025 Typography */
   font-optical-sizing: auto;
@@ -630,13 +652,20 @@ body {
 
 @media (max-width: 768px) {
   .item-name-price {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: -3px; /* ESPACEMENT NÉGATIF pour rapprocher */
   }
-
-  .item-name-price::after {
-    content: '';
-    border-bottom: 1px dotted rgba(255, 255, 255, 0.3);
-    margin: 5px 0;
+  
+  /* Remonter encore plus le prix sur mobile */
+  .item-price {
+    margin-top: -5px;
+  }
+  
+  /* Petit espace entre nom et ingrédients sur mobile */
+  .item-description {
+    margin-top: 6px;
   }
 }
 

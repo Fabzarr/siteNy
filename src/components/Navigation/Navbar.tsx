@@ -51,6 +51,11 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-brand">
         <Link to="/" className="navbar-logo" onClick={handleNavClick('/')}>
+          <img 
+            src="/images/karaoke-logo.png" 
+            alt="Karaoke Logo" 
+            className="navbar-logo-icon"
+          />
           NEW YORK CAFÉ
         </Link>
       </div>
