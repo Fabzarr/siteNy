@@ -175,20 +175,24 @@
   margin-bottom: 40px;
   padding: 25px;
   
-  /* Glassmorphism compatible */
-  background: rgba(15, 15, 35, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* 2025 Advanced Glassmorphism - IDENTIQUE À CARTEPAGE */
+  background: color-mix(in oklch, transparent 15%, oklch(0.05 0.02 240) 85%);
+  backdrop-filter: blur(20px) saturate(180%) contrast(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(120%);
   
   border-radius: 20px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
+  border: 1px solid color-mix(in srgb, #D4AF37 25%, transparent 75%);
   
-  /* Box Shadow moderne */
+  /* 2025 Box Shadow avec Depth Layers - IDENTIQUE À CARTEPAGE */
   box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.2),
-    0 8px 24px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(212, 175, 55, 0.08),
-    0 0 0 1px rgba(212, 175, 55, 0.05);
+    /* Ambient shadow */
+    0 2px 8px color-mix(in srgb, #000000 20%, transparent 80%),
+    /* Key light shadow */
+    0 8px 24px color-mix(in srgb, #000000 15%, transparent 85%),
+    /* Rim light */
+    inset 0 1px 0 color-mix(in srgb, #D4AF37 8%, transparent 92%),
+    /* Depth enhancement */
+    0 0 0 1px color-mix(in srgb, #D4AF37 5%, transparent 95%);
   
   box-sizing: border-box;
   position: relative;
@@ -197,13 +201,13 @@
 }
 
 .galerie-section:hover {
-  background: rgba(20, 20, 45, 0.92);
-  border-color: rgba(212, 175, 55, 0.35);
+  background: color-mix(in oklch, transparent 8%, oklch(0.08 0.02 45) 92%);
+  border-color: color-mix(in srgb, #D4AF37 35%, transparent 65%);
   box-shadow: 
-    0 3px 12px rgba(0, 0, 0, 0.25),
-    0 10px 28px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(212, 175, 55, 0.12),
-    0 0 0 1px rgba(212, 175, 55, 0.08);
+    0 3px 12px color-mix(in srgb, #000000 25%, transparent 75%),
+    0 10px 28px color-mix(in srgb, #000000 18%, transparent 82%),
+    inset 0 1px 0 color-mix(in srgb, #D4AF37 12%, transparent 88%),
+    0 0 0 1px color-mix(in srgb, #D4AF37 8%, transparent 92%);
 }
 
 /* CENTRAGE DESKTOP AMÉLIORÉ - Comme CartePage */
@@ -212,8 +216,8 @@
     max-width: 650px;
     padding: 25px;
     
-    /* Enhanced desktop glassmorphism */
-    background: rgba(15, 15, 35, 0.88);
+    /* Enhanced desktop glassmorphism - IDENTIQUE À CARTEPAGE */
+    background: color-mix(in oklch, transparent 12%, oklch(0.06 0.025 240) 88%);
   }
 }
 
@@ -474,8 +478,9 @@
     margin-bottom: 30px;
     padding: 20px;
     
-    background: rgba(15, 15, 35, 0.90);
-    backdrop-filter: blur(16px);
+    /* Glassmorphism adaptatif mobile - IDENTIQUE À CARTEPAGE */
+    background: color-mix(in oklch, transparent 5%, oklch(0.08 0.02 240) 95%);
+    backdrop-filter: blur(16px) saturate(150%);
   }
 }
 
