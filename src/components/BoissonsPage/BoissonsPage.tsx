@@ -5,6 +5,18 @@ import './BoissonsPage.css';
 const BoissonsPage = () => {
   const [activeMenu, setActiveMenu] = useState('boissons');
 
+  // Fonction pour changer de menu et remonter en haut
+  const handleMenuChange = (menu: string) => {
+    setActiveMenu(menu);
+    // Scroll to top avec un léger délai pour permettre le changement de contenu
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }, 100);
+  };
+
   const boissonsData = {
     boissons_fraiches: [
       { name: "Coca-Cola / Coca-Cola Zero", price: 4, description: "33cl" },
@@ -121,12 +133,12 @@ const BoissonsPage = () => {
   );
 
   return (
-      <motion.div 
+    <motion.div 
       className="boissons-page"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
+      transition={{ duration: 0.5 }}
+    >
       <div className="boissons-content">
           <div className="boissons-header">
           <div className="boissons-header-left">
@@ -134,26 +146,48 @@ const BoissonsPage = () => {
           </div>
           <div className="boissons-header-center">
             <h2>CARTE DES BOISSONS</h2>
-            <p>BOISSONS, COCKTAILS & MOCKTAILS</p>
+            <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '1.1rem', margin: '0', letterSpacing: '2px' }}>
+              BOISSONS, COCKTAILS & MOCKTAILS
+            </p>
           </div>
           <div className="boissons-header-right">
+            {/* Espace réservé pour équilibrer */}
           </div>
-        </div>
-
-          <div className="menu-selector">
+          
+          {/* Titres et boutons pour mobile/tablette - directement dans header */}
+          <h2 className="mobile-subtitle">CARTE DES BOISSONS</h2>
+          <p className="mobile-description">BOISSONS, COCKTAILS & MOCKTAILS</p>
+          
+          <div className="mobile-menu-selector">
             <button 
               className={`menu-button ${activeMenu === 'boissons' ? 'active' : ''}`}
-              onClick={() => setActiveMenu('boissons')}
+              onClick={() => handleMenuChange('boissons')}
             >
               <span>BOISSONS</span>
             </button>
             <button 
               className={`menu-button ${activeMenu === 'cocktails' ? 'active' : ''}`}
-              onClick={() => setActiveMenu('cocktails')}
+              onClick={() => handleMenuChange('cocktails')}
             >
               <span>COCKTAILS</span>
             </button>
           </div>
+        </div>
+
+        <div className="menu-selector desktop-only">
+          <button 
+            className={`menu-button ${activeMenu === 'boissons' ? 'active' : ''}`}
+            onClick={() => handleMenuChange('boissons')}
+          >
+            <span>BOISSONS</span>
+          </button>
+          <button 
+            className={`menu-button ${activeMenu === 'cocktails' ? 'active' : ''}`}
+            onClick={() => handleMenuChange('cocktails')}
+          >
+            <span>COCKTAILS</span>
+          </button>
+        </div>
         
           <InfoSection />
 

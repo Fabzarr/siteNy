@@ -53,7 +53,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
       ];
       
       const detectActiveSection = () => {
-        const offset = window.innerWidth <= 768 ? 250 : 180;
+        const offset = window.innerWidth <= 768 ? 235 : 180;
         const scrollPosition = window.scrollY;
         
         for (const sectionId of sections) {
@@ -133,7 +133,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
     const element = document.getElementById(id);
     
     if (element) {
-      const offset = window.innerWidth <= 768 ? 250 : 180;
+      const offset = window.innerWidth <= 768 ? 235 : 180;
       const elementPosition = element.getBoundingClientRect().top + window.scrollY - offset;
       
       window.scrollTo({

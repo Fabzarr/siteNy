@@ -4,88 +4,107 @@ import SideMenu from '../Carte/SideMenu';
 import CloseButton from '../common/CloseButton';
 import './PizzaPage.css';
 
-// This interface will be used when we integrate with the backend
+// Interface pour les données de l'API
 interface Pizza {
-  id: string;
-  name: string;
-  price: number;
+  id: number;
+  nom: string;
+  prix: string;
   description: string;
+  disponible?: boolean;
 }
 
-// Temporary data - will be replaced with API call
-const initialPizzas: Pizza[] = [
-  { id: "1", name: "Margherita", price: 9, description: "Tomato, mozzarella, basille" },
-  { id: "2", name: "Regina", price: 11, description: "Tomato, ham, eirojons" },
-  { id: "3", name: "Quattro Formaggi", price: 11, description: "Mozzarella, poronpola" },
-  { id: "4", name: "Reine", price: 12, description: "Tomato, mozzarella, hamum, nustraions" },
-  { id: "5", name: "Napolitaine", price: 10, description: "Tomato, mozzarella, hamum, et pictoions" },
-  { id: "6", name: "Hawaienne", price: 11, description: "Tomato, mozzarella, iamum, et ainanas" },
-  { id: "7", name: "Calzone", price: 12, description: "Tomato, mozzarella, jamum, cashews, caperes" },
-  { id: "8", name: "Orientale", price: 12, description: "Tomato, mozzarella, salaimi, pimenti, pairans" },
-  { id: "9", name: "Diavola", price: 12, description: "Tomato, mozzarella, sajisimi, salami" },
-  { id: "10", name: "Paysanne", price: 11, description: "Tomato, mozzrella, bacon, oignons" },
-  { id: "11", name: "4 Saisons", price: 12, description: "Tomato, mozzaella, hamum, mushr soms artichicots, alives" },
-  { id: "12", name: "Capricciosa", price: 12, description: "Tomato, mozzarella, ham, mushroona, artichicots, olives" },
-  { id: "13", name: "Sicilienne", price: 12, description: "Tomato, mozzarella ancholes, capers, ainons, olives" },
-  { id: "14", name: "Romana", price: 10, description: "Tomato, mozzarella ancholes" },
-  { id: "15", name: "Montanara", price: 12, description: "Tomato, mozzarella speek, muchrooms" },
-  { id: "16", name: "Vegetariana", price: 11, description: "Tomato, mozzarella legumes" },
-  { id: "17", name: "Parigina", price: 12, description: "Tomato, mozzarella namum, potates" },
-  { id: "18", name: "Parma", price: 13, description: "Tomato, mozzarella, prosciutta, arugala" },
-  { id: "19", name: "Bufala", price: 13, description: "Tomato, bufcella mozzarella, basil" },
-  { id: "20", name: "Tonno", price: 11, description: "Tomato, mozzarella" },
-  { id: "21", name: "Rustica", price: 12, description: "Tomato, mozzarella, bacon, petates, rogemarin" },
-  { id: "22", name: "Gorgonzola", price: 11, description: "Tomato, mozzarella gorgonzala" },
-  { id: "23", name: "Savoyarde", price: 13, description: "Crame traiche, mozzarella, potatoes, bacon" },
-  { id: "24", name: "Marinara", price: 9, description: "Tomato, garlic oregano" },
-  { id: "25", name: "Piccante", price: 12, description: "Tomato, mozzarella sauce spusage" },
-  { id: "26", name: "Valenciana", price: 12, description: "Tomato, mozzarella chicken, olgnerons" }
-];
-
 const PizzaPage: React.FC = () => {
-  const [pizzas, setPizzas] = useState<Pizza[]>(initialPizzas);
+  const [pizzas, setPizzas] = useState<Pizza[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // This will be used when we integrate with the backend
   useEffect(() => {
-    // Future API call will go here
-    // const fetchPizzas = async () => {
-    //   try {
-    //     const response = await fetch('/api/pizzas');
-    //     const data = await response.json();
-    //     setPizzas(data);
-    //   } catch (error) {
-    //     console.error('Error fetching pizzas:', error);
-    //   }
-    // };
-    // fetchPizzas();
+    const fetchPizzas = async () => {
+      try {
+        const response = await fetch('/api/menu/menu-complet');
+        if (!response.ok) {
+          throw new Error('Erreur lors du chargement du menu');
+        }
+        
+        const menuData = await response.json();
+        
+        // Récupérer la catégorie "nos-pizzas"
+        const pizzasCategory = menuData['nos-pizzas'];
+        if (pizzasCategory && pizzasCategory.plats) {
+          setPizzas(pizzasCategory.plats);
+        } else {
+          // Fallback avec données par défaut si pas de données
+          setPizzas([
+            { id: 1, nom: "Margherita", prix: "14.00", description: "Tomate, mozzarella, basilic" },
+            { id: 2, nom: "Regina", prix: "16.00", description: "Tomate, mozzarella, jambon, champignons" }
+          ]);
+        }
+        
+        setLoading(false);
+      } catch (error) {
+        console.error('Erreur lors du chargement des pizzas:', error);
+        setError('Impossible de charger le menu. Veuillez réessayer plus tard.');
+        
+        // Données de fallback
+        setPizzas([
+          { id: 1, nom: "Margherita", prix: "14.00", description: "Tomate, mozzarella, basilic" },
+          { id: 2, nom: "Regina", prix: "16.00", description: "Tomate, mozzarella, jambon, champignons" }
+        ]);
+        setLoading(false);
+      }
+    };
+
+    fetchPizzas();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="page-with-menu">
+        <SideMenu isOpen={false} toggleMenu={() => {}} />
+        <CloseButton />
+        <div className="pizza-page-container">
+          <div className="pizza-menu-card">
+            <div className="pizza-header">
+              <h1>New York Café</h1>
+              <h2>CHARGEMENT...</h2>
+            </div>
+            <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
+              <p>🚀 Chargement des pizzas...</p>
+              {error && <p style={{ color: '#ff6b6b' }}>⚠️ {error}</p>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="page-with-menu">
-      <SideMenu />
+      <SideMenu isOpen={false} toggleMenu={() => {}} />
       <CloseButton />
       <motion.div 
-        className="pizza-page-container"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="pizza-menu-card">
-          <div className="pizza-header">
-            <h1>New York Café</h1>
-            <h2>PIZZAS</h2>
-          </div>
+        <div className="pizza-page-container">
+          <div className="pizza-menu-card">
+            <div className="pizza-header">
+              <h1>New York Café</h1>
+              <h2>NOS PIZZAS</h2>
+            </div>
 
-          <div className="pizza-menu">
-            {pizzas.map((pizza) => (
-              <div key={pizza.id} className="pizza-item">
-                <div className="pizza-name-price">
-                  <span className="pizza-name">{pizza.name}</span>
-                  <span className="pizza-price">{pizza.price}€</span>
+            <div className="pizza-menu">
+              {pizzas.map((pizza) => (
+                <div key={pizza.id} className="pizza-item">
+                  <div className="pizza-name-price">
+                    <span className="pizza-name">{pizza.nom}</span>
+                    <span className="pizza-price">{parseFloat(pizza.prix)}€</span>
+                  </div>
+                  <div className="pizza-description">{pizza.description}</div>
                 </div>
-                <div className="pizza-description">{pizza.description}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </motion.div>

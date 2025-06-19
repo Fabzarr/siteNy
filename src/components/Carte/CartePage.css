@@ -452,13 +452,13 @@
 html {
   scroll-behavior: smooth;
   /* SOLUTION MODERNE: scroll-padding-top pour offset navbar fixe */
-  scroll-padding-top: var(--navbar-height); /* Desktop: navbar seulement */
+  scroll-padding-top: calc(var(--navbar-height) + 180px); /* Desktop: navbar + offset pour meilleur positionnement */
 }
 
 /* Responsive scroll-padding pour mobile */
 @media (max-width: 768px) {
   html {
-    scroll-padding-top: calc(var(--navbar-height) + 250px); /* Mobile: navbar + offset */
+    scroll-padding-top: calc(var(--navbar-height) + 300px); /* Mobile: navbar + offset */
   }
 }
 
@@ -643,6 +643,13 @@ body {
 .section-container {
   position: relative;
   scroll-margin-top: 0px;
+}
+
+/* Override scroll-margin pour mobile/tablette - APPLICATION SUR LES VRAIES SECTIONS */
+@media (max-width: 1024px) {
+  .menu-section {
+    scroll-margin-top: 300px !important;
+  }
 }
 
 .section-anchor {

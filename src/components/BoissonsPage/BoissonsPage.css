@@ -19,6 +19,7 @@
   border-radius: 15px;
 }
 
+/* HEADER MOBILE ET TABLETTE PAR DÉFAUT */
 .boissons-header {
   position: fixed;
   top: var(--navbar-height);
@@ -26,31 +27,11 @@
   right: 0;
   z-index: 80;
   margin: 0;
-  padding: 15px 40px;
-  /* 2025 Modern Glass Effect avec différenciation subtile */
-  background: color-mix(in srgb, #000000 88%, #D4AF37 3%);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  /* Bordure gradient moderne */
-  border-bottom: 1px solid;
-  border-image: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(212, 175, 55, 0.4) 30%,
-    rgba(212, 175, 55, 0.6) 50%,
-    rgba(212, 175, 55, 0.4) 70%,
-    transparent 100%) 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  /* Box-shadow avec profondeur moderne */
-  box-shadow: 
-    0 2px 12px rgba(0, 0, 0, 0.15),
-    0 1px 3px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(212, 175, 55, 0.1);
-  /* Transition fluide moderne */
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 15px 20px 20px 20px;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  text-align: center;
 }
 
 .boissons-header::before {
@@ -71,7 +52,7 @@
   color: #D4AF37;
   font-size: 2.5rem;
   margin-bottom: 30px;
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Playfair Display', serif;
   font-weight: 600;
   letter-spacing: 2px;
   user-select: none !important;
@@ -90,20 +71,21 @@
 
 .boissons-header-center h2 {
   color: white;
-  font-size: 1.4rem;
-  letter-spacing: 2px;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
   margin: 0;
-  margin-bottom: 4px;
-  font-family: 'Caveat', cursive;
+  margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
   font-weight: 500;
 }
 
 .boissons-header-center p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
   margin: 0;
   letter-spacing: 1px;
-  text-transform: uppercase;
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
   font-weight: 400;
 }
 
@@ -119,7 +101,7 @@
   color: #D4AF37;
   font-size: 2.5rem;
   margin: 0;
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Playfair Display', serif;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -207,9 +189,9 @@
 }
 
 .happy-hour-info {
-  margin: 20px 40px;
+  margin: 10px 40px;
   text-align: center;
-  padding: 18px;
+  padding: 12px;
   background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(39, 174, 96, 0.1));
   border-radius: 15px;
   border: 2px solid rgba(46, 204, 113, 0.7);
@@ -226,8 +208,8 @@
 }
 
 .karaoke-info {
-  margin: 20px 40px;
-  padding: 18px;
+  margin: 10px 40px 20px 40px;
+  padding: 12px;
   background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(41, 128, 185, 0.1));
   border: 2px solid rgba(52, 152, 219, 0.6);
   border-radius: 15px;
@@ -270,12 +252,57 @@
 }
 
 .boissons-section h2 {
-  color: #D4AF37;
-  font-size: 1.4rem;
-  margin-bottom: 20px;
+  /* Style identique à CartePage section-header h2 */
+  color: color-mix(in oklch, #D4AF37 95%, #F4D03F 5%);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: clamp(8px, 2vw, 30px);
   font-family: 'Playfair Display', serif;
+  font-weight: 600;
   text-align: center;
-  letter-spacing: 1px;
+  
+  /* 2025 Text Effects */
+  text-shadow: 
+    0 2px 4px color-mix(in srgb, #000000 30%, transparent 70%),
+    0 0 8px color-mix(in srgb, #D4AF37 20%, transparent 80%);
+  
+  /* Lettre Spacing fluide */
+  letter-spacing: clamp(0.5px, 0.1em, 2px);
+  
+  /* Modern Positioning */
+  position: relative;
+  padding-bottom: 15px;
+  
+  /* Léger effet sur les titres */
+  transition: text-shadow 0.3s ease;
+}
+
+.boissons-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(40px, 15%, 80px);
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    color-mix(in srgb, #D4AF37 80%, #F4D03F 20%) 20%,
+    color-mix(in srgb, #D4AF37 100%, #F4D03F 0%) 50%,
+    color-mix(in srgb, #D4AF37 80%, #F4D03F 20%) 80%,
+    transparent 100%);
+  border-radius: 1px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.boissons-section h2:hover {
+  text-shadow: 
+    0 2px 6px color-mix(in srgb, #000000 35%, transparent 65%),
+    0 0 12px color-mix(in srgb, #D4AF37 25%, transparent 75%);
+}
+
+.boissons-section h2:hover::after {
+  opacity: 1;
 }
 
 .boisson-item {
@@ -335,6 +362,290 @@
   letter-spacing: 1px;
 }
 
+/* Classes pour gérer desktop vs mobile */
+.mobile-subtitle, 
+.mobile-description,
+.mobile-menu-selector {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .desktop-only {
+    display: block;
+  }
+}
+
+@media (max-width: 1024px) {
+  .boissons-header-left,
+  .boissons-header-center,
+  .boissons-header-right {
+    display: none !important;
+  }
+  
+  .mobile-subtitle,
+  .mobile-description,
+  .mobile-menu-selector {
+    display: block;
+  }
+  
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-subtitle {
+    color: white;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
+  }
+  
+  .mobile-description {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin: 5px 0 15px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 400;
+    text-align: center;
+  }
+  
+  .mobile-menu-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0 0 0;
+    padding: 0;
+  }
+  
+  .mobile-menu-selector .menu-button {
+    background: rgba(30, 30, 30, 0.9);
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 14px 32px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    min-width: 140px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+  }
+
+  .mobile-menu-selector .menu-button::after {
+    content: '→';
+    margin-left: 10px;
+    font-size: 1.2rem;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu-selector .menu-button:hover {
+    color: #000;
+    background: linear-gradient(135deg, #D4AF37, #F4D03F);
+    border-color: #D4AF37;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+  }
+
+  .mobile-menu-selector .menu-button:hover::after {
+    opacity: 1;
+    transform: translateX(5px);
+  }
+
+  .mobile-menu-selector .menu-button.active {
+    color: #000;
+    background: linear-gradient(135deg, #D4AF37, #F4D03F);
+    border: 2px solid #D4AF37;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    font-weight: 600;
+    transform: translateY(-2px);
+  }
+
+  .mobile-menu-selector .menu-button.active::after {
+    content: '✓';
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* DESKTOP - Structure identique à CartePage */
+@media (min-width: 1025px) {
+  .boissons-page {
+    padding-top: var(--navbar-height);
+  }
+
+  .boissons-content {
+    padding: 40px 0 200px 0;
+    padding-top: 0;
+  }
+
+  .boissons-header {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    z-index: 80;
+    margin: 0;
+    padding: 15px 40px;
+    /* 2025 Modern Glass Effect avec différenciation subtile */
+    background: color-mix(in srgb, #000000 88%, #D4AF37 3%);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    /* Bordure gradient moderne */
+    border-bottom: 1px solid;
+    border-image: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(212, 175, 55, 0.4) 30%,
+      rgba(212, 175, 55, 0.6) 50%,
+      rgba(212, 175, 55, 0.4) 70%,
+      transparent 100%) 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    /* Box-shadow avec profondeur moderne */
+    box-shadow: 
+      0 2px 12px rgba(0, 0, 0, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(212, 175, 55, 0.1);
+    /* Transition fluide moderne */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .boissons-header-left,
+  .boissons-header-center,
+  .boissons-header-right {
+    position: relative;
+    z-index: 2;
+  }
+
+  .boissons-header-left {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+    padding-left: 30px;
+  }
+
+  .boissons-header-center {
+    flex: 1;
+    text-align: center;
+  }
+
+  .boissons-header-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px;
+  }
+
+  .boissons-header h1 {
+    color: #D4AF37;
+    font-size: 2.5rem;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .boissons-header h2 {
+    color: white;
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    margin: 0;
+    margin-bottom: 8px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+  }
+
+  .boissons-header p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .boissons-page .menu-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 40px 30px 40px;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .boissons-page .menu-button {
+    background: rgba(30, 30, 30, 0.9);
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 14px 32px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    min-width: 140px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+  }
+
+  .boissons-page .menu-button::after {
+    content: '→';
+    margin-left: 10px;
+    font-size: 1.2rem;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+
+  .boissons-page .menu-button:hover {
+    color: #000;
+    background: linear-gradient(135deg, #D4AF37, #F4D03F);
+    border-color: #D4AF37;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+  }
+
+  .boissons-page .menu-button:hover::after {
+    opacity: 1;
+    transform: translateX(5px);
+  }
+
+  .boissons-page .menu-button.active {
+    color: #000;
+    background: linear-gradient(135deg, #D4AF37, #F4D03F);
+    border: 2px solid #D4AF37;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    font-weight: 600;
+    transform: translateY(-2px);
+  }
+
+  .boissons-page .menu-button.active::after {
+    content: '✓';
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (max-width: 1024px) {
   .boissons-columns {
     flex-direction: column;
@@ -342,104 +653,93 @@
   }
 
   .boissons-section h2 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 }
 
-/* Styles spécifiques pour tablettes */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .boissons-page .menu-selector {
-    gap: 25px;
-    padding: 15px 30px;
-    margin: 35px 0;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .boissons-page .menu-button {
-    padding: 14px 25px;
-    font-size: 1.05rem;
-    letter-spacing: 1px;
-    min-width: 150px;
-    width: 150px;
-    height: 48px;
-    justify-content: center;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    border-radius: 12px;
-  }
-
-  .boissons-page .menu-button span {
-    text-align: center;
-    width: 100%;
-  }
-
-  .boissons-page .menu-button::after {
-    display: none; /* Cacher la flèche sur tablette */
-  }
-
-  .boissons-page .menu-button:hover {
-    transform: translateX(0); /* Pas de décalage sur tablette */
-  }
-
-  .boissons-page .menu-button.active {
-    transform: translateX(0); /* Pas de décalage sur tablette */
-  }
-}
-
-@media (max-width: 768px) {
+/* Structure mobile/tablette identique à CartePage */
+@media (max-width: 1024px) {
   .boissons-page {
-    padding: 20px 15px;
+    padding: 20px;
+    padding-top: calc(var(--navbar-height) + 80px);
   }
 
   .boissons-content {
+    padding: 0;
+  }
+
+  .boissons-header {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px 20px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  }
+
+  .boissons-header-left,
+  .boissons-header-right {
+    display: none;
+  }
+
+  .boissons-header-center {
+    display: block;
+    text-align: center;
+  }
+
+  .boissons-header h1 {
+    color: #D4AF37;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+  }
+
+  .boissons-header h2 {
+    color: #D4AF37;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+  }
+
+  .boissons-header p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin: 5px 0 0 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+
+}
+
+@media (max-width: 768px) {
+  .boissons-header {
+    left: 0;
     padding: 20px;
+    text-align: center;
   }
 
   .boissons-header h1 {
     font-size: 2rem;
+    margin-bottom: 8px;
   }
 
-  .boissons-page .menu-selector {
-    gap: 15px;
-    padding: 12px 25px;
-    margin: 30px 0;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+  .boissons-header h2 {
+    font-size: 1.4rem;
+    letter-spacing: 2px;
   }
 
   .boissons-page .menu-button {
     padding: 12px 20px;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    min-width: 130px;
-    width: 130px;
-    height: 44px;
-    justify-content: center;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-  }
-
-  .boissons-page .menu-button span {
-    text-align: center;
-    width: 100%;
-  }
-
-  .boissons-page .menu-button::after {
-    display: none;
-  }
-
-  .boissons-page .menu-button:hover {
-    transform: translateX(0);
-  }
-
-  .boissons-page .menu-button.active {
-    transform: translateX(0);
+    font-size: 0.9rem;
+    min-width: 120px;
   }
 
   .happy-hour-info p {
@@ -465,56 +765,19 @@
 }
 
 @media (max-width: 480px) {
-  .boissons-page {
-    padding: 15px 10px;
-  }
-
-  .boissons-content {
-    padding: 15px;
-  }
-
   .boissons-header h1 {
     font-size: 1.8rem;
   }
 
-  .boissons-page .menu-selector {
-    gap: 12px;
-    padding: 10px 20px;
-    margin: 20px 0;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    flex-direction: row;
+  .boissons-header h2 {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
   }
 
   .boissons-page .menu-button {
-    padding: 10px 16px;
-    font-size: 0.95rem;
-    min-width: 115px;
-    width: 115px;
-    height: 40px;
-    justify-content: center;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-  }
-
-  .boissons-page .menu-button span {
-    text-align: center;
-    width: 100%;
-  }
-
-  .boissons-page .menu-button::after {
-    display: none;
-  }
-
-  .boissons-page .menu-button:hover {
-    transform: translateX(0);
-  }
-
-  .boissons-page .menu-button.active {
-    transform: translateX(0);
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    min-width: 110px;
   }
 
   .happy-hour-info p {
@@ -555,11 +818,55 @@
 }
 
 .cocktails-section h2 {
-  color: #D4AF37;
-  font-size: 1.4rem;
-  margin-bottom: 20px;
+  /* Style identique à CartePage section-header h2 */
+  color: color-mix(in oklch, #D4AF37 95%, #F4D03F 5%);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: clamp(8px, 2vw, 30px);
   font-family: 'Playfair Display', serif;
+  font-weight: 600;
   text-align: center;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  
+  /* 2025 Text Effects */
+  text-shadow: 
+    0 2px 4px color-mix(in srgb, #000000 30%, transparent 70%),
+    0 0 8px color-mix(in srgb, #D4AF37 20%, transparent 80%);
+  
+  /* Lettre Spacing fluide */
+  letter-spacing: clamp(0.5px, 0.1em, 2px);
+  
+  /* Modern Positioning */
+  position: relative;
+  padding-bottom: 15px;
+  
+  /* Léger effet sur les titres */
+  transition: text-shadow 0.3s ease;
+}
+
+.cocktails-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(40px, 15%, 80px);
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    color-mix(in srgb, #D4AF37 80%, #F4D03F 20%) 20%,
+    color-mix(in srgb, #D4AF37 100%, #F4D03F 0%) 50%,
+    color-mix(in srgb, #D4AF37 80%, #F4D03F 20%) 80%,
+    transparent 100%);
+  border-radius: 1px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.cocktails-section h2:hover {
+  text-shadow: 
+    0 2px 6px color-mix(in srgb, #000000 35%, transparent 65%),
+    0 0 12px color-mix(in srgb, #D4AF37 25%, transparent 75%);
+}
+
+.cocktails-section h2:hover::after {
+  opacity: 1;
 } 

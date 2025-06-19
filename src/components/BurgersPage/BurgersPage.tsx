@@ -1,120 +1,114 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SideMenu from '../Carte/SideMenu';
 import CloseButton from '../common/CloseButton';
 import './BurgersPage.css';
 
-const burgers = [
-  { 
-    name: "Classic NY Burger", 
-    price: 16, 
-    description: "Bœuf black angus, cheddar affiné, bacon croustillant, laitue, tomate, oignon rouge, sauce maison"
-  },
-  { 
-    name: "Cheese Lover", 
-    price: 17, 
-    description: "Double bœuf, cheddar, mozzarella, fromage bleu, oignons caramélisés, sauce au fromage"
-  },
-  { 
-    name: "Spicy Mexican", 
-    price: 16, 
-    description: "Bœuf épicé, guacamole, jalapeños, cheddar, tomate, oignon rouge, sauce chipotle"
-  },
-  { 
-    name: "Veggie Dream", 
-    price: 15, 
-    description: "Galette de quinoa aux légumes, avocat, roquette, tomate, oignon rouge grillé, sauce végane"
-  },
-  { 
-    name: "Italian Style", 
-    price: 17, 
-    description: "Bœuf, mozzarella di bufala, tomates séchées, roquette, pesto, jambon de Parme"
-  },
-  { 
-    name: "BBQ Master", 
-    price: 16, 
-    description: "Bœuf, cheddar fumé, oignons frits, bacon, salade, sauce BBQ maison"
-  }
-];
-
-const tartares = [
-  { 
-    name: "Tartare Classic", 
-    price: 18, 
-    description: "Bœuf charolais coupé au couteau, câpres, cornichons, oignon rouge, jaune d'œuf, assaisonnement maison"
-  },
-  { 
-    name: "Tartare Italien", 
-    price: 19, 
-    description: "Bœuf, parmesan, tomates séchées, basilic, pignons de pin, huile d'olive vierge"
-  },
-  { 
-    name: "Tartare Asiatique", 
-    price: 19, 
-    description: "Bœuf, gingembre, coriandre, sauce soja, sésame, huile de sésame grillé, citron vert"
-  },
-  { 
-    name: "Tartare de Saumon", 
-    price: 20, 
-    description: "Saumon frais, avocat, mangue, ciboulette, échalote, sauce yuzu"
-  },
-  { 
-    name: "Tartare Méditerranéen", 
-    price: 19, 
-    description: "Bœuf, olives Kalamata, feta, tomates séchées, origan, huile d'olive"
-  },
-  { 
-    name: "Tartare du Chef", 
-    price: 21, 
-    description: "Bœuf premium, truffe noire, parmesan 24 mois, roquette, huile de truffe"
-  }
-];
+// Interface pour les données de l'API
+interface Plat {
+  id: number;
+  nom: string;
+  prix: string;
+  description: string;
+  disponible?: boolean;
+}
 
 const BurgersPage: React.FC = () => {
+  const [burgers, setBurgers] = useState<Plat[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBurgers = async () => {
+      try {
+        const response = await fetch('/api/menu/menu-complet');
+        if (!response.ok) {
+          throw new Error('Erreur lors du chargement du menu');
+        }
+        
+        const menuData = await response.json();
+        
+        // Récupérer la catégorie "nos-burgers" ou "nos-hamburgers"
+        const burgersCategory = menuData['nos-burgers'] || menuData['nos-hamburgers'];
+        if (burgersCategory && burgersCategory.plats) {
+          setBurgers(burgersCategory.plats);
+        } else {
+          // Fallback avec données par défaut si pas de données
+          setBurgers([
+            { id: 1, nom: "Classic NY Burger", prix: "16.00", description: "Bœuf black angus, cheddar affiné, bacon croustillant, laitue, tomate, oignon rouge, sauce maison" },
+            { id: 2, nom: "Tartare Classic", prix: "18.00", description: "Bœuf charolais coupé au couteau, câpres, cornichons, oignon rouge, jaune d'œuf" }
+          ]);
+        }
+        
+        setLoading(false);
+      } catch (error) {
+        console.error('Erreur lors du chargement des burgers:', error);
+        setError('Impossible de charger le menu. Veuillez réessayer plus tard.');
+        
+        // Données de fallback
+        setBurgers([
+          { id: 1, nom: "Classic NY Burger", prix: "16.00", description: "Bœuf black angus, cheddar affiné, bacon croustillant, laitue, tomate, oignon rouge, sauce maison" },
+          { id: 2, nom: "Tartare Classic", prix: "18.00", description: "Bœuf charolais coupé au couteau, câpres, cornichons, oignon rouge, jaune d'œuf" }
+        ]);
+        setLoading(false);
+      }
+    };
+
+    fetchBurgers();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="page-with-menu">
+        <SideMenu isOpen={false} toggleMenu={() => {}} />
+        <CloseButton />
+        <div className="burgers-page-container">
+          <div className="burgers-menu-card">
+            <div className="burgers-header">
+              <h1>New York Café</h1>
+              <h2>CHARGEMENT...</h2>
+              <p className="subtitle">Hamburgers & Tartares</p>
+            </div>
+            <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
+              <p>🚀 Chargement des hamburgers & tartares...</p>
+              {error && <p style={{ color: '#ff6b6b' }}>⚠️ {error}</p>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="page-with-menu">
-      <SideMenu />
+      <SideMenu isOpen={false} toggleMenu={() => {}} />
       <CloseButton />
       <motion.div 
-        className="burgers-page-container"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="burgers-menu-card">
-          <div className="burgers-header">
-            <h1>New York Café</h1>
-            <h2>HAMBURGERS & TARTARES</h2>
-            <p className="subtitle">Saveurs & Raffinement</p>
-          </div>
-
-          <div className="menu-section">
-            <h3 className="section-title">NOS HAMBURGERS</h3>
-            <div className="burgers-menu">
-              {burgers.map((burger, index) => (
-                <div key={index} className="burger-item">
-                  <div className="burger-name-price">
-                    <span className="burger-name">{burger.name}</span>
-                    <span className="burger-price">{burger.price}€</span>
-                  </div>
-                  <div className="burger-description">{burger.description}</div>
-                </div>
-              ))}
+        <div className="burgers-page-container">
+          <div className="burgers-menu-card">
+            <div className="burgers-header">
+              <h1>New York Café</h1>
+              <h2>HAMBURGERS & TARTARES</h2>
+              <p className="subtitle">Saveurs & Raffinement</p>
             </div>
-          </div>
 
-          <div className="menu-section">
-            <h3 className="section-title">NOS TARTARES</h3>
-            <div className="tartares-menu">
-              {tartares.map((tartare, index) => (
-                <div key={index} className="tartare-item">
-                  <div className="tartare-name-price">
-                    <span className="tartare-name">{tartare.name}</span>
-                    <span className="tartare-price">{tartare.price}€</span>
+            <div className="menu-section">
+              <h3 className="section-title">NOS SPÉCIALITÉS</h3>
+              <div className="burgers-menu">
+                {burgers.map((item) => (
+                  <div key={item.id} className="burger-item">
+                    <div className="burger-name-price">
+                      <span className="burger-name">{item.nom}</span>
+                      <span className="burger-price">{parseFloat(item.prix)}€</span>
+                    </div>
+                    <div className="burger-description">{item.description}</div>
                   </div>
-                  <div className="tartare-description">{tartare.description}</div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

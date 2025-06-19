@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SideMenu from '../Carte/SideMenu';
 import CloseButton from '../common/CloseButton';
 import './PartagerPage.css';
+
+// Interface pour les données de l'API
+interface Plat {
+  id: number;
+  nom: string;
+  description: string;
+  prix: string;
+  disponible?: boolean;
+}
 
 const platsPartager = [
   {
@@ -77,65 +86,110 @@ const tapas = [
 ];
 
 const PartagerPage: React.FC = () => {
+  const [platsPartager, setPlatsPartager] = useState<Plat[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPlatsPartager = async () => {
+      try {
+        const response = await fetch('/api/menu/menu-complet');
+        if (!response.ok) {
+          throw new Error('Erreur lors du chargement du menu');
+        }
+        
+        const menuData = await response.json();
+        
+        // Récupérer la catégorie "a-partager"
+        const partagerCategory = menuData['a-partager'];
+        if (partagerCategory && partagerCategory.plats) {
+          setPlatsPartager(partagerCategory.plats);
+        } else {
+          // Fallback avec données par défaut si pas de données
+          setPlatsPartager([
+            { id: 1, nom: "Plateau de Fromages Affinés", prix: "28.00", description: "Sélection de 6 fromages, fruits secs, raisins frais, miel, confiture de figues et pain aux noix" },
+            { id: 2, nom: "Planche de Charcuteries Fines", prix: "26.00", description: "Jambon de Parme, chorizo ibérique, saucisson aux herbes, terrine maison" }
+          ]);
+        }
+        
+        setLoading(false);
+      } catch (error) {
+        console.error('Erreur lors du chargement des plats à partager:', error);
+        setError('Impossible de charger le menu. Veuillez réessayer plus tard.');
+        
+        // Données de fallback
+        setPlatsPartager([
+          { id: 1, nom: "Plateau de Fromages Affinés", prix: "28.00", description: "Sélection de 6 fromages, fruits secs, raisins frais, miel, confiture de figues et pain aux noix" },
+          { id: 2, nom: "Planche de Charcuteries Fines", prix: "26.00", description: "Jambon de Parme, chorizo ibérique, saucisson aux herbes, terrine maison" }
+        ]);
+        setLoading(false);
+      }
+    };
+
+    fetchPlatsPartager();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="page-with-menu">
+        <SideMenu isOpen={false} toggleMenu={() => {}} />
+        <CloseButton />
+        <div className="partager-page-container">
+          <div className="partager-menu-card">
+            <div className="partager-header">
+              <h1>New York Café</h1>
+              <h2>CHARGEMENT...</h2>
+              <p className="subtitle">À Partager</p>
+            </div>
+            <div style={{ textAlign: 'center', color: 'white', padding: '40px' }}>
+              <p>🚀 Chargement des plats à partager...</p>
+              {error && <p style={{ color: '#ff6b6b' }}>⚠️ {error}</p>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="page-with-menu">
-      <SideMenu />
+      <SideMenu isOpen={false} toggleMenu={() => {}} />
       <CloseButton />
       <motion.div 
-        className="partager-page-container"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="partager-menu-card">
-          <div className="partager-header">
-            <h1>New York Café</h1>
-            <h2>À PARTAGER</h2>
-            <p className="subtitle">Moments de Convivialité & de Partage</p>
-          </div>
-
-          <div className="menu-section">
-            <h3 className="section-title">GRANDES PLANCHES</h3>
-            <div className="partager-menu">
-              {platsPartager.map((plat, index) => (
-                <motion.div 
-                  key={index} 
-                  className="partager-item"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <div className="partager-name-price">
-                    <span className="partager-name">{plat.name}</span>
-                    <div className="price-info">
-                      <span className="personnes">{plat.personnes} pers.</span>
-                      <span className="partager-price">{plat.price}€</span>
-                    </div>
-                  </div>
-                  <div className="partager-description">{plat.description}</div>
-                </motion.div>
-              ))}
+        <div className="partager-page-container">
+          <div className="partager-menu-card">
+            <div className="partager-header">
+              <h1>New York Café</h1>
+              <h2>À PARTAGER</h2>
+              <p className="subtitle">Moments de Convivialité & de Partage</p>
             </div>
-          </div>
 
-          <div className="menu-section">
-            <h3 className="section-title">TAPAS & PETITES PORTIONS</h3>
-            <div className="tapas-menu">
-              {tapas.map((tapa, index) => (
-                <motion.div 
-                  key={index} 
-                  className="tapas-item"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <div className="tapas-name-price">
-                    <span className="tapas-name">{tapa.name}</span>
-                    <span className="tapas-price">{tapa.price}€</span>
-                  </div>
-                  <div className="tapas-description">{tapa.description}</div>
-                </motion.div>
-              ))}
+            <div className="menu-section">
+              <h3 className="section-title">NOS PLATS À PARTAGER</h3>
+              <div className="partager-menu">
+                {platsPartager.map((plat) => (
+                  <motion.div 
+                    key={plat.id} 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    <div className="partager-item">
+                    <div className="partager-name-price">
+                      <span className="partager-name">{plat.nom}</span>
+                      <div className="price-info">
+                        <span className="partager-price">{parseFloat(plat.prix)}€</span>
+                      </div>
+                    </div>
+                    <div className="partager-description">{plat.description}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
