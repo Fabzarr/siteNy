@@ -104,48 +104,48 @@ const SaladesPage: React.FC = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="salades-page-container">
-          <div className="salades-menu-card">
-            <div className="salades-header">
-              <h1>New York Café</h1>
-              <h2>NOS BELLES SALADES</h2>
-              <p className="subtitle">Fraîcheur & Saveurs</p>
-            </div>
+        <div className="salades-menu-card">
+          <div className="salades-header">
+            <h1>New York Café</h1>
+            <h2>NOS BELLES SALADES</h2>
+            <p className="subtitle">Fraîcheur & Saveurs</p>
+          </div>
 
-            <div className="salades-menu">
-              <div className="menu-column">
+          <div className="salades-menu">
+            <div className="menu-column">
                 {column1.map((salade) => (
                   <div key={salade.id} className="salade-item">
-                    <div className="salade-name-price">
+                  <div className="salade-name-price">
                       <span className="salade-name">{salade.nom}</span>
                       <span className="salade-price">{parseFloat(salade.prix)}€</span>
-                    </div>
-                    <div className="salade-description">{salade.description}</div>
                   </div>
-                ))}
-              </div>
+                  <div className="salade-description">{salade.description}</div>
+                </div>
+              ))}
+            </div>
 
-              <div className="menu-column">
+            <div className="menu-column">
                 {column2.map((salade) => (
                   <div key={salade.id} className="salade-item">
-                    <div className="salade-name-price">
+                  <div className="salade-name-price">
                       <span className="salade-name">{salade.nom}</span>
                       <span className="salade-price">{parseFloat(salade.prix)}€</span>
-                    </div>
-                    <div className="salade-description">{salade.description}</div>
                   </div>
-                ))}
-              </div>
+                  <div className="salade-description">{salade.description}</div>
+                </div>
+              ))}
+            </div>
 
-              <div className="menu-column">
+            <div className="menu-column">
                 {column3.map((salade) => (
                   <div key={salade.id} className="salade-item">
-                    <div className="salade-name-price">
+                  <div className="salade-name-price">
                       <span className="salade-name">{salade.nom}</span>
                       <span className="salade-price">{parseFloat(salade.prix)}€</span>
-                    </div>
-                    <div className="salade-description">{salade.description}</div>
                   </div>
-                ))}
+                  <div className="salade-description">{salade.description}</div>
+                </div>
+              ))}
               </div>
             </div>
           </div>

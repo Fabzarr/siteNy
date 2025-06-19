@@ -88,22 +88,22 @@ const PizzaPage: React.FC = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="pizza-page-container">
-          <div className="pizza-menu-card">
-            <div className="pizza-header">
-              <h1>New York Café</h1>
+        <div className="pizza-menu-card">
+          <div className="pizza-header">
+            <h1>New York Café</h1>
               <h2>NOS PIZZAS</h2>
-            </div>
+          </div>
 
-            <div className="pizza-menu">
-              {pizzas.map((pizza) => (
-                <div key={pizza.id} className="pizza-item">
-                  <div className="pizza-name-price">
+          <div className="pizza-menu">
+            {pizzas.map((pizza) => (
+              <div key={pizza.id} className="pizza-item">
+                <div className="pizza-name-price">
                     <span className="pizza-name">{pizza.nom}</span>
                     <span className="pizza-price">{parseFloat(pizza.prix)}€</span>
-                  </div>
-                  <div className="pizza-description">{pizza.description}</div>
                 </div>
-              ))}
+                <div className="pizza-description">{pizza.description}</div>
+              </div>
+            ))}
             </div>
           </div>
         </div>

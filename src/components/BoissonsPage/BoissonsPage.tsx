@@ -122,14 +122,34 @@ const BoissonsPage = () => {
   };
 
   const InfoSection = () => (
-    <>
-      <div className="happy-hour-info">
-        <p>Happy Hours de 16h à 21h - Pinte blonde Herrenbräu 4 € - Cocktails 5 €</p>
-      </div>
-      <div className="karaoke-info">
-        <p>Pour participer au karaoké, une consommation hors happy hours est obligatoire.</p>
-      </div>
-    </>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px', width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+      <p style={{
+        color: '#2ECC71', 
+        margin: '0', 
+        fontSize: '1.1rem', 
+        fontWeight: '500',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        width: '100%'
+      }}>
+        <span style={{ fontSize: '1.2rem', width: '28px', textAlign: 'center', flexShrink: 0 }}>🍻</span>
+        <span>Happy Hours 16h-21h : Pinte Herrenbräu 4€ - Cocktails 5€</span>
+      </p>
+      <p style={{
+        color: '#5DADE2', 
+        margin: '0', 
+        fontSize: '1.1rem', 
+        fontWeight: '500',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        width: '100%'
+      }}>
+        <span style={{ fontSize: '1.2rem', width: '28px', textAlign: 'center', flexShrink: 0 }}>🎤</span>
+        <span>Karaoké : consommation hors happy hours obligatoire</span>
+      </p>
+    </div>
   );
 
   return (
@@ -187,9 +207,9 @@ const BoissonsPage = () => {
           >
             <span>COCKTAILS</span>
           </button>
-        </div>
+                </div>
         
-          <InfoSection />
+        <InfoSection />
 
         {activeMenu === 'boissons' ? (
           <div className="boissons-columns">
@@ -337,7 +357,7 @@ const BoissonsPage = () => {
                     <span className="boisson-description">{item.description}</span>
                   </div>
                 ))}
-          </div>
+              </div>
 
               <div className="boissons-section">
                 <h2>Bouteilles premium 70 cl</h2>
@@ -461,8 +481,21 @@ const BoissonsPage = () => {
           </div>
         )}
 
-        <div className="boissons-footer">
-          <p>PRIX NETS EN EUROS - CB MINIMUM 10 € - L'ÉTABLISSEMENT N'ACCEPTE NI CHÈQUES NI TICKETS RESTAURANTS</p>
+        <div style={{ marginTop: '40px', textAlign: 'center', padding: '20px 0' }}>
+          <p style={{
+            color: '#FFD700', 
+            textAlign: 'center', 
+            margin: '10px 0', 
+            fontSize: '1rem', 
+            fontWeight: '700',
+            textShadow: '0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FF6B00, 0 0 50px #FF6B00',
+            animation: 'glow-gold-spectacular 1.5s ease-in-out infinite alternate',
+            letterSpacing: '1px',
+            textTransform: 'uppercase',
+            fontFamily: 'Arial Black, sans-serif'
+          }}>
+            PRIX NETS EN EUROS - CB MINIMUM 10 € - L'ÉTABLISSEMENT N'ACCEPTE NI CHÈQUES NI TICKETS RESTAURANTS
+          </p>
         </div>
         </div>
       </motion.div>

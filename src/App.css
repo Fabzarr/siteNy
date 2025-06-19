@@ -58,6 +58,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  caret-color: transparent !important;
 }
 
 /* Scrollbar styles */
@@ -152,6 +153,24 @@ h1, h2, h3, h4, h5, h6 {
   -moz-user-focus: none !important;
   -moz-user-input: none !important;
   -moz-user-modify: read-only !important;
+  caret-color: transparent !important;
+  text-decoration: none !important;
+}
+
+/* Suppression complète des curseurs et barres de saisie */
+h1::before, h1::after,
+h2::before, h2::after,
+h3::before, h3::after,
+h4::before, h4::after,
+h5::before, h5::after,
+h6::before, h6::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Suppression des curseurs de texte sur tous les éléments */
+*, *::before, *::after {
+  caret-color: transparent !important;
 }
 
 /* Liens et boutons */

@@ -94,48 +94,48 @@ const PetitesFaimsPage: React.FC = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="petites-faims-page-container">
-          <div className="petites-faims-menu-card">
-            <div className="petites-faims-header">
-              <h1>New York Café</h1>
-              <h2>PETITES FAIMS</h2>
-              <p className="subtitle">Entrées & Apéritifs</p>
-            </div>
+        <div className="petites-faims-menu-card">
+          <div className="petites-faims-header">
+            <h1>New York Café</h1>
+            <h2>PETITES FAIMS</h2>
+            <p className="subtitle">Entrées & Apéritifs</p>
+          </div>
 
-            <div className="petites-faims-menu">
-              <div className="menu-column">
+          <div className="petites-faims-menu">
+            <div className="menu-column">
                 {column1.map((item) => (
                   <div key={item.id} className="petites-faims-item">
-                    <div className="petites-faims-name-price">
+                  <div className="petites-faims-name-price">
                       <span className="petites-faims-name">{item.nom}</span>
                       <span className="petites-faims-price">{parseFloat(item.prix)}€</span>
-                    </div>
-                    <div className="petites-faims-description">{item.description}</div>
                   </div>
-                ))}
-              </div>
+                  <div className="petites-faims-description">{item.description}</div>
+                </div>
+              ))}
+            </div>
 
-              <div className="menu-column">
+            <div className="menu-column">
                 {column2.map((item) => (
                   <div key={item.id} className="petites-faims-item">
-                    <div className="petites-faims-name-price">
+                  <div className="petites-faims-name-price">
                       <span className="petites-faims-name">{item.nom}</span>
                       <span className="petites-faims-price">{parseFloat(item.prix)}€</span>
-                    </div>
-                    <div className="petites-faims-description">{item.description}</div>
                   </div>
-                ))}
-              </div>
+                  <div className="petites-faims-description">{item.description}</div>
+                </div>
+              ))}
+            </div>
 
-              <div className="menu-column">
+            <div className="menu-column">
                 {column3.map((item) => (
                   <div key={item.id} className="petites-faims-item">
-                    <div className="petites-faims-name-price">
+                  <div className="petites-faims-name-price">
                       <span className="petites-faims-name">{item.nom}</span>
                       <span className="petites-faims-price">{parseFloat(item.prix)}€</span>
-                    </div>
-                    <div className="petites-faims-description">{item.description}</div>
                   </div>
-                ))}
+                  <div className="petites-faims-description">{item.description}</div>
+                </div>
+              ))}
               </div>
             </div>
           </div>

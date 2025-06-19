@@ -179,31 +179,31 @@ const DessertsPage: React.FC = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="desserts-page-container">
-          <div className="desserts-menu-card">
-            <div className="desserts-header">
-              <h1>New York Café</h1>
-              <h2>NOS DESSERTS</h2>
-              <p className="subtitle">Douceurs & Gourmandises</p>
-            </div>
+        <div className="desserts-menu-card">
+          <div className="desserts-header">
+            <h1>New York Café</h1>
+            <h2>NOS DESSERTS</h2>
+            <p className="subtitle">Douceurs & Gourmandises</p>
+          </div>
 
-            <div className="menu-section">
-              <div className="desserts-menu">
-                {desserts.map((dessert, index) => (
-                  <motion.div 
-                    key={index} 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
+          <div className="menu-section">
+            <div className="desserts-menu">
+              {desserts.map((dessert, index) => (
+                <motion.div 
+                  key={index} 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
                     <div className="dessert-item">
-                      <div className="dessert-name-price">
+                  <div className="dessert-name-price">
                         <span className="dessert-name">{dessert.nom_plat}</span>
                         <span className="dessert-price">{dessert.prix}€</span>
-                      </div>
-                      <div className="dessert-description">{dessert.description}</div>
+                  </div>
+                  <div className="dessert-description">{dessert.description}</div>
                     </div>
-                  </motion.div>
-                ))}
+                </motion.div>
+              ))}
               </div>
             </div>
           </div>

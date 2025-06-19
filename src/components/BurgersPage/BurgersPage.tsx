@@ -89,26 +89,26 @@ const BurgersPage: React.FC = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="burgers-page-container">
-          <div className="burgers-menu-card">
-            <div className="burgers-header">
-              <h1>New York Café</h1>
-              <h2>HAMBURGERS & TARTARES</h2>
-              <p className="subtitle">Saveurs & Raffinement</p>
-            </div>
+        <div className="burgers-menu-card">
+          <div className="burgers-header">
+            <h1>New York Café</h1>
+            <h2>HAMBURGERS & TARTARES</h2>
+            <p className="subtitle">Saveurs & Raffinement</p>
+          </div>
 
-            <div className="menu-section">
+          <div className="menu-section">
               <h3 className="section-title">NOS SPÉCIALITÉS</h3>
-              <div className="burgers-menu">
+            <div className="burgers-menu">
                 {burgers.map((item) => (
                   <div key={item.id} className="burger-item">
-                    <div className="burger-name-price">
+                  <div className="burger-name-price">
                       <span className="burger-name">{item.nom}</span>
                       <span className="burger-price">{parseFloat(item.prix)}€</span>
-                    </div>
-                    <div className="burger-description">{item.description}</div>
                   </div>
-                ))}
-              </div>
+                    <div className="burger-description">{item.description}</div>
+                </div>
+              ))}
+            </div>
             </div>
           </div>
         </div>
