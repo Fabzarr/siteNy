@@ -1,8 +1,9 @@
 .burgers-page-container {
   flex: 1;
-  margin-left: 280px;
   padding: 40px;
   min-height: 100%;
+  /* Utiliser le système de marges responsive global */
+  margin-left: var(--content-margin-desktop);
 }
 
 .burgers-menu-card {
@@ -273,9 +274,18 @@
   }
 }
 
+/* Tablette */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .burgers-page-container {
+    margin-left: var(--content-margin-tablet);
+    padding: 30px;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   .burgers-page-container {
-    margin-left: 220px;
+    margin-left: var(--content-margin-mobile);
     padding: 20px;
   }
 
@@ -306,7 +316,7 @@
 
 @media (max-width: 480px) {
   .burgers-page-container {
-    margin-left: 0;
+    margin-left: var(--content-margin-mobile);
     padding: 10px;
   }
 

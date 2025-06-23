@@ -319,8 +319,20 @@
 }
 
 .boisson-item {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  padding: clamp(12px, 2vw, 15px) 0;
+  border-block-end: 1px solid color-mix(in srgb, #FFFFFF 10%, transparent 90%);
+  
+  /* Hover équilibré */
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+  border-radius: 8px;
+  padding-inline: clamp(8px, 2vw, 12px);
+  margin-inline: -clamp(8px, 2vw, 12px);
+}
+
+.boisson-item:hover {
+  /* Changement plus visible mais modéré */
+  background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
+  border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
 }
 
 .boisson-item:last-child {
@@ -330,28 +342,63 @@
 .boisson-info {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 4px;
+  align-items: flex-start;
+  /* ESPACEMENT ULTRA-MINIMAL */
+  margin-bottom: 1px;
+  gap: clamp(12px, 3vw, 15px);
 }
 
 .boisson-name {
-  color: white;
-  font-size: 1.1rem;
+  color: color-mix(in oklch, #FFFFFF 95%, #D4AF37 5%);
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
   font-weight: 500;
+  flex: 1;
+  
+  /* 2025 Typography Enhancement */
+  line-height: 1.3;
+  font-optical-sizing: auto;
+  font-variation-settings: "wght" 500;
+  
+  /* Subtle transition */
+  transition: color 0.2s ease;
 }
 
 .boisson-price {
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-left: 15px;
+  color: color-mix(in oklch, #D4AF37 90%, #F4D03F 10%);
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  font-weight: 600;
   white-space: nowrap;
+  
+  /* 2025 Price Styling */
+  background: color-mix(in srgb, #D4AF37 8%, transparent 92%);
+  padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #D4AF37 20%, transparent 80%);
+  
+  /* Léger effet sur les prix */
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.boisson-price:hover {
+  background: color-mix(in srgb, #D4AF37 12%, transparent 88%);
+  border-color: color-mix(in srgb, #D4AF37 30%, transparent 70%);
 }
 
 .boisson-description {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
+  color: color-mix(in oklch, #FFFFFF 70%, transparent 30%);
+  font-size: clamp(0.85rem, 2vw, 0.9rem);
   line-height: 1.4;
+  font-style: italic;
+  
+  /* REMONTER LES INGRÉDIENTS */
+  margin-top: -1px;
+  
+  /* 2025 Typography */
+  font-optical-sizing: auto;
+  letter-spacing: 0.2px;
+  
+  /* Enhanced readability */
+  text-shadow: 0 1px 2px color-mix(in srgb, #000000 20%, transparent 80%);
 }
 
 .boissons-footer {
@@ -499,6 +546,8 @@
 @media (min-width: 1025px) {
   .boissons-page {
     padding-top: var(--navbar-height);
+    margin-left: var(--content-margin-desktop);
+    max-width: calc(100vw - var(--content-margin-desktop) - 80px);
   }
 
   .boissons-content {
@@ -674,6 +723,24 @@
   .boissons-section h2 {
     font-size: 1.4rem;
   }
+
+  /* Ajustements d'espacement identiques à CartePage pour 1024px */
+  .boisson-info {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: -2px;
+  }
+  
+  /* Remonter le prix visuellement */
+  .boisson-price {
+    margin-top: -3px;
+  }
+  
+  /* Petit espace entre nom et ingrédients */
+  .boisson-description {
+    margin-top: 5px;
+  }
 }
 
 /* Structure mobile/tablette identique à CartePage */
@@ -763,14 +830,32 @@
     padding: 20px;
   }
 
-  .boisson-name,
-  .boisson-price {
-    font-size: 1rem;
+  /* Titre de section identique à CartePage */
+  .boissons-section h2 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 15px;
   }
 
-  .boisson-description {
-    font-size: 0.85rem;
+  /* Ajustements d'espacement identiques à CartePage */
+  .boisson-info {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: -3px; /* ESPACEMENT NÉGATIF pour rapprocher */
   }
+  
+  /* Remonter encore plus le prix sur mobile */
+  .boisson-price {
+    margin-top: -5px;
+  }
+  
+  /* Petit espace entre nom et ingrédients sur mobile */
+  .boisson-description {
+    margin-top: 6px;
+  }
+
+  /* Pas de réduction de taille - on garde le clamp() original comme CartePage */
 }
 
 @media (max-width: 480px) {

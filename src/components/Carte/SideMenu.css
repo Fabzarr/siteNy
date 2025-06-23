@@ -462,10 +462,10 @@ body.menu-open {
 @media (min-width: 1025px) {
   .side-menu {
     position: fixed;
-    left: -44px; /* Parfaitement collé à gauche */
+    left: 0; /* Parfaitement collé à gauche sans déborder */
     top: var(--navbar-height);
     bottom: 0; /* Collé au footer */
-    width: 300px; /* Compenser la largeur */
+    width: 280px; /* Largeur standard */
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     border-right: 1px solid rgba(212, 175, 55, 0.1);
