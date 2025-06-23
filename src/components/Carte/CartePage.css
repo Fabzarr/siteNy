@@ -7,7 +7,7 @@
 
 .carte-page-container {
   flex: 1;
-  margin-left: 280px;
+  margin-left: var(--content-margin-desktop);
   padding: 40px 0 200px 0;
   padding-top: var(--navbar-height);
   min-height: 100vh;
@@ -21,7 +21,7 @@
 @media (min-width: 1025px) {
   .carte-page-container {
     flex: 1;
-    margin-left: 280px;
+    margin-left: var(--content-margin-desktop);
     padding: 40px 0 200px 0;
     padding-top: var(--navbar-height);
     min-height: 100vh;
@@ -34,7 +34,7 @@
   .carte-header {
     position: fixed;
     top: var(--navbar-height);
-    left: 280px;
+    left: var(--side-menu-width);
     right: 0;
     z-index: 80;
     margin: 0;
@@ -169,7 +169,7 @@
   container-name: menu-section;
   
   /* Logical Properties pour l'internationalisation */
-  inline-size: calc(100vw - 280px - 80px);
+  inline-size: calc(100vw - var(--side-menu-width) - 80px);
   max-inline-size: 700px;
   margin-block-end: 40px;
   padding: clamp(20px, 3vw, 25px);
@@ -285,7 +285,7 @@
 /* CENTRAGE DESKTOP - Approche 2025 moderne */
 @media (min-width: 1025px) {
   .carte-page-container .menu-section {
-    inline-size: calc(100vw - 280px - 120px);
+    inline-size: calc(100vw - var(--side-menu-width) - 120px);
     max-inline-size: 700px;
     margin-block-end: 40px;
     padding: clamp(20px, 3vw, 25px);

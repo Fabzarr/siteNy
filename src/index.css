@@ -7,8 +7,8 @@
 :root {
   --navbar-height: 80px;
   --side-menu-width: 280px;
-  --content-margin-desktop: 300px; /* Marge pour le contenu sur desktop */
-  --content-margin-tablet: 300px;  /* Marge pour le contenu sur tablette */
+  --content-margin-desktop: 280px; /* Marge pour le contenu sur desktop - CONSERVATRICE */
+  --content-margin-tablet: 280px;  /* Marge pour le contenu sur tablette */
   --content-margin-mobile: 0px;    /* Pas de marge sur mobile */
   font-family: 'Inter', sans-serif;
   line-height: 1.5;
@@ -115,17 +115,17 @@ button:focus-visible {
   }
 }
 
-/* Très grands écrans - optimisation */
+/* Très grands écrans - optimisation CONSERVATIVE */
 @media (min-width: 1440px) {
   :root {
-    --content-margin-desktop: 320px; /* Plus d'espace sur les grands écrans */
+    --content-margin-desktop: 300px; /* Légèrement plus d'espace sur les grands écrans */
   }
 }
 
-/* Écrans ultra-larges - optimisation avancée */
+/* Écrans ultra-larges - optimisation CONSERVATIVE */
 @media (min-width: 1920px) {
   :root {
-    --content-margin-desktop: 350px; /* Encore plus d'espace sur les écrans ultra-larges */
+    --content-margin-desktop: 320px; /* Modérément plus d'espace sur les écrans ultra-larges */
   }
 }
 
@@ -185,18 +185,18 @@ button:focus-visible {
   }
 }
 
-/* Optimisations pour les grands écrans */
+/* Optimisations pour les grands écrans - DÉSACTIVÉES TEMPORAIREMENT */
 @media (min-width: 1025px) {
-  .menu-card, .menu-section {
+  /* .menu-card, .menu-section {
     max-width: calc(100vw - var(--content-margin-desktop) - 80px);
-  }
+  } */
   
-  /* Centrage du contenu sur les très grands écrans */
-  .menu-page-container {
+  /* Centrage du contenu sur les très grands écrans - DÉSACTIVÉ */
+  /* .menu-page-container {
     max-width: 1400px;
     margin-left: var(--content-margin-desktop);
     margin-right: auto;
-  }
+  } */
 }
 
 /* Correction des problèmes de glassmorphism sur différents écrans */
