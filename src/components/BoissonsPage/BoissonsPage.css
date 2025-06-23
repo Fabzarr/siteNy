@@ -546,8 +546,6 @@
 @media (min-width: 1025px) {
   .boissons-page {
     padding-top: var(--navbar-height);
-    margin-left: var(--content-margin-desktop);
-    max-width: calc(100vw - var(--content-margin-desktop) - 80px);
   }
 
   .boissons-content {
