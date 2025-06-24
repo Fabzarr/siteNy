@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import './BoissonsPage.css';
 
 const BoissonsPage = () => {
@@ -153,25 +152,14 @@ const BoissonsPage = () => {
   );
 
   return (
-    <motion.div 
-      className="boissons-page"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div className="boissons-page">
       <div className="boissons-content">
           <div className="boissons-header">
-          <div className="boissons-header-left">
-            <h1>New York Café</h1>
-          </div>
           <div className="boissons-header-center">
             <h2>CARTE DES BOISSONS</h2>
-            <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '1.1rem', margin: '0', letterSpacing: '2px' }}>
+            <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', margin: '0', letterSpacing: '1px' }}>
               BOISSONS, COCKTAILS & MOCKTAILS
             </p>
-          </div>
-          <div className="boissons-header-right">
-            {/* Espace réservé pour équilibrer */}
           </div>
           
           {/* Titres et boutons pour mobile/tablette - directement dans header */}
@@ -214,8 +202,9 @@ const BoissonsPage = () => {
         {activeMenu === 'boissons' ? (
           <div className="boissons-columns">
             <div className="boissons-column">
-              <div className="boissons-section">
-                <h2>Boissons fraîches</h2>
+                          <div className="boissons-section">
+              <h2>Boissons fraîches</h2>
+              <div className="boisson-grid">
                 {boissonsData.boissons_fraiches.map((item, index) => (
                   <div key={index} className="boisson-item">
                     <div className="boisson-info">
@@ -226,6 +215,7 @@ const BoissonsPage = () => {
                   </div>
                 ))}
               </div>
+            </div>
 
               <div className="boissons-section">
                 <h2>Apéritifs</h2>
@@ -377,106 +367,122 @@ const BoissonsPage = () => {
           <div className="cocktails-container">
             <div className="cocktails-section">
               <h2>COCKTAILS - 10.00 €</h2>
-              {cocktailsData.cocktails_standards.map((item, index) => (
-                <div key={index} className="boisson-item">
-                  <div className="boisson-info">
-                    <span className="boisson-name">{item.name}</span>
-                    <span className="boisson-price">{item.price}€</span>
+              <div className="cocktail-grid">
+                {cocktailsData.cocktails_standards.map((item, index) => (
+                  <div key={index} className="cocktail-item">
+                    <div className="cocktail-info">
+                      <span className="cocktail-name">{item.name}</span>
+                      <span className="cocktail-price">{item.price}€</span>
+                    </div>
+                    <span className="cocktail-description">{item.description}</span>
                   </div>
-                  <span className="boisson-description">{item.description}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="cocktails-section">
               <h2>RHUM</h2>
-              {cocktailsData.rhum.map((item, index) => (
-                <div key={index} className="boisson-item">
-                  <div className="boisson-info">
-                    <span className="boisson-name">{item.name}</span>
-                    <span className="boisson-price">{item.price}€</span>
+              <div className="cocktail-grid">
+                {cocktailsData.rhum.map((item, index) => (
+                  <div key={index} className="cocktail-item">
+                    <div className="cocktail-info">
+                      <span className="cocktail-name">{item.name}</span>
+                      <span className="cocktail-price">{item.price}€</span>
+                    </div>
+                    <span className="cocktail-description">{item.description}</span>
                   </div>
-                  <span className="boisson-description">{item.description}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="cocktails-section">
               <h2>VODKA</h2>
-              {cocktailsData.vodka.map((item, index) => (
-                <div key={index} className="boisson-item">
-                  <div className="boisson-info">
-                    <span className="boisson-name">{item.name}</span>
-                    <span className="boisson-price">{item.price}€</span>
+              <div className="cocktail-grid">
+                {cocktailsData.vodka.map((item, index) => (
+                  <div key={index} className="cocktail-item">
+                    <div className="cocktail-info">
+                      <span className="cocktail-name">{item.name}</span>
+                      <span className="cocktail-price">{item.price}€</span>
+                    </div>
+                    <span className="cocktail-description">{item.description}</span>
                   </div>
-                  <span className="boisson-description">{item.description}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="cocktails-section">
               <h2>GIN</h2>
-              {cocktailsData.gin.map((item, index) => (
-                <div key={index} className="boisson-item">
-                  <div className="boisson-info">
-                    <span className="boisson-name">{item.name}</span>
-                    <span className="boisson-price">{item.price}€</span>
+              <div className="cocktail-grid">
+                {cocktailsData.gin.map((item, index) => (
+                  <div key={index} className="cocktail-item">
+                    <div className="cocktail-info">
+                      <span className="cocktail-name">{item.name}</span>
+                      <span className="cocktail-price">{item.price}€</span>
+                    </div>
+                    <span className="cocktail-description">{item.description}</span>
                   </div>
-                  <span className="boisson-description">{item.description}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="cocktails-section">
               <h2>TEQUILA</h2>
-              {cocktailsData.tequila.map((item, index) => (
-                <div key={index} className="boisson-item">
-                  <div className="boisson-info">
-                    <span className="boisson-name">{item.name}</span>
-                    <span className="boisson-price">{item.price}€</span>
+              <div className="cocktail-grid">
+                {cocktailsData.tequila.map((item, index) => (
+                  <div key={index} className="cocktail-item">
+                    <div className="cocktail-info">
+                      <span className="cocktail-name">{item.name}</span>
+                      <span className="cocktail-price">{item.price}€</span>
+                    </div>
+                    <span className="cocktail-description">{item.description}</span>
                   </div>
-                  <span className="boisson-description">{item.description}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="cocktails-section">
               <h2>WHISKY</h2>
-              {cocktailsData.whisky.map((item, index) => (
-                <div key={index} className="boisson-item">
-                  <div className="boisson-info">
-                    <span className="boisson-name">{item.name}</span>
-                    <span className="boisson-price">{item.price}€</span>
+              <div className="cocktail-grid">
+                {cocktailsData.whisky.map((item, index) => (
+                  <div key={index} className="cocktail-item">
+                    <div className="cocktail-info">
+                      <span className="cocktail-name">{item.name}</span>
+                      <span className="cocktail-price">{item.price}€</span>
+                    </div>
+                    <span className="cocktail-description">{item.description}</span>
                   </div>
-                  <span className="boisson-description">{item.description}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="cocktails-section">
               <h2>FUNS</h2>
-              {cocktailsData.funs.map((item, index) => (
-                <div key={index} className="boisson-item">
-                  <div className="boisson-info">
-                    <span className="boisson-name">{item.name}</span>
-                    <span className="boisson-price">{item.price}€</span>
+              <div className="cocktail-grid">
+                {cocktailsData.funs.map((item, index) => (
+                  <div key={index} className="cocktail-item">
+                    <div className="cocktail-info">
+                      <span className="cocktail-name">{item.name}</span>
+                      <span className="cocktail-price">{item.price}€</span>
+                    </div>
+                    <span className="cocktail-description">{item.description}</span>
                   </div>
-                  <span className="boisson-description">{item.description}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="cocktails-section">
               <h2>MOCKTAILS 8.00 € - BIG MOCKTAILS 10.00 €</h2>
-              {cocktailsData.mocktails.map((item, index) => (
-                <div key={index} className="boisson-item">
-                  <div className="boisson-info">
-                    <span className="boisson-name">{item.name}</span>
-                    <span className="boisson-price">{item.price}€</span>
+              <div className="cocktail-grid">
+                {cocktailsData.mocktails.map((item, index) => (
+                  <div key={index} className="cocktail-item">
+                    <div className="cocktail-info">
+                      <span className="cocktail-name">{item.name}</span>
+                      <span className="cocktail-price">{item.price}€</span>
+                    </div>
+                    <span className="cocktail-description">{item.description}</span>
                   </div>
-                  <span className="boisson-description">{item.description}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -497,8 +503,8 @@ const BoissonsPage = () => {
             PRIX NETS EN EUROS - CB MINIMUM 10 € - L'ÉTABLISSEMENT N'ACCEPTE NI CHÈQUES NI TICKETS RESTAURANTS
           </p>
         </div>
-        </div>
-      </motion.div>
+                </div>
+    </div>
   );
 };
 

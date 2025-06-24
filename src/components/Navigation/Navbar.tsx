@@ -66,6 +66,9 @@ const Navbar = () => {
         <Link to="/carte" className={location.pathname === '/carte' ? 'active' : ''} onClick={handleNavClick('/carte')}>
           CARTE
         </Link>
+        <Link to="/menu" className={location.pathname === '/menu' ? 'active' : ''} onClick={handleNavClick('/menu')}>
+          MENU
+        </Link>
         <Link to="/boissons" className={location.pathname === '/boissons' ? 'active' : ''} onClick={handleNavClick('/boissons')}>
           BOISSONS
         </Link>

@@ -462,10 +462,10 @@ body.menu-open {
 @media (min-width: 1025px) {
   .side-menu {
     position: fixed;
-    left: 0; /* Parfaitement collé à gauche sans déborder */
+    left: -44px; /* Parfaitement collé à gauche */
     top: var(--navbar-height);
     bottom: 0; /* Collé au footer */
-    width: 280px; /* Largeur standard */
+    width: 300px; /* Compenser la largeur */
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     border-right: 1px solid rgba(212, 175, 55, 0.1);
@@ -497,39 +497,40 @@ body.menu-open {
     justify-content: flex-start; /* Commence en haut */
     flex: 1;
     overflow: hidden;
-    padding: 30px 10px 30px 30px; /* Padding raisonnable */
+    padding: 20px 10px 20px 30px; /* Réduire le padding vertical */
     height: 100%; /* Prendre toute la hauteur disponible */
-    gap: 30px; /* Espacement encore plus réduit entre les 3 sections */
+    gap: 15px; /* Réduire encore plus l'espacement pour que tout rentre */
   }
 
   .side-menu .menu-section {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Espace entre les boutons */
+    gap: 6px; /* Réduire l'espace entre les boutons */
     /* Pas de flex: 1 pour éviter l'étirement excessif */
     justify-content: flex-start; /* Aligne les boutons en haut de chaque section */
   }
 
   .side-menu h3.section-title {
     color: #D4AF37;
-    font-size: 1.1rem; /* Plus grand que les boutons (1rem) */
+    font-size: 1rem; /* Réduire la taille pour économiser l'espace */
     font-family: 'Playfair Display', serif;
-    margin: 0 0 8px 0; /* Plus d'espace en bas */
+    margin: 0 0 6px 0; /* Réduire l'espace en bas */
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 700; /* Plus gras */
     text-align: center;
-    padding-bottom: 5px; /* Plus de padding */
+    padding-bottom: 3px; /* Réduire le padding */
     border-bottom: 1px solid rgba(212, 175, 55, 0.3);
   }
 
   .side-menu .menu-button {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
+    font-size: 0.9rem; /* Réduire légèrement la taille des boutons */
     cursor: pointer;
     text-align: center;
     white-space: normal;
     line-height: 1.1;
+    padding: 8px 12px; /* Ajouter un padding compact */
     /* Optimisation des transitions pour éviter les artefacts */
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     /* Suppression des transformations qui causent des artefacts */
