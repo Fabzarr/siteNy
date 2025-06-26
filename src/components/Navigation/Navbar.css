@@ -484,32 +484,81 @@
   }
 }
 
-/* 🎯 ADAPTATIONS RESPONSIVE POUR DESKTOP - Optimisé pour 9 boutons */
-/* Écrans moyens (1025px - 1366px) - Adaptation pour 9 boutons */
-@media (min-width: 1025px) and (max-width: 1366px) {
+/* 💻 DESKTOP REAL - SOLUTION EXPERT : HOVER + POINTER FINE */
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) and (max-width: 1366px) {
+  /* MASQUER LE HAMBURGER */
+  .hamburger {
+    display: none;
+  }
+  
+  /* NAVBAR DESKTOP NORMALE */
   .navbar {
-    padding: 0 1rem;
-    height: calc(var(--navbar-height) * 0.95);
+    padding: 0 1.2rem; /* Réduit pour écrans moyens */
+    height: var(--navbar-height);
   }
   
   .navbar-logo {
-    font-size: 1.3rem;
+    font-size: 1.3rem; /* Réduit pour éviter débordement */
     gap: 6px;
   }
   
   .navbar-logo-icon {
-    height: 48px;
-    width: 48px;
+    height: 45px; /* Réduit pour éviter débordement */
+    width: 45px;
   }
   
+  /* MENU DESKTOP NORMAL - SIMPLE ET PROPRE */
   .navbar-menu {
-    gap: 0.4rem;
+    display: flex;
+    gap: 0.5rem; /* Réduit pour éviter débordement */
+    align-items: center;
   }
   
+  /* STYLES DESKTOP EXACTS - SIMPLE ET PROPRE */
   .navbar-menu a {
-    padding: 0.3rem 0.5rem;
-    font-size: 0.8rem;
+    color: white;
+    text-decoration: none;
     font-weight: 500;
+    padding: 0.35rem 0.6rem; /* Réduit pour écrans moyens */
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 0.8rem; /* Réduit pour éviter débordement */
+  }
+  
+  .navbar-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -2px;
+    left: 50%;
+    background: linear-gradient(90deg, #D4AF37, #F4D03F);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
+  
+  .navbar-menu a:hover {
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.1);
+  }
+  
+  .navbar-menu a:hover::after {
+    width: 80%;
+  }
+  
+  /* Style pour la page active sur desktop */
+  .navbar-menu a.active {
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.15);
+    font-weight: 600;
+  }
+  
+  .navbar-menu a.active::after {
+    width: 100%;
+    background: linear-gradient(90deg, #D4AF37, #F4D03F);
+    height: 3px;
   }
 }
 

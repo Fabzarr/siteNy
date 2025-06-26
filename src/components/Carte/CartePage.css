@@ -849,6 +849,54 @@ body {
   }
 }
 
+/* 💻 DESKTOP SMALL (1024-1366px) - OPTIMISATIONS SPÉCIFIQUES */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  /* Ajustements header pour écrans desktop petits */
+  .carte-header {
+    padding: 12px 30px;
+    height: 65px;
+  }
+  
+  .carte-header h1 {
+    font-size: 1.4rem;
+  }
+  
+  .carte-header h2 {
+    font-size: 1.3rem;
+    letter-spacing: 1.8px;
+  }
+  
+  .carte-header p {
+    font-size: 0.7rem;
+  }
+  
+  /* Optimisation sections menu pour desktop compact */
+  .carte-page-container .menu-section {
+    inline-size: calc(100vw - 280px - 100px);
+    max-inline-size: 650px;
+    padding: 22px;
+    margin-block-end: 35px;
+  }
+  
+  /* Ajustements typographie pour écrans moyens */
+  .section-header h2 {
+    font-size: clamp(1.6rem, 3vw, 1.8rem);
+  }
+  
+  .item-name {
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  }
+  
+  .item-price {
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+    padding: 5px 10px;
+  }
+  
+  .item-description {
+    font-size: clamp(0.8rem, 1.8vw, 0.85rem);
+  }
+}
+
 @media (min-width: 1025px) {
   .mobile-nav-button {
     display: none !important;

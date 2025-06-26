@@ -602,6 +602,34 @@ body.menu-open {
   }
 }
 
+/* 💻 DESKTOP SMALL (1024-1366px) - OPTIMISATIONS SPÉCIFIQUES */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .side-menu {
+    width: 260px; /* Largeur légèrement réduite pour écrans compacts */
+  }
+  
+  .side-menu .menu-sections {
+    padding: 18px 8px 18px 25px; /* Réduction du padding pour optimiser l'espace */
+    gap: 12px; /* Réduction de l'espacement entre sections */
+  }
+  
+  .side-menu .menu-section {
+    gap: 5px; /* Réduction de l'espace entre boutons */
+  }
+  
+  .side-menu h3.section-title {
+    font-size: 0.9rem; /* Réduction de la taille des titres */
+    margin: 0 0 5px 0; /* Réduction des marges */
+    padding-bottom: 2px;
+  }
+  
+  .side-menu .menu-button {
+    font-size: 0.85rem; /* Réduction de la taille du texte */
+    padding: 7px 10px; /* Réduction du padding */
+    line-height: 1.0;
+  }
+}
+
 .side-menu .menu-button.active::before {
   display: none;
 } 

@@ -152,6 +152,79 @@
   overflow: hidden;
 }
 
+/* 💻 DESKTOP SMALL (1024-1366px) - OPTIMISATIONS HOME */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .hero {
+    min-height: 550px;
+    padding: 1.5rem;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero p {
+    font-size: 1.3rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-buttons {
+    gap: 1.2rem;
+  }
+  
+  .btn {
+    padding: 0.9rem 1.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* CORRECTION FEATURES : 2x2 AU LIEU DE 3+1 */
+  .features {
+    padding: 3.5rem 2rem; /* Plus de padding sur les côtés */
+    grid-template-columns: repeat(2, 1fr); /* FORCÉ À 2 COLONNES */
+    gap: 2.5rem; /* Gap plus généreux */
+    max-width: 800px; /* Largeur maximale pour éviter l'étalement */
+    margin: 0 auto; /* Centrer la grille */
+  }
+
+  .feature-card {
+    padding: 2rem; /* Padding légèrement augmenté pour 2x2 */
+    max-width: none; /* Pas de limite de largeur */
+  }
+  
+  .feature-icon {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .about-preview {
+    padding: 3.5rem 2rem; /* Même padding que features */
+  }
+
+  .about-content {
+    gap: 3rem;
+  }
+
+  .about-text h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .about-image {
+    height: 350px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero h1 {
     font-size: 2.5rem;
