@@ -458,23 +458,27 @@ body.menu-open {
   display: none;
 }
 
-/* RÈGLES DESKTOP - Style original restauré avec les 2 modifications demandées */
+/* RÈGLES DESKTOP - Style original corrigé */
 @media (min-width: 1025px) {
   .side-menu {
     position: fixed;
-    left: -44px; /* Parfaitement collé à gauche */
+    left: 0; /* Collé à gauche avec espacement visible */
     top: var(--navbar-height);
     bottom: 0; /* Collé au footer */
-    width: 300px; /* Compenser la largeur */
+    width: 280px; /* Largeur normale */
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     border-right: 1px solid rgba(212, 175, 55, 0.1);
+    /* Espacement arrondi à gauche ET à droite */
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
     display: flex;
     flex-direction: column;
     z-index: 100;
     padding: 0;
     margin: 0;
     overflow: hidden;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     /* Optimisations pour éviter les artefacts visuels */
     transform: translateZ(0); /* Force hardware acceleration */
     will-change: auto; /* Évite les repaintings inutiles */

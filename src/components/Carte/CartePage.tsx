@@ -648,28 +648,6 @@ const CartePage: React.FC = () => {
           <div className="carte-page-container">
             <div className="carte-header">
               <div className="carte-header-left">
-                {/* Bouton Menu moderne à gauche */}
-                <button style={{
-                  background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05))',
-                  border: '1px solid rgba(212, 175, 55, 0.3)',
-                  borderRadius: '10px',
-                  padding: '8px 16px',
-                  fontSize: '0.75rem',
-                  color: '#D4AF37',
-                  fontWeight: '600',
-                  letterSpacing: '1px',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer',
-                  backdropFilter: 'blur(10px)',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                  transition: 'all 0.3s ease',
-                  fontFamily: 'Playfair Display, serif',
-                  opacity: '0.5' // Désactivé pendant le loading
-                }}
-                disabled
-                >
-                  📋 MENU
-                </button>
               </div>
               <div className="carte-header-center">
                 <h2>CHARGEMENT DE LA CARTE...</h2>
@@ -739,41 +717,6 @@ const CartePage: React.FC = () => {
         <div className="carte-page-container">
           <div className="carte-header">
             <div className="carte-header-left">
-              {/* Bouton Menu moderne à gauche */}
-              <button style={{
-                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05))',
-                border: '1px solid rgba(212, 175, 55, 0.3)',
-                borderRadius: '10px',
-                padding: '8px 16px',
-                fontSize: '0.75rem',
-                color: '#D4AF37',
-                fontWeight: '600',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                cursor: 'pointer',
-                backdropFilter: 'blur(10px)',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.3s ease',
-                fontFamily: 'Playfair Display, serif'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1))';
-                e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.5)';
-                e.currentTarget.style.transform = 'translateY(-1px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05))';
-                e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.3)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-              onClick={() => {
-                // TODO: Navigation vers la page Menu
-                console.log('Navigation vers page Menu à implémenter');
-                // navigate('/menu'); // À décommenter quand la page sera créée
-              }}
-              >
-                📋 MENU
-              </button>
             </div>
             <div className="carte-header-center">
               <h2>NOTRE CARTE</h2>

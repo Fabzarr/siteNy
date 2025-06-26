@@ -39,7 +39,7 @@ const Galerie = () => {
           {/* Header fixe moderne comme CartePage */}
           <div className="galerie-header">
             <div className="galerie-header-left">
-              <h1>New York Café</h1>
+              {/* Espace réservé pour équilibrer */}
             </div>
             <div className="galerie-header-center">
               <h2>NOTRE GALERIE</h2>
