@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { isHolidayEve } from '../../utils/holidays';
 import { FaPhone, FaCalendarAlt, FaUsers, FaGlassCheers, FaTimes } from 'react-icons/fa';
 import { useModal } from '../../context/ModalContext';
@@ -25,6 +25,7 @@ interface TimeSlot {
 
 const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
   const { closeModal } = useModal();
+  const selectRef = useRef<HTMLSelectElement>(null);
   const [step, setStep] = useState<'form' | 'recap'>('form');
   const [formData, setFormData] = useState<ReservationData>({
     prenom: '',
@@ -36,6 +37,45 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
     nombrePersonnes: ''
   });
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
+
+  // Détection mobile/tablette par taille d'écran (plus fiable que la détection tactile)
+  const isMobileOrTablet = window.innerWidth <= 1024;
+
+  // Simple date change handler - works for all devices
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Amélioration tactile pour le calendrier
+  const handleDateClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const rect = target.getBoundingClientRect();
+    const clickX = e.clientX;
+    
+    // Calculer la position de l'icône calendrier (à droite du champ)
+    const iconZoneStart = rect.right - 40; // Zone de 40px à droite pour l'icône
+    
+    // Ne déclencher le calendrier que si on clique dans la zone de l'icône
+    if (clickX >= iconZoneStart) {
+      // Détection mobile/tablette pour le calendrier
+      if (isMobileOrTablet) {
+        // Force l'ouverture du calendrier sur les appareils tactiles
+        setTimeout(() => {
+          try {
+            target.showPicker?.();
+          } catch (error) {
+            // Fallback si showPicker n'est pas supporté
+            target.focus();
+          }
+        }, 100);
+      }
+    }
+    // Si on clique ailleurs dans le champ, ne rien faire (permettre la saisie manuelle)
+  };
 
   useEffect(() => {
     if (formData.date) {
@@ -128,14 +168,6 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
     }
 
     setTimeSlots(slots);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
   };
 
   const handleTimeSelect = (time: string) => {
@@ -276,12 +308,14 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
                       onChange={handleChange}
                       min={getMinDate()}
                       required
+                      onClick={handleDateClick}
                     />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="nombrePersonnes">Nombre de personnes *</label>
                     <select
+                      ref={selectRef}
                       id="nombrePersonnes"
                       name="nombrePersonnes"
                       value={formData.nombrePersonnes}
@@ -289,11 +323,14 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen }) => {
                       required
                     >
                       <option value="">Sélectionnez</option>
-                      {/* Ordre décroissant : de 20 à 1 */}
                       {[...Array(20)].map((_, i) => {
-                        const num = 20 - i; // 20, 19, 18... jusqu'à 1
+                        // Sur mobile/tablette : 1→20, sur desktop : 20→1
+                        const num = isMobileOrTablet ? i + 1 : 20 - i;
                         return (
-                          <option key={num} value={num}>
+                          <option 
+                            key={num} 
+                            value={num}
+                          >
                             {num} {num === 1 ? 'personne' : 'personnes'}
                           </option>
                         );

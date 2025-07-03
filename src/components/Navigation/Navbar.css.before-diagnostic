@@ -1,0 +1,589 @@
+/* =============================================== */
+/* 🎨 NAVBAR - SYSTÈME RESPONSIVE SIMPLIFIÉ */
+/* =============================================== */
+/* MOBILE OU DESKTOP - FINIES LES CONFUSIONS */
+
+/* =============================================== */
+/* 📋 STYLES DE BASE (DESKTOP PAR DÉFAUT) */
+/* =============================================== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #D4AF37;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-logo-icon {
+  height: 60px;
+  width: 60px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+  transition: all 0.3s ease;
+}
+
+.navbar-logo:hover .navbar-logo-icon {
+  transform: rotate(5deg) scale(1.05);
+  filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.5));
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.navbar-menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar-menu a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: -2px;
+  left: 50%;
+  background: linear-gradient(90deg, #D4AF37, #F4D03F);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.navbar-menu a:hover {
+  color: #D4AF37;
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.navbar-menu a:hover::after {
+  width: 80%;
+}
+
+.navbar-menu a.active {
+  color: #D4AF37;
+  background: rgba(212, 175, 55, 0.15);
+  font-weight: 600;
+}
+
+.navbar-menu a.active::after {
+  width: 100%;
+  background: linear-gradient(90deg, #D4AF37, #F4D03F);
+  height: 3px;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+  background: none;
+  border: none;
+  z-index: 1001;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #D4AF37;
+  margin: 3px 0;
+  transition: 0.3s;
+  display: block;
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.nav-link h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: white;
+  transition: color 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* =============================================== */
+/* 📱 MOBILE (max-width: 767px) */
+/* =============================================== */
+
+@media (max-width: 767px) {
+  /* Logo mobile */
+  .navbar-logo {
+    font-size: 1.5rem;
+    gap: 8px;
+  }
+  
+  .navbar-logo-icon {
+    height: 48px;
+    width: 48px;
+  }
+
+  /* Hamburger mobile */
+  .hamburger {
+    display: flex;
+    position: relative;
+  }
+
+  /* Menu mobile full-screen */
+  .navbar-menu {
+    position: fixed;
+    top: var(--navbar-height);
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - var(--navbar-height));
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 1rem;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .navbar-menu.open {
+    left: 0;
+  }
+
+  /* Liens mobile sophistiqués */
+  .navbar-menu a {
+    margin: 0.4rem 0;
+    font-size: 1rem;
+    padding: 12px 20px;
+    width: 85%;
+    text-align: center;
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    transition: all 0.2s ease;
+    position: relative;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.1);
+    backdrop-filter: blur(10px);
+    font-family: 'Playfair Display', serif;
+    overflow: hidden;
+    animation: buttonGlow 3s ease-in-out infinite alternate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    min-height: 44px;
+  }
+
+  /* Suppression underlines desktop sur mobile */
+  .navbar-menu a::after {
+    content: '○';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    color: rgba(212, 175, 55, 0.6);
+    animation: touchIndicator 2.5s ease-in-out infinite;
+    width: auto;
+    height: auto;
+    bottom: auto;
+    left: auto;
+    background: none;
+    border-radius: 0;
+  }
+
+  /* Bordures animées sophistiquées */
+  .navbar-menu a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(45deg, 
+      transparent, 
+      rgba(212, 175, 55, 0.8), 
+      transparent, 
+      rgba(244, 208, 63, 0.6),
+      transparent
+    );
+    background-size: 300% 300%;
+    animation: borderMove 4s ease infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+  }
+
+  /* Suppression hover sur mobile */
+  .navbar-menu a:hover {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    border-color: rgba(212, 175, 55, 0.4);
+    color: white;
+    transform: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .navbar-menu a:hover::after {
+    transform: translateY(-50%);
+    color: #D4AF37;
+    width: auto;
+  }
+
+  /* Effet tactile mobile */
+  .navbar-menu a:active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.15));
+    border-color: #D4AF37;
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.6);
+    animation: none;
+  }
+
+  .navbar-menu a:active::after {
+    transform: translateY(-50%) translateX(5px) scale(1.2);
+    color: #F4D03F;
+    text-shadow: 0 0 15px rgba(244, 208, 63, 1);
+    animation: none;
+  }
+
+  .navbar-menu a:active::before {
+    animation: none;
+    background: linear-gradient(45deg, 
+      rgba(212, 175, 55, 0.8), 
+      rgba(244, 208, 63, 1), 
+      rgba(212, 175, 55, 0.8)
+    );
+  }
+
+  /* Page active mobile */
+  .navbar-menu a.active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.15));
+    border-color: #D4AF37;
+    color: #D4AF37;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    transform: scale(1.02);
+  }
+
+  .navbar-menu a.active::after {
+    content: '●';
+    color: #D4AF37;
+    font-size: 1rem;
+    animation: activeIndicator 2s ease-in-out infinite;
+  }
+
+  /* Animations mobile */
+  @keyframes buttonGlow {
+    0% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 5px rgba(212, 175, 55, 0.1);
+    }
+    100% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+  }
+
+  @keyframes touchIndicator {
+    0%, 100% {
+      opacity: 0.6;
+      transform: translateY(-50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.1);
+    }
+  }
+
+  @keyframes borderMove {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes activeIndicator {
+    0%, 100% {
+      opacity: 1;
+      transform: translateY(-50%) scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: translateY(-50%) scale(1.1);
+    }
+  }
+}
+
+/* =============================================== */
+/* 💻 DESKTOP (768px+) - PLUS DE CONFLITS ! */
+/* =============================================== */
+
+@media (min-width: 768px) {
+  /* Hamburger caché sur desktop */
+  .hamburger {
+    display: none;
+  }
+  
+  /* Menu desktop normal */
+  .navbar-menu {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    position: static;
+    width: auto;
+    height: auto;
+    background: none;
+    backdrop-filter: none;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-top: 0;
+    transition: none;
+    z-index: auto;
+    overflow-y: visible;
+  }
+
+  /* Liens desktop normaux */
+  .navbar-menu a {
+    margin: 0;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    width: auto;
+    text-align: left;
+    border: none;
+    border-radius: 5px;
+    background: none;
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    box-shadow: none;
+    backdrop-filter: none;
+    font-family: inherit;
+    overflow: visible;
+    animation: none;
+    display: inline-block;
+    align-items: normal;
+    justify-content: normal;
+    line-height: normal;
+    min-height: auto;
+  }
+
+  /* Restoration des underlines desktop - SUPPRESSION COMPLÈTE MOBILE */
+  .navbar-menu a::after {
+    content: '' !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 3px !important;
+    bottom: -2px !important;
+    left: 50% !important;
+    background: linear-gradient(90deg, #D4AF37, #F4D03F) !important;
+    transition: all 0.3s ease !important;
+    transform: translateX(-50%) !important;
+    border-radius: 2px !important;
+    right: auto !important;
+    top: auto !important;
+    font-size: inherit !important;
+    color: inherit !important;
+    animation: none !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+  }
+
+  .navbar-menu a::before {
+    display: none !important;
+    content: none !important;
+    animation: none !important;
+  }
+
+  /* Hover desktop - SUPPRESSION COMPLÈTE EFFETS MOBILES */
+  .navbar-menu a:hover {
+    color: #D4AF37 !important;
+    background: rgba(212, 175, 55, 0.1) !important;
+    border: none !important;
+    border-color: initial !important;
+    transform: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    border-radius: 5px !important;
+    margin: 0 !important;
+    padding: 0.4rem 0.8rem !important;
+    width: auto !important;
+    text-align: left !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    backdrop-filter: none !important;
+    font-family: inherit !important;
+    font-weight: 500 !important;
+    min-height: auto !important;
+  }
+
+  .navbar-menu a:hover::after {
+    width: 80% !important;
+    transform: translateX(-50%) !important;
+    color: inherit !important;
+    content: '' !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  /* Active desktop */
+  .navbar-menu a.active {
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.15);
+    font-weight: 600;
+    border-color: initial;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .navbar-menu a.active::after {
+    width: 100%;
+    background: linear-gradient(90deg, #D4AF37, #F4D03F);
+    height: 3px;
+    content: '';
+    font-size: inherit;
+    animation: none;
+  }
+
+  /* Suppression TOTALE des effets tactiles sur desktop */
+  .navbar-menu a:active {
+    background: rgba(212, 175, 55, 0.1) !important;
+    border: none !important;
+    border-color: initial !important;
+    transform: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    color: #D4AF37 !important;
+    margin: 0 !important;
+    padding: 0.4rem 0.8rem !important;
+    width: auto !important;
+    text-align: left !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    backdrop-filter: none !important;
+    font-family: inherit !important;
+    border-radius: 5px !important;
+    min-height: auto !important;
+  }
+
+  .navbar-menu a:active::after {
+    content: '' !important;
+    width: 80% !important;
+    transform: translateX(-50%) !important;
+    color: inherit !important;
+    animation: none !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    font-size: inherit !important;
+  }
+
+  .navbar-menu a:active::before {
+    display: none !important;
+    content: none !important;
+    animation: none !important;
+  }
+}
+
+/* =============================================== */
+/* 💻 AJUSTEMENTS DESKTOP SPÉCIFIQUES */
+/* =============================================== */
+
+/* Desktop moyen (768px - 1366px) */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .navbar {
+    padding: 0 1.5rem;
+  }
+  
+  .navbar-logo {
+    font-size: 1.6rem;
+    gap: 10px;
+  }
+  
+  .navbar-logo-icon {
+    height: 55px;
+    width: 55px;
+  }
+  
+  .navbar-menu {
+    gap: 0.6rem;
+  }
+  
+  .navbar-menu a {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Desktop large (1367px+) */
+@media (min-width: 1367px) {
+  .navbar {
+    padding: 0 2rem;
+  }
+  
+  .navbar-logo {
+    font-size: 1.8rem;
+    gap: 12px;
+  }
+  
+  .navbar-logo-icon {
+    height: 60px;
+    width: 60px;
+  }
+  
+  .navbar-menu {
+    gap: 0.8rem;
+  }
+  
+  .navbar-menu a {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+} 

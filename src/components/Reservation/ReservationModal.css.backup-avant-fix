@@ -10,8 +10,8 @@
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(5px);
-  padding: 80px 1rem 80px;
-  overflow: hidden;
+  padding: 20px 1rem 1rem;
+  
 }
 
 /* Style pour masquer toutes les barres de défilement - MODIFIÉ */
@@ -43,7 +43,7 @@ body.modal-open {
 
 .modal-content {
   background: linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(0, 0, 0, 0.98));
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 8px;
   width: 85%;
   max-width: 550px;
@@ -54,9 +54,9 @@ body.modal-open {
   color: white;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   margin: auto;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(212, 175, 55, 0.6) rgba(0, 0, 0, 0.3);
+  
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .modal-content::-webkit-scrollbar {
@@ -80,7 +80,7 @@ body.modal-open {
 .modal-header {
   text-align: center;
   margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
+  
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   position: relative;
 }
@@ -98,8 +98,8 @@ body.modal-open {
 
 .modal-content h2 {
   color: #D4AF37;
-  font-size: 0.95rem;
-  margin-bottom: 0.3rem;
+  font-size: 0.7rem;
+  
   text-align: center;
   font-family: 'Playfair Display', serif;
   text-transform: uppercase;
@@ -121,8 +121,8 @@ body.modal-open {
 
 .intro-text {
   color: #fff;
-  margin-bottom: 0.3rem;
-  padding: 0.3rem;
+  
+  
   background: rgba(212, 175, 55, 0.05);
   border-radius: 6px;
   border: 1px solid rgba(212, 175, 55, 0.1);
@@ -132,7 +132,7 @@ body.modal-open {
 .intro-section {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 0.3rem;
+  
   padding: 0.2rem;
 }
 
@@ -188,7 +188,7 @@ body.modal-open {
   top: 15px;
   right: 15px;
   width: 32px;
-  height: 32px;
+  
   background-color: transparent;
   border: 2px solid #D4AF37;
   border-radius: 50%;
@@ -238,7 +238,7 @@ body.modal-open {
 .form-section h3 {
   color: #D4AF37;
   font-size: 0.9rem;
-  margin-bottom: 0.3rem;
+  
   padding-bottom: 0.3rem;
   border-bottom: 1px solid rgba(212, 175, 55, 0.1);
 }
@@ -530,49 +530,124 @@ body.modal-open {
   background: rgba(212, 175, 55, 0.5);
 }
 
+
 @media (max-width: 1024px) and (min-width: 769px) {
   .modal-overlay {
-    padding: 20px 1rem 1rem;
+    padding: 60px 1rem;
+    overflow: hidden;
   }
 
   .modal-content {
-    width: 95%;
-    max-width: none;
-    padding: 1.5rem;
-    margin-top: calc(var(--navbar-height) + 10px);
+    width: 90%;
+    max-width: 600px;
+    padding: 1rem;
+    max-height: calc(100vh - 120px);
+    overflow: hidden;
+    margin-top: 0;
   }
 
   .modal-content h2 {
-    font-size: 1.2rem;
-  }
-
-  .intro-section {
-    font-size: 0.95rem;
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
     margin-bottom: 0.3rem;
   }
 
+  .intro-text {
+    font-size: 0.75rem;
+    padding: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .intro-section {
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    padding: 0.1rem;
+  }
+
   .intro-icon {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+  }
+
+  .reservation-form {
+    margin-top: 0.8rem;
+  }
+
+  .form-section {
+    margin-bottom: 0.3rem;
+    padding: 0.4rem;
   }
 
   .form-group label {
-    font-size: 0.95rem;
+    font-size: 0.7rem;
+    margin-bottom: 0.1rem;
   }
 
   .form-group input,
   .form-group select {
-    height: 42px;
-    font-size: 0.95rem;
+    height: 32px;
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+
+  .form-row {
+    gap: 0.4rem;
+    margin-bottom: 0.3rem;
   }
 
   .submit-button {
-    height: 42px;
-    font-size: 0.95rem;
+    height: 36px;
+    font-size: 0.75rem;
+    margin-top: 0.8rem;
+  }
+
+  .contact-info {
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+    padding-top: 0.3rem;
+  }
+
+  .phone-numbers a,
+  .phone-numbers span {
+    font-size: 0.75rem;
   }
 
   .close-button {
     top: 12px;
     right: 12px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .close-button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Optimisation des créneaux horaires pour tablette */
+  .schedule-section {
+    margin-top: 0.4rem;
+    padding: 0.4rem;
+  }
+
+  .schedule-section h3 {
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .time-slot {
+    font-size: 0.7rem;
+    height: 26px;
+  }
+
+  .slots-container {
+    max-height: 80px;
+    gap: 0.2rem;
+  }
+
+  .schedule-legend {
+    font-size: 0.65rem;
+    gap: 0.5rem;
+    padding: 0.3rem 0;
   }
 }
 
@@ -594,7 +669,7 @@ body.modal-open {
   }
 
   .modal-content h2 {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
   }
 
   .intro-section {
@@ -607,8 +682,11 @@ body.modal-open {
   }
 
   .form-group label {
-    font-size: 0.9rem;
-  }
+  display: block;
+  margin-bottom: 0.2rem;
+  color: #D4AF37;
+  font-size: 0.65rem;
+}
 
   .form-group input,
   .form-group select {
@@ -617,9 +695,11 @@ body.modal-open {
   }
 
   .form-row {
-    grid-template-columns: 1fr;
-    gap: 0.3rem;
-  }
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+}
 
   .submit-button {
     height: 38px;
@@ -645,13 +725,12 @@ body.modal-open {
     height: 14px;
   }
 }
-
 .close-modal-btn {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 30px;
-  height: 30px;
+  
+  
   background-color: transparent;
   border: 2px solid #D4AF37;
   border-radius: 50%;
@@ -693,3 +772,13 @@ body.modal-open {
   opacity: 1;
   transform: scale(1.1);
 }
+
+
+
+
+
+
+
+
+
+

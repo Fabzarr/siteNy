@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 TEST URGENT - 1024x1366px Anti-Touch</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .emergency-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 3px solid #D4AF37;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .resolution-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #D4AF37;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        .status-indicator {
+            font-size: 1.5rem;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .success {
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid #00ff00;
+            color: #00ff00;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff0000;
+            color: #ff0000;
+        }
+
+        .test-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .test-btn {
+            background: #D4AF37;
+            color: black;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .test-btn:hover {
+            background: #F4D03F;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: rgba(212, 175, 55, 0.2);
+            color: #D4AF37;
+            text-decoration: none;
+            border-radius: 10px;
+            border: 2px solid #D4AF37;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 🚫 RÈGLES ANTI-TOUCH POUR CE TEST À 1024px+ */
+        @media (min-width: 1024px) {
+            *, *::before, *::after {
+                -webkit-touch-callout: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+                touch-action: none !important;
+                -webkit-user-select: none !important;
+                -moz-user-select: none !important;
+                -ms-user-select: none !important;
+                user-select: none !important;
+            }
+
+            p, span, h1, h2, h3, .instructions {
+                -webkit-user-select: text !important;
+                -moz-user-select: text !important;
+                -ms-user-select: text !important;
+                user-select: text !important;
+            }
+
+            button, a {
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: transparent !important;
+                cursor: pointer !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="emergency-container">
+        <h1>🚨 TEST ANTI-TOUCH URGENT</h1>
+        <h2>Résolution 1024x1366px</h2>
+        
+        <div class="resolution-display" id="resolution-display">
+            Chargement...
+        </div>
+
+        <div class="status-indicator" id="status-indicator">
+            🔍 Analyse en cours...
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Instructions de Test :</h3>
+            <ul>
+                <li>✅ <strong>Aucun cercle/rond ne doit apparaître</strong> quand vous cliquez</li>
+                <li>✅ <strong>Aucun effet de glissement/swipe</strong> ne doit être possible</li>
+                <li>✅ <strong>Pas de menu hamburger visible</strong> (c'est pour mobile/tablette)</li>
+                <li>✅ <strong>Menu horizontal visible</strong> en haut (comportement desktop)</li>
+                <li>❌ <strong>Si vous voyez des ronds = PROBLÈME</strong></li>
+            </ul>
+        </div>
+
+        <div class="test-buttons">
+            <button class="test-btn" onclick="testClick('Bouton 1')">
+                🖱️ Test Bouton 1
+            </button>
+            <button class="test-btn" onclick="testClick('Bouton 2')">
+                🖱️ Test Bouton 2  
+            </button>
+            <button class="test-btn" onclick="testClick('Bouton 3')">
+                🖱️ Test Bouton 3
+            </button>
+        </div>
+
+        <div id="test-results"></div>
+
+        <a href="http://localhost:5173" class="back-link">
+            🔙 Retourner au Site Principal
+        </a>
+    </div>
+
+    <script>
+        // 🚫 Appliquer les règles anti-touch immédiatement
+        if (window.innerWidth >= 1024) {
+            console.log('🖥️ Desktop 1024px+ détecté - Application anti-touch');
+            
+            ['touchstart', 'touchmove', 'touchend', 'gesturestart'].forEach(eventType => {
+                document.addEventListener(eventType, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log(`🚫 Événement tactile bloqué: ${eventType}`);
+                }, { passive: false, capture: true });
+            });
+        }
+
+        // 🎯 Fonction de test de résolution et comportement
+        function updateStatus() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const resolutionDisplay = document.getElementById('resolution-display');
+            const statusIndicator = document.getElementById('status-indicator');
+
+            resolutionDisplay.textContent = `${width} x ${height}px`;
+
+            if (width >= 1024) {
+                statusIndicator.innerHTML = '✅ DESKTOP DÉTECTÉ - Aucun comportement tactile attendu';
+                statusIndicator.className = 'status-indicator success';
+            } else {
+                statusIndicator.innerHTML = '📱 MOBILE/TABLETTE - Comportements tactiles normaux';
+                statusIndicator.className = 'status-indicator error';
+            }
+        }
+
+        // 🖱️ Test de clic
+        function testClick(buttonName) {
+            const timestamp = new Date().toLocaleTimeString();
+            const resultsDiv = document.getElementById('test-results');
+            
+            const result = document.createElement('div');
+            result.style.cssText = `
+                background: rgba(0, 255, 0, 0.2);
+                border: 1px solid #00ff00;
+                color: #00ff00;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                font-weight: bold;
+            `;
+            result.textContent = `✅ ${timestamp} - Clic sur "${buttonName}" détecté (comportement desktop normal)`;
+            
+            resultsDiv.appendChild(result);
+        }
+
+        // 🚀 Démarrage immédiat
+        updateStatus();
+        window.addEventListener('resize', updateStatus);
+    </script>
+</body>
+</html> 

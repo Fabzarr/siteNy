@@ -389,66 +389,35 @@
 
   .navbar-menu a {
     margin: 0.5rem 0;
+    padding: 12px 18px;
+    border-radius: 10px;
     font-size: 0.95rem;
-    padding: 12px 20px;
     width: 80%;
-    text-align: center;
-    border: 2px solid rgba(212, 175, 55, 0.4);
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
+    border: 2px solid rgba(212, 175, 55, 0.3);
     transition: all 0.2s ease;
     position: relative;
-    font-weight: 600;
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.1);
-    backdrop-filter: blur(10px);
-    font-family: 'Playfair Display', serif;
     overflow: hidden;
-    animation: buttonGlow 3s ease-in-out infinite alternate;
+    animation: buttonGlowTablet 4s ease-in-out infinite alternate;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 1.1;
-    min-height: 44px;
+    text-align: center;
+    min-height: 42px;
   }
 
-  /* Ajouter l'indicateur tactile comme en mobile */
-  .navbar-menu a::after {
-    content: '○';
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.7rem;
-    color: rgba(212, 175, 55, 0.6);
-    animation: touchIndicator 2.5s ease-in-out infinite;
-  }
-
-  @keyframes touchIndicator {
-    0%, 100% {
-      opacity: 0.6;
-      transform: translateY(-50%) scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: translateY(-50%) scale(1.1);
-    }
-  }
-
-  /* Animation de lueur dorée comme en mobile */
-  @keyframes buttonGlow {
+  /* Animation plus subtile pour tablette */
+  @keyframes buttonGlowTablet {
     0% {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 5px rgba(212, 175, 55, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 3px rgba(212, 175, 55, 0.1);
     }
     100% {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 15px rgba(212, 175, 55, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(212, 175, 55, 0.2);
     }
   }
 
-  /* Bordure animée comme en mobile */
+  /* Bordure animée pour tablette */
   .navbar-menu a::before {
     content: '';
     position: absolute;
@@ -456,25 +425,22 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 2px;
-    background: linear-gradient(45deg, 
+    background: linear-gradient(90deg, 
       transparent, 
-      rgba(212, 175, 55, 0.8), 
-      transparent, 
-      rgba(244, 208, 63, 0.6),
+      rgba(212, 175, 55, 0.4), 
       transparent
     );
-    background-size: 300% 300%;
-    animation: borderMove 4s ease infinite;
+    background-size: 200% 100%;
+    animation: borderMoveTablet 3s ease infinite;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: xor;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
   }
 
-  /* Animation de la bordure */
-  @keyframes borderMove {
+  @keyframes borderMoveTablet {
     0%, 100% {
       background-position: 0% 50%;
     }
@@ -483,80 +449,46 @@
     }
   }
 
-  /* Suppression hover tablette - utiliser les mêmes styles que mobile */
+  /* Suppression hover tablette */
   .navbar-menu a:hover {
-    /* Pas d'effet hover spéciaux sur tablette comme mobile */
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
-    border-color: rgba(212, 175, 55, 0.4);
-    color: white;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
     transform: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 3px rgba(212, 175, 55, 0.1);
   }
 
-  .navbar-menu a:hover::after {
-    transform: translateY(-50%);
-    color: #D4AF37;
-  }
-
-  /* Effet tactile tablette - copier mobile */
-  .navbar-menu a:active {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.15));
+  /* Style pour la page active sur tablette */
+  .navbar-menu a.active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
     border-color: #D4AF37;
-    transform: scale(0.95);
-    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.6);
-    animation: none; /* Stop l'animation pendant le touch */
+    color: #D4AF37;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    transform: scale(1.01);
   }
 
-  .navbar-menu a:active::after {
-    transform: translateY(-50%) translateX(5px) scale(1.2);
-    color: #F4D03F;
-    text-shadow: 0 0 15px rgba(244, 208, 63, 1);
-    animation: none; /* Stop l'animation pendant le touch */
+  /* Effet tactile tablette */
+  .navbar-menu a:active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+    transform: scale(0.97);
+    box-shadow: 0 1px 4px rgba(212, 175, 55, 0.3);
+    animation: none;
   }
 
   .navbar-menu a:active::before {
-    animation: none; /* Stop l'animation pendant le touch */
-    background: linear-gradient(45deg, 
-      rgba(212, 175, 55, 0.8), 
-      rgba(244, 208, 63, 1), 
-      rgba(212, 175, 55, 0.8)
+    animation: none;
+    background: linear-gradient(90deg, 
+      rgba(212, 175, 55, 0.6), 
+      rgba(244, 208, 63, 0.8), 
+      rgba(212, 175, 55, 0.6)
     );
-}
-
-  /* Style pour la page active sur tablette - copier mobile */
-  .navbar-menu a.active {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.15));
-    border-color: #D4AF37;
-    color: #D4AF37;
-    font-weight: 700;
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-    transform: scale(1.02);
-  }
-
-  .navbar-menu a.active::after {
-    content: '●';
-    color: #D4AF37;
-    font-size: 1rem;
-    animation: activeIndicator 2s ease-in-out infinite;
-  }
-
-  @keyframes activeIndicator {
-    0%, 100% {
-      opacity: 1;
-      transform: translateY(-50%) scale(1);
-    }
-    50% {
-      opacity: 0.7;
-      transform: translateY(-50%) scale(1.1);
-    }
   }
 }
 
-/* 💻 DESKTOP REAL - SOLUTION EXPERT : RÉSOLUTION FIXE */
-@media (min-width: 1024px) and (max-width: 1366px) {
+/* 💻 DESKTOP REAL - SOLUTION EXPERT : HOVER + POINTER FINE */
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) and (max-width: 1366px) {
   /* MASQUER LE HAMBURGER */
   .hamburger {
-    display: none !important;
+    display: none;
   }
   
   /* NAVBAR DESKTOP NORMALE */
@@ -577,133 +509,56 @@
   
   /* MENU DESKTOP NORMAL - SIMPLE ET PROPRE */
   .navbar-menu {
-    display: flex !important;
-    position: static !important;
-    flex-direction: row !important;
-    width: auto !important;
-    height: auto !important;
-    background: none !important;
-    backdrop-filter: none !important;
-    left: auto !important;
-    top: auto !important;
+    display: flex;
     gap: 0.5rem; /* Réduit pour éviter débordement */
     align-items: center;
-    padding-top: 0 !important;
-    overflow-y: visible !important;
   }
   
   /* STYLES DESKTOP EXACTS - SIMPLE ET PROPRE */
   .navbar-menu a {
-    color: white !important;
-    text-decoration: none !important;
-    font-weight: 500 !important;
-    padding: 0.35rem 0.6rem !important; /* Réduit pour écrans moyens */
-    border-radius: 5px !important;
-    transition: all 0.3s ease !important;
-    position: relative !important;
-    font-size: 0.8rem !important; /* Réduit pour éviter débordement */
-    margin: 0 !important;
-    width: auto !important;
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    animation: none !important;
-    backdrop-filter: none !important;
-    text-transform: none !important;
-    letter-spacing: normal !important;
-    min-height: auto !important;
-    line-height: normal !important;
-    text-align: left !important;
-    overflow: visible !important;
-  }
-  
-  .navbar-menu a::before {
-    display: none !important;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.35rem 0.6rem; /* Réduit pour écrans moyens */
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 0.8rem; /* Réduit pour éviter débordement */
   }
   
   .navbar-menu a::after {
-    content: '' !important;
-    position: absolute !important;
-    width: 0 !important;
-    height: 3px !important;
-    bottom: -2px !important;
-    left: 50% !important;
-    background: linear-gradient(90deg, #D4AF37, #F4D03F) !important;
-    transition: all 0.3s ease !important;
-    transform: translateX(-50%) !important;
-    border-radius: 2px !important;
-    opacity: 1 !important;
-    color: transparent !important;
-    font-size: 0 !important;
-    animation: none !important;
-    text-shadow: none !important;
-    right: auto !important;
-    top: auto !important;
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -2px;
+    left: 50%;
+    background: linear-gradient(90deg, #D4AF37, #F4D03F);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
   }
   
   .navbar-menu a:hover {
-    color: #D4AF37 !important;
-    background: rgba(212, 175, 55, 0.1) !important;
-    transform: none !important;
-    box-shadow: none !important;
-    border-color: transparent !important;
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.1);
   }
   
   .navbar-menu a:hover::after {
-    width: 80% !important;
-    content: '' !important;
-    color: transparent !important;
-    font-size: 0 !important;
-    text-shadow: none !important;
-    animation: none !important;
-  }
-  
-  .navbar-menu a:active {
-    background: rgba(212, 175, 55, 0.2) !important;
-    transform: none !important;
-    box-shadow: none !important;
-    animation: none !important;
-  }
-  
-  .navbar-menu a:active::after {
-    animation: none !important;
-    background: linear-gradient(90deg, #D4AF37, #F4D03F) !important;
-    content: '' !important;
-    color: transparent !important;
-    font-size: 0 !important;
-    text-shadow: none !important;
-    transform: translateX(-50%) !important;
-  }
-  
-  .navbar-menu a:active::before {
-    display: none !important;
-    animation: none !important;
+    width: 80%;
   }
   
   /* Style pour la page active sur desktop */
   .navbar-menu a.active {
-    color: #D4AF37 !important;
-    background: rgba(212, 175, 55, 0.15) !important;
-    font-weight: 600 !important;
-    transform: none !important;
-    box-shadow: none !important;
-    border-color: transparent !important;
-    animation: none !important;
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.15);
+    font-weight: 600;
   }
   
   .navbar-menu a.active::after {
-    width: 100% !important;
-    background: linear-gradient(90deg, #D4AF37, #F4D03F) !important;
-    height: 3px !important;
-    content: '' !important;
-    color: transparent !important;
-    font-size: 0 !important;
-    text-shadow: none !important;
-    animation: none !important;
-  }
-  
-  .navbar-menu a.active::before {
-    display: none !important;
+    width: 100%;
+    background: linear-gradient(90deg, #D4AF37, #F4D03F);
+    height: 3px;
   }
 }
 
