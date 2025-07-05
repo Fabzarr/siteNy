@@ -1,10 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
 
+/* 🎯 STYLES DES PRIX - Définition unique et claire */
+.boisson-price,
+.cocktail-price {
+  color: #D4AF37;
+  font-size: 1.1rem; /* Desktop par défaut */
+  font-weight: 600;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.8);
+  padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+  border-radius: 12px;
+  border: 1px solid #D4AF37;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+/* Ajustement mobile */
+@media (max-width: 768px) {
+  .boisson-price,
+  .cocktail-price {
+    font-size: 0.95rem; /* Exactement comme .item-price en mobile */
+  }
+}
+
+.boisson-price:hover,
+.cocktail-price:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: #E5C158;
+}
+
 .boissons-page {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 20px;
-  padding-top: calc(var(--navbar-height) + 30px);
+  padding: 20px;
+  padding-top: calc(var(--navbar-height) + 80px);
   color: white;
   user-select: none;
   -webkit-user-select: none;
@@ -16,6 +46,7 @@
   background: transparent;
   backdrop-filter: none;
   padding: 0;
+  margin: 0;
   border-radius: 15px;
 }
 
@@ -27,11 +58,68 @@
   right: 0;
   z-index: 80;
   margin: 0;
-  padding: 15px 20px 20px 20px;
+  padding: 8px 20px;
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  height: auto;
+}
+
+/* Contenus desktop et mobile */
+.desktop-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-header-content {
+  display: none;
   text-align: center;
+}
+
+/* Media queries pour gérer l'affichage */
+@media (min-width: 1024px) {
+  .desktop-header-content {
+    display: flex;
+  }
+  
+  .mobile-header-content {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .desktop-header-content {
+    display: none;
+  }
+  
+  .mobile-header-content {
+    display: block;
+  }
+  
+  .mobile-subtitle {
+    color: #D4AF37;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    margin: 0 0 5px 0;
+  }
+  
+  .mobile-description {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin: 0 0 15px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .mobile-menu-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
 }
 
 .boissons-header::before {
@@ -51,7 +139,7 @@
 .boissons-header h1 {
   color: #D4AF37;
   font-size: 2.5rem;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   font-family: 'Playfair Display', serif;
   font-weight: 600;
   letter-spacing: 2px;
@@ -59,10 +147,6 @@
   -webkit-user-select: none !important;
   -moz-user-select: none !important;
   -ms-user-select: none !important;
-  cursor: default !important;
-  
-  
-  
   -moz-window-dragging: none !important;
   -moz-user-focus: none !important;
   -moz-user-input: none !important;
@@ -119,7 +203,7 @@
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin: 20px 40px 30px 40px;
+  margin: 0 40px 20px 40px;
   background: transparent;
   padding: 0;
   border-radius: 0;
@@ -129,22 +213,14 @@
 }
 
 .boissons-page .menu-button {
-  background: rgba(30, 30, 30, 0.9);
-  border: 2px solid rgba(212, 175, 55, 0.4);
-  color: rgba(255, 255, 255, 0.9);
-  padding: 14px 32px;
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  border-radius: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  min-width: 140px;
-  position: relative;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  text-transform: uppercase;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  min-width: 125px;
+  border-radius: 16px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .boissons-page .menu-button::after {
@@ -243,8 +319,10 @@
   display: flex;
   flex-direction: row;
   gap: 40px;
-  margin: 40px 40px;
+  margin: 40px auto;
   justify-content: center;
+  max-width: 1200px;
+  padding: 0 50px;
 }
 
 .boissons-column {
@@ -255,72 +333,59 @@
   max-width: 600px;
 }
 
-.boissons-section {
+/* Styles de base communs aux sections */
+.boissons-section,
+.cocktails-section {
   /* Container Queries Support */
   container-type: inline-size;
   container-name: menu-section;
   
-  /* Logical Properties pour l'internationalisation */
+  /* Dimensions de base */
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
   inline-size: 100%;
   max-inline-size: 100%;
-  margin-block-end: 40px;
-  padding: clamp(20px, 3vw, 25px);
+  min-inline-size: 100%;
   
-  /* 2025 Advanced Glassmorphism */
-  background: color-mix(in oklch, transparent 15%, oklch(0.05 0.02 240) 85%);
-  backdrop-filter: blur(20px) saturate(180%) contrast(120%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(120%);
+  /* Marges et padding */
+  margin: 0 0 30px 0;
+  padding: clamp(16px, 4vw, 20px);
   
-  /* Modern Border Radius - COHÉRENT */
+  /* Styles visuels */
+  background: color-mix(in oklch, transparent 5%, oklch(0.08 0.02 240) 95%);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
   border-radius: 20px;
-  
-  /* Border simple pour compatibilité avec border-radius */
   border: 1px solid color-mix(in srgb, #D4AF37 25%, transparent 75%);
   
-  /* 2025 Box Shadow avec Depth Layers */
+  /* Box shadow */
   box-shadow: 
-    /* Ambient shadow */
-    0 2px 8px color-mix(in srgb, #000000 20%, transparent 80%),
-    /* Key light shadow */
-    0 8px 24px color-mix(in srgb, #000000 15%, transparent 85%),
-    /* Rim light */
-    inset 0 1px 0 color-mix(in srgb, #D4AF37 8%, transparent 92%),
-    /* Depth enhancement */
-    0 0 0 1px color-mix(in srgb, #D4AF37 5%, transparent 95%);
-  
-  /* Modern Positioning */
+    0 4px 15px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(212, 175, 55, 0.1);
+    
+  /* Positionnement */
+  position: static;
   box-sizing: border-box;
-  position: relative;
   
-  /* Transitions équilibrées */
+  /* Transitions */
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  
-  /* Hover équilibré - visible mais pas trompeur */
-  &:hover {
-    background: color-mix(in oklch, transparent 8%, oklch(0.08 0.02 45) 92%);
-    border-color: color-mix(in srgb, #D4AF37 35%, transparent 65%);
-    box-shadow: 
-      0 3px 12px color-mix(in srgb, #000000 25%, transparent 75%),
-      0 10px 28px color-mix(in srgb, #000000 18%, transparent 82%),
-      inset 0 1px 0 color-mix(in srgb, #D4AF37 12%, transparent 88%),
-      0 0 0 1px color-mix(in srgb, #D4AF37 8%, transparent 92%);
-  }
-  
-  /* 2025 Animation Performance */
-  contain: layout style paint;
 }
 
 .boissons-section:last-child {
   margin-block-end: 0;
 }
 
-.boissons-section h2 {
+.boissons-section h2,
+.cocktails-section h2 {
   /* Style EXACTEMENT identique à CartePage section-header h2 */
   color: color-mix(in oklch, #D4AF37 95%, #F4D03F 5%);
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  margin-block-end: clamp(8px, 2vw, 10px);
+  font-size: 1.8rem;
+  margin-block-end: 15px;
   font-family: 'Playfair Display', serif;
   font-weight: 600;
+  text-align: center;
   
   /* 2025 Text Effects */
   text-shadow: 
@@ -337,8 +402,27 @@
   transition: text-shadow 0.3s ease;
 }
 
-/* 2025 Pseudo-element enhancement - EXACTEMENT comme CartePage */
-.boissons-section h2::after {
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
+  .boissons-section h2,
+  .cocktails-section h2 {
+    font-size: 1.2rem !important;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .boissons-section h2,
+  .cocktails-section h2 {
+    font-size: 1.1rem !important;
+    margin-bottom: 8px;
+  }
+}
+
+/* Style de la ligne décorative sous les titres */
+.boissons-section h2::after,
+.cocktails-section h2::after {
   content: '';
   position: absolute;
   bottom: -8px;
@@ -357,14 +441,34 @@
   transition: opacity 0.3s ease;
 }
 
-.boissons-section h2:hover {
+/* Hover effects */
+.boissons-section h2:hover,
+.cocktails-section h2:hover {
   text-shadow: 
     0 2px 6px color-mix(in srgb, #000000 35%, transparent 65%),
     0 0 12px color-mix(in srgb, #D4AF37 25%, transparent 75%);
 }
 
-.boissons-section h2:hover::after {
+.boissons-section h2:hover::after,
+.cocktails-section h2:hover::after {
   opacity: 1;
+}
+
+/* Ajustements mobile */
+@media (max-width: 768px) {
+  .boissons-section h2,
+  .cocktails-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .boissons-section h2,
+  .cocktails-section h2 {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
 }
 
 /* MENU ITEMS GRID - 2025 MODERNISATION pour boissons */
@@ -375,43 +479,48 @@
   container-type: inline-size;
 }
 
-.boisson-item {
+.boisson-item,
+.cocktail-item {
   padding: clamp(12px, 2vw, 15px) 0;
   border-block-end: 1px solid color-mix(in srgb, #FFFFFF 10%, transparent 90%);
   
-  /* Hover équilibré */
+  /* Hover équilibré - EXACTEMENT comme CartePage */
   transition: background-color 0.25s ease, border-color 0.25s ease;
   border-radius: 8px;
   padding-inline: clamp(8px, 2vw, 12px);
   margin-inline: -clamp(8px, 2vw, 12px);
+}
   
-  &:hover {
-    /* Changement plus visible mais modéré */
-    background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
-    border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
-  }
+.boisson-item:hover,
+.cocktail-item:hover {
+  /* Changement plus visible mais modéré - EXACTEMENT comme CartePage */
+  background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
+  border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
+}
   
-  &:last-child {
-    border-block-end: none;
-  }
+.boisson-item:last-child,
+.cocktail-item:last-child {
+  border-block-end: none;
 }
 
-.boisson-info {
+.boisson-info,
+.cocktail-info {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  /* ESPACEMENT ULTRA-MINIMAL */
+  /* ESPACEMENT HARMONISÉ AVEC LE MENU */
   margin-bottom: 1px;
   gap: clamp(12px, 3vw, 15px);
 }
 
-.boisson-name {
+.boisson-name,
+.cocktail-name {
   color: color-mix(in oklch, #FFFFFF 95%, #D4AF37 5%);
   font-size: clamp(1rem, 2.5vw, 1.1rem);
   font-weight: 500;
   flex: 1;
   
-  /* 2025 Typography Enhancement */
+  /* 2025 Typography Enhancement - EXACTEMENT comme CartePage */
   line-height: 1.3;
   font-optical-sizing: auto;
   font-variation-settings: "wght" 500;
@@ -420,28 +529,8 @@
   transition: color 0.2s ease;
 }
 
-.boisson-price {
-  color: color-mix(in oklch, #D4AF37 90%, #F4D03F 10%);
-  font-size: clamp(0.85rem, 2vw, 0.95rem);
-  font-weight: 600;
-  white-space: nowrap;
-  
-  /* 2025 Price Styling - Plus petit que CartePage */
-  background: color-mix(in srgb, #D4AF37 8%, transparent 92%);
-  padding: clamp(3px, 0.8vw, 5px) clamp(6px, 1.5vw, 10px);
-  border-radius: 10px;
-  border: 1px solid color-mix(in srgb, #D4AF37 20%, transparent 80%);
-  
-  /* Léger effet sur les prix */
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  
-  &:hover {
-    background: color-mix(in srgb, #D4AF37 12%, transparent 88%);
-    border-color: color-mix(in srgb, #D4AF37 30%, transparent 70%);
-  }
-}
-
-.boisson-description {
+.boisson-description,
+.cocktail-description {
   color: color-mix(in oklch, #FFFFFF 70%, transparent 30%);
   font-size: clamp(0.85rem, 2vw, 0.9rem);
   line-height: 1.4;
@@ -450,7 +539,7 @@
   /* REMONTER LES INGRÉDIENTS */
   margin-top: -1px;
   
-  /* 2025 Typography */
+  /* 2025 Typography - EXACTEMENT comme CartePage */
   font-optical-sizing: auto;
   letter-spacing: 0.2px;
   
@@ -480,6 +569,7 @@
 }
 
 /* Classes pour gérer desktop vs mobile */
+.mobile-header-content,
 .mobile-subtitle, 
 .mobile-description,
 .mobile-menu-selector {
@@ -491,6 +581,7 @@
     display: block;
   }
   
+  .mobile-header-content,
   .mobile-subtitle,
   .mobile-description,
   .mobile-menu-selector {
@@ -504,6 +595,7 @@
     display: block;
   }
   
+  .mobile-header-content,
   .mobile-subtitle,
   .mobile-description,
   .mobile-menu-selector {
@@ -520,27 +612,36 @@
 
 @media (max-width: 1023px) {
   .boissons-header-left,
-  .boissons-header-center,
   .boissons-header-right {
-    display: none !important;
+    display: none;
+  }
+
+  .mobile-header-content {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+    order: 1;
   }
   
   .mobile-subtitle,
-  .mobile-description,
-  .mobile-menu-selector {
+  .mobile-description {
     display: block;
+  }
+
+  .mobile-menu-selector {
+    display: flex;
+    order: 2;
   }
   
   .desktop-only {
     display: none !important;
   }
 
-  /* FORCER UNE SEULE COLONNE EN MOBILE */
   .boissons-columns {
     display: flex !important;
     flex-direction: column !important;
     gap: 20px !important;
-    margin: 20px 0 !important;
+    margin: 20px !important;
   }
 
   .boissons-column {
@@ -573,7 +674,7 @@
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin: 15px 0 0 0;
+    margin: 0px 0 0 0;
     padding: 0;
   }
   
@@ -581,15 +682,15 @@
     background: rgba(30, 30, 30, 0.9);
     border: 2px solid rgba(212, 175, 55, 0.4);
     color: rgba(255, 255, 255, 0.9);
-    padding: 14px 32px;
-    font-size: 1.3rem;
+    padding: 12px 28px;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     border-radius: 12px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    min-width: 140px;
+    min-width: 120px;
     position: relative;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -636,11 +737,11 @@
 /* DESKTOP - Structure identique à CartePage avec adaptations responsive */
 @media (min-width: 1024px) {
   .boissons-page {
-    padding-top: var(--navbar-height);
+    padding-top: calc(var(--navbar-height) + 60px);
   }
 
   .boissons-content {
-    padding: 40px 0 200px 0;
+    margin-top: 0;
     padding-top: 0;
   }
 
@@ -651,7 +752,7 @@
     right: 0;
     z-index: 80;
     margin: 0;
-    padding: 15px 20px;
+    padding: 8px 20px;
     /* 2025 Modern Glass Effect avec différenciation subtile */
     background: color-mix(in srgb, #000000 88%, #D4AF37 3%);
     backdrop-filter: blur(16px) saturate(160%);
@@ -737,19 +838,23 @@
     background: rgba(30, 30, 30, 0.9);
     border: 2px solid rgba(212, 175, 55, 0.4);
     color: rgba(255, 255, 255, 0.9);
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    border-radius: 8px;
+    border-radius: 16px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    min-width: 100px;
+    min-width: 125px;
     position: relative;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .boissons-page .menu-button::after {
@@ -802,10 +907,11 @@
     gap: 4px;
   }
   
-  .boisson-price {
+  /* .boisson-price harmonisation définie globalement */
+  /* .boisson-price {
     margin-left: 0;
     align-self: flex-end;
-  }
+  } */
 }
 
 @container menu-section (min-width: 501px) and (max-width: 650px) {
@@ -818,28 +924,143 @@
   }
 }
 
-/* MOBILE/TABLETTE - Styles 2025 optimisés pour boissons-section */
-@media (max-width: 1023px) {
-  .boissons-section {
-    inline-size: 100%;
-    max-inline-size: none;
-    margin-block-end: 30px;
-    padding: clamp(16px, 4vw, 20px);
-    position: static;
-    left: auto;
-    transform: none;
-    
-    /* Glassmorphism adaptatif mobile */
-    background: color-mix(in oklch, transparent 5%, oklch(0.08 0.02 240) 95%);
-    backdrop-filter: blur(16px) saturate(150%);
+/* MOBILE ET TABLETTE - Structure identique au menu */
+@media (max-width: 1024px) {
+  .boissons-page {
+    flex-direction: column;
   }
+
+  .boissons-page-container {
+    margin-left: 0;
+    padding: 20px;
+    padding-top: calc(var(--navbar-height) + 60px);
+  }
+
+  /* SECTIONS EXACTEMENT COMME menu-section */
+  .boissons-section {
+    inline-size: 100% !important;
+    max-inline-size: none !important;
+    margin-block-end: 30px !important;
+    padding: clamp(16px, 4vw, 20px) !important;
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+    
+    /* Glassmorphism identique au menu */
+    background: color-mix(in oklch, transparent 5%, oklch(0.08 0.02 240) 95%) !important;
+    backdrop-filter: blur(16px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    
+    /* Ombre identique au menu */
+    box-shadow: 
+      0 4px 6px rgba(0, 0, 0, 0.1),
+      0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Styles des prix déjà définis au début du fichier */
+
+  /* DESCRIPTION EXACTEMENT comme menu-section */
+  .boissons-section .item-description {
+    color: color-mix(in oklch, #FFFFFF 70%, transparent 30%) !important;
+    font-size: clamp(0.85rem, 2vw, 0.9rem) !important;
+    line-height: 1.4 !important;
+    font-style: italic !important;
+    margin-top: -1px !important;
+    letter-spacing: 0.2px !important;
+    text-shadow: 0 1px 2px color-mix(in srgb, #000000 20%, transparent 80%) !important;
+  }
+}
+
+/* MOBILE - Ajustements supplémentaires comme menu */
+@media (max-width: 768px) {
+  .boissons-page-container {
+    padding: 15px;
+    padding-top: calc(var(--navbar-height) + 40px);
+  }
+  
+  .boissons-section,
+  .cocktails-section {
+    width: calc(100% - 30px) !important;
+    max-width: 500px !important;
+    margin: 10px auto !important;
+    padding: 20px 15px !important;
+    border-radius: 15px !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    display: block !important;
+    position: relative !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+
+  .boissons-columns {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .boissons-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Ajustement des marges pour aligner avec le texte karaoké */
+  .happy-hours-container {
+    margin: 5px auto 15px;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .karaoke-message {
+    margin-bottom: 30px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .boissons-content {
+    margin-top: 30px;
+  }
+
+  .cocktails-section {
+    margin-top: 20px !important;
+  }
+
+  .cocktails-container {
+    margin-top: 20px !important;
+  }
+}
+
+/* Ajustements spécifiques pour très petit mobile */
+@media (max-width: 480px) {
+  .boissons-section,
+  .cocktails-section {
+    padding: 15px !important;
+    margin-bottom: 30px !important;
+    border-radius: 12px !important;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+  }
+
+  /* Supprimé les styles qui écrasent ceux des prix */
 }
 
 /* DESKTOP - Sections dans colonnes */
 @media (min-width: 1024px) {
   .boissons-section {
     inline-size: 100%;
-    max-inline-size: 100%;
+    max-inline-size: none;
     margin-block-end: 40px;
     padding: clamp(20px, 3vw, 25px);
     box-sizing: border-box;
@@ -856,7 +1077,7 @@
 /* Écrans moyens (1024px - 1366px) - Adaptation pour header plus compact */
 @media (min-width: 1024px) and (max-width: 1366px) {
   .boissons-header {
-    padding: 10px 15px;
+    padding: 8px 15px;
     height: 60px;
   }
   
@@ -960,7 +1181,9 @@
 @media (max-width: 1366px) and (min-width: 1024px) {
   .boissons-columns {
     gap: 25px;
-    margin: 25px;
+    margin: 25px auto;
+    max-width: 1000px;
+    padding: 0 40px;
   }
   
   .boissons-column {
@@ -979,16 +1202,15 @@
     margin-bottom: -1px;
   }
   
-  .boisson-price {
+  /* .boisson-price harmonisation définie globalement */
+  /* .boisson-price {
     margin-top: -2px;
-  }
+  } */
   
   .boisson-description {
     margin-top: 4px;
   }
 }
-
-
 
 @media (max-width: 768px) {
   .boisson-info {
@@ -999,9 +1221,10 @@
   }
   
   /* Remonter encore plus le prix sur mobile */
-  .boisson-price {
+  /* .boisson-price harmonisation définie globalement */
+  /* .boisson-price {
     margin-top: -5px;
-  }
+  } */
   
   /* Petit espace entre nom et ingrédients sur mobile */
   .boisson-description {
@@ -1030,7 +1253,6 @@
     backdrop-filter: blur(10px);
     padding: 15px 20px 20px 20px;
     text-align: center;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
   }
 
   .boissons-header-left,
@@ -1089,30 +1311,17 @@
   }
 
   .boissons-page .menu-button {
-    padding: 12px 20px;
-    font-size: 0.9rem;
-    min-width: 120px;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    min-width: 105px;
+    border-radius: 16px;
   }
 
   .boissons-section {
     padding: 20px;
   }
 
-  /* Titre de section identique à CartePage */
-  /* Titre de section EXACTEMENT identique à CartePage */
-  .boissons-section h2 {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  .cocktails-section h2 {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-
-  /* Pas de réduction de taille - on garde le clamp() original comme CartePage */
+  /* Styles des titres déjà définis au début du fichier */
 }
 
 @media (max-width: 480px) {
@@ -1127,16 +1336,16 @@
   }
 
   .boissons-page .menu-button {
-    padding: 10px 18px;
-    font-size: 0.85rem;
-    min-width: 110px;
+    padding: 7px 10px;
+    font-size: 0.87rem;
+    min-width: 115px;
+    border-radius: 16px;
   }
 
   .boissons-section h2 {
-    font-size: 1.2rem;
+    font-size: 1.1rem !important;
+    margin-bottom: 8px;
   }
-
-
 
   .boissons-footer p {
     font-size: 0.9rem;
@@ -1191,7 +1400,7 @@
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   
   /* Hover équilibré - visible mais pas trompeur */
-  &:hover {
+.boissons-section:hover {
     background: color-mix(in oklch, transparent 8%, oklch(0.08 0.02 45) 92%);
     border-color: color-mix(in srgb, #D4AF37 35%, transparent 65%);
     box-shadow: 
@@ -1208,8 +1417,8 @@
 .cocktails-section h2 {
   /* Style EXACTEMENT identique à CartePage section-header h2 */
   color: color-mix(in oklch, #D4AF37 95%, #F4D03F 5%);
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  margin-block-end: clamp(8px, 2vw, 10px);
+  font-size: 1.8rem;
+  margin-block-end: 15px;
   font-family: 'Playfair Display', serif;
   font-weight: 600;
   
@@ -1275,23 +1484,23 @@
   border-radius: 8px;
   padding-inline: clamp(8px, 2vw, 12px);
   margin-inline: -clamp(8px, 2vw, 12px);
+}
 
-  &:hover {
+.cocktail-item:hover {
     /* Changement plus visible mais modéré */
     background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
     border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
   }
 
-  &:last-child {
+.cocktail-item:last-child {
     border-block-end: none;
-  }
 }
 
 .cocktail-info {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  /* ESPACEMENT ULTRA-MINIMAL */
+  /* ESPACEMENT HARMONISÉ AVEC LE MENU */
   margin-bottom: 1px;
   gap: clamp(12px, 3vw, 15px);
 }
@@ -1309,27 +1518,6 @@
   
   /* Subtle transition */
   transition: color 0.2s ease;
-}
-
-.cocktail-price {
-  color: color-mix(in oklch, #D4AF37 90%, #F4D03F 10%);
-  font-size: clamp(0.85rem, 2vw, 0.95rem);
-  font-weight: 600;
-  white-space: nowrap;
-  
-  /* 2025 Price Styling - Plus petit que CartePage */
-  background: color-mix(in srgb, #D4AF37 8%, transparent 92%);
-  padding: clamp(3px, 0.8vw, 5px) clamp(6px, 1.5vw, 10px);
-  border-radius: 10px;
-  border: 1px solid color-mix(in srgb, #D4AF37 20%, transparent 80%);
-  
-  /* Léger effet sur les prix */
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  
-  &:hover {
-    background: color-mix(in srgb, #D4AF37 12%, transparent 88%);
-    border-color: color-mix(in srgb, #D4AF37 30%, transparent 70%);
-  }
 }
 
 .cocktail-description {
@@ -1355,7 +1543,8 @@
     margin: 30px 0;
   }
   
-  .cocktails-section {
+  .cocktails-section,
+  .boissons-section {
     inline-size: 85%;
     max-inline-size: 900px;
     margin-block-end: 35px;
@@ -1368,18 +1557,18 @@
 
   .cocktail-info {
     margin-bottom: -1px;
+    gap: clamp(12px, 3vw, 15px);
   }
   
-  .cocktail-price {
+  /* .cocktail-price harmonisation définie globalement */
+  /* .cocktail-price {
     margin-top: -2px;
-  }
+  } */
   
   .cocktail-description {
     margin-top: 4px;
   }
 }
-
-
 
 @media (max-width: 768px) {
   .cocktail-info {
@@ -1390,9 +1579,10 @@
   }
   
   /* Remonter encore plus le prix sur mobile */
-  .cocktail-price {
+  /* .cocktail-price harmonisation définie globalement */
+  /* .cocktail-price {
     margin-top: -5px;
-  }
+  } */
   
   /* Petit espace entre nom et ingrédients sur mobile */
   .cocktail-description {
@@ -1402,26 +1592,450 @@
 
 /* DESKTOP GRAND FORMAT - Section cocktails */
 @media (min-width: 1367px) {
-  .cocktails-section {
-    inline-size: 70%;
-    max-inline-size: 1200px;
-    margin-block-end: 40px;
-    padding: clamp(20px, 3vw, 25px);
-    box-sizing: border-box;
-    position: relative;
-    left: auto;
-    transform: none;
-    
-    /* Enhanced desktop glassmorphism */
-    background: color-mix(in oklch, transparent 12%, oklch(0.06 0.025 240) 88%);
-  }
-  
   .cocktails-container {
+    width: 75% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Correction header desktop */
+  .boissons-header {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    z-index: 80;
+    background: color-mix(in srgb, #000000 88%, #D4AF37 3%);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 8px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    margin: 40px auto;
+    min-height: 110px;
   }
-} 
+
+  .desktop-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .boissons-header h2 {
+    color: #D4AF37;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-family: "Playfair Display", serif;
+    letter-spacing: 2px;
+    margin: 0 0 5px 0;
+    white-space: nowrap;
+  }
+
+  .desktop-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin: 0 0 10px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .boissons-header .menu-selector {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+  }
+
+  .menu-selector button {
+    white-space: nowrap;
+    padding: 8px 20px;
+  }
+
+  .boissons-content {
+    padding-top: calc(var(--navbar-height) + 60px);
+  }
+}
+
+/* TABLETTE SPÉCIFIQUE - Correction du padding-top pour éviter le texte coupé */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .boissons-page {
+    padding-top: calc(var(--navbar-height) + 140px) !important;
+  }
+  
+  .boissons-header {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    z-index: 80;
+    padding: 20px 20px 10px 20px;
+    height: 140px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .boissons-header h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+  }
+  
+  .boissons-header h2 {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+  }
+  
+  .boissons-header p {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Masquer les colonnes gauche/droite et afficher le centre */
+  .boissons-header-left,
+  .boissons-header-right {
+    display: none;
+  }
+
+  .boissons-header-center {
+    display: block;
+    text-align: center;
+    flex: 1;
+  }
+  
+  /* Harmonisation des tailles - boissons-section identique à cocktails-section et menu-section */
+  .boissons-section,
+  .cocktails-section,
+  .carte-page-container .menu-section {
+    inline-size: 100%;
+    max-inline-size: none !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+  }
+  
+  /* Harmonisation des items - boisson-item et cocktail-item identiques à menu-item */
+  .boisson-item,
+  .cocktail-item {
+    padding: clamp(12px, 2vw, 15px) 0;
+    border-block-end: 1px solid color-mix(in srgb, #FFFFFF 10%, transparent 90%);
+    
+    /* Hover équilibré */
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+    border-radius: 8px;
+    padding-inline: clamp(8px, 2vw, 12px);
+    margin-inline: -clamp(8px, 2vw, 12px);
+  }
+  
+  .boisson-item:hover,
+  .cocktails-section:hover {
+    /* Changement plus visible mais modéré */
+    background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
+    border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
+  }
+  
+  .boisson-item:last-child,
+  .cocktail-item:last-child {
+    border-block-end: none;
+  }
+  
+  /* Harmonisation des conteneurs d'info - identiques à item-name-price */
+  .boisson-info,
+  .cocktail-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* ESPACEMENT ULTRA-MINIMAL */
+    margin-bottom: 1px;
+    gap: clamp(12px, 3vw, 15px);
+  }
+  
+  /* Harmonisation des noms - EXACTEMENT comme item-name */
+  .boisson-name,
+  .cocktail-name {
+    color: color-mix(in oklch, #FFFFFF 95%, #D4AF37 5%);
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    font-weight: 500;
+    flex: 1;
+    
+    /* 2025 Typography Enhancement - EXACTEMENT comme CartePage */
+    line-height: 1.3;
+    font-optical-sizing: auto;
+    font-variation-settings: "wght" 500;
+    
+    /* Subtle transition */
+    transition: color 0.2s ease;
+  }
+  
+  /* Styles des prix déjà définis au début du fichier */
+  
+  /* Harmonisation des descriptions - identiques à item-description */
+  .boisson-description,
+  .cocktail-description {
+    color: color-mix(in oklch, #FFFFFF 70%, transparent 30%);
+    font-size: clamp(0.85rem, 2vw, 0.9rem);
+    line-height: 1.4;
+    font-style: italic;
+    
+    /* REMONTER LES INGRÉDIENTS */
+    margin-top: -1px;
+    
+    /* 2025 Typography */
+    font-optical-sizing: auto;
+    letter-spacing: 0.2px;
+    
+    /* Enhanced readability */
+    text-shadow: 0 1px 2px color-mix(in srgb, #000000 20%, transparent 80%);
+  }
+
+  /* Boutons tablette - PLUS GRANDS que mobile (progression logique) */
+  .boissons-page .menu-selector {
+    position: relative;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 6px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    margin-bottom: 60px;
+  }
+
+  .boissons-page .menu-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    min-width: 125px;
+    border-radius: 16px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* HARMONISATION FINALE - Uniformisation complète des cellules et polices */
+@media (min-width: 1024px) {
+  /* Éléments container - EXACTEMENT identiques */
+  .menu-item,
+  .boisson-item,
+  .cocktail-item {
+    padding: clamp(12px, 2vw, 15px) 0;
+    border-block-end: 1px solid color-mix(in srgb, #FFFFFF 10%, transparent 90%);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+    border-radius: 8px;
+    padding-inline: clamp(8px, 2vw, 12px);
+    margin-inline: -clamp(8px, 2vw, 12px);
+  }
+  
+  /* Info containers - EXACTEMENT identiques */
+  .item-name-price,
+  .boisson-info,
+  .cocktail-info {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    margin-bottom: 1px;
+    gap: clamp(12px, 3vw, 15px) !important;
+  }
+  
+  /* Noms - EXACTEMENT identiques */
+  .item-name,
+  .boisson-name,
+  .cocktail-name {
+    color: color-mix(in oklch, #FFFFFF 95%, #D4AF37 5%);
+    font-size: clamp(1rem, 2.5vw, 1.1rem) !important;
+    font-weight: 500 !important;
+    flex: 1;
+    line-height: 1.3;
+    font-optical-sizing: auto;
+    font-variation-settings: "wght" 500;
+    transition: color 0.2s ease;
+  }
+  
+  /* Styles des prix déjà définis au début du fichier */
+  
+  /* Descriptions - EXACTEMENT identiques */
+  .item-description,
+  .boisson-description,
+  .cocktail-description {
+    color: color-mix(in oklch, #FFFFFF 70%, transparent 30%);
+    font-size: clamp(0.85rem, 2vw, 0.9rem) !important;
+    line-height: 1.4;
+    font-style: italic;
+    
+    /* REMONTER LES INGRÉDIENTS */
+    margin-top: -1px;
+    
+    /* 2025 Typography */
+    font-optical-sizing: auto;
+    letter-spacing: 0.2px;
+    
+    /* Enhanced readability */
+    text-shadow: 0 1px 2px color-mix(in srgb, #000000 20%, transparent 80%);
+  }
+}
+
+/* SURCHARGE SPÉCIFIQUE pour corriger les boissons */
+@media (min-width: 1024px) {
+  .boissons-page .boisson-info {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: clamp(12px, 3vw, 15px) !important;
+    margin-bottom: 1px !important;
+  }
+  
+  .boissons-page .boisson-name {
+    flex: 1 !important;
+    text-align: left !important;
+  }
+  
+  .boissons-page .boisson-price {
+    flex-shrink: 0 !important;
+    text-align: right !important;
+  }
+}
+
+/* FORCE MOBILE ABSOLUE - Largeur et style EXACTEMENT identiques pour toutes les sections */
+@media (max-width: 768px) {
+  .boissons-section,
+  .cocktails-section,
+  .menu-section {
+    /* Reset des styles précédents */
+    all: unset;
+    display: block;
+    
+    /* DIMENSIONS COMMUNES */
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 20px 0 !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+    
+    /* STYLES VISUELS COMMUNS */
+    background: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: 20px !important;
+    
+    /* OMBRE COMMUNE */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* FORCER ESPACEMENT IDENTIQUE ENTRE SECTIONS */
+  .happy-hours-container {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .karaoke-message {
+    margin-bottom: 10px !important;
+  }
+}
+
+/* AJUSTEMENTS TRÈS PETITS ÉCRANS */
+@media (max-width: 480px) {
+  .boissons-section,
+  .cocktails-section,
+  .menu-section {
+    padding: 15px 10px !important;
+    margin: 8px auto !important;
+  }
+}
+
+/* DESKTOP - Largeur réduite pour cocktails */
+.cocktails-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 1025px) {
+  .cocktails-section {
+    max-width: 60% !important;
+  }
+}
+
+@media (min-width: 1367px) {
+  .boissons-page {
+    padding: 0 20px;
+    padding-top: calc(var(--navbar-height) + 100px);
+  }
+
+  .boissons-header {
+    padding: 8px 20px;
+    height: auto;
+  }
+
+  .boissons-content {
+    margin: 0;
+    padding: 0;
+  }
+
+  .happy-hours-container {
+    margin-top: 10px;
+  }
+
+  .boissons-columns {
+    margin-top: 20px;
+    padding: 0;
+  }
+}
+
+/* Conteneur des messages Happy Hours */
+.happy-hours-container {
+  margin: 20px auto;
+  padding: 15px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  max-width: 800px;
+}
+
+.happy-hours-container span {
+  color: #00ff00;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+
+/* Ajustement mobile pour rapprocher du header */
+@media (max-width: 768px) {
+  .happy-hours-container {
+    margin: 5px auto 15px;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  .happy-hours-container span {
+    font-size: 0.95rem;
+  }
+}
+
+/* Très petit mobile */
+@media (max-width: 480px) {
+  .happy-hours-container {
+    margin: 2px auto 12px;
+    padding: 10px;
+  }
+  
+  .happy-hours-container span {
+    font-size: 0.9rem;
+  }
+}
