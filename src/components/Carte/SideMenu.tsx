@@ -10,13 +10,16 @@ interface SideMenuProps {
 const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isTablet, setIsTablet] = useState(window.innerWidth > 768 && window.innerWidth <= 1024);
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Détecter si on est en version mobile
+  // Détecter si on est en version mobile/tablette
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+      setIsTablet(width > 768 && width <= 1024);
     };
 
     window.addEventListener('resize', handleResize);
@@ -53,7 +56,9 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
       ];
       
       const detectActiveSection = () => {
-        const offset = window.innerWidth <= 768 ? 235 : 180;
+        // Offsets ajustés pour chaque type d'écran
+        const offset = window.innerWidth <= 768 ? 235 : 
+                      (window.innerWidth <= 1024 ? 230 : 180);
         const scrollPosition = window.scrollY;
         
         for (const sectionId of sections) {
@@ -118,8 +123,8 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
   };
 
   const handleNavigation = (id: string) => {
-    // Fermeture du menu mobile seulement
-    if (isOpen && isMobile) {
+    // Fermeture du menu mobile et tablette seulement
+    if (isOpen && (isMobile || isTablet)) {
       toggleMenu();
       document.body.classList.remove('menu-open');
       
@@ -133,7 +138,9 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
     const element = document.getElementById(id);
     
     if (element) {
-      const offset = window.innerWidth <= 768 ? 235 : 180;
+      // Offsets ajustés pour chaque type d'écran
+      const offset = window.innerWidth <= 768 ? 235 : 
+                    (window.innerWidth <= 1024 ? 230 : 180);
       const elementPosition = element.getBoundingClientRect().top + window.scrollY - offset;
       
       window.scrollTo({
@@ -152,8 +159,8 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
 
   return (
     <>
-      {/* Overlay pour mobile */}
-      {isOpen && isMobile && (
+      {/* Overlay pour mobile et tablette */}
+      {isOpen && (isMobile || isTablet) && (
         <div 
           className="menu-overlay" 
           onClick={toggleMenu}
@@ -162,10 +169,12 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, toggleMenu }) => {
       
       {/* Menu latéral */}
       <div className={`side-menu ${isOpen ? 'open' : ''}`}>
-        {/* Bouton de fermeture - Style du formulaire de réservation */}
-        <button className="close-menu-btn" onClick={toggleMenu} aria-label="Fermer le menu">
-          ×
-        </button>
+        {/* Bouton de fermeture - Seulement sur mobile et tablette */}
+        {(isMobile || isTablet) && (
+          <button className="close-button" onClick={toggleMenu} aria-label="Fermer le menu">
+            ×
+          </button>
+        )}
         
         <div className="menu-title">Notre Carte</div>
         <div className="menu-sections">

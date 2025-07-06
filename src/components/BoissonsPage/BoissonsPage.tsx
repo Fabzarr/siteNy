@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './BoissonsPage.css';
+import './BoissonsHeader.css';
 
 const BoissonsPage = () => {
   const [activeMenu, setActiveMenu] = useState('boissons');
@@ -155,18 +156,11 @@ const BoissonsPage = () => {
     <div className="boissons-page">
       <div className="boissons-content">
           <div className="boissons-header">
-          <div className="boissons-header-center">
+          {/* Contenu desktop */}
+          <div className="desktop-header-content">
             <h2>CARTE DES BOISSONS</h2>
-            <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', margin: '0', letterSpacing: '1px' }}>
-              BOISSONS, COCKTAILS & MOCKTAILS
-            </p>
-          </div>
-          
-          {/* Titres et boutons pour mobile/tablette - directement dans header */}
-          <h2 className="mobile-subtitle">CARTE DES BOISSONS</h2>
-          <p className="mobile-description">BOISSONS, COCKTAILS & MOCKTAILS</p>
-          
-          <div className="mobile-menu-selector">
+            <p className="desktop-subtitle">BOISSONS, COCKTAILS & MOCKTAILS</p>
+            <div className="menu-selector">
             <button 
               className={`menu-button ${activeMenu === 'boissons' ? 'active' : ''}`}
               onClick={() => handleMenuChange('boissons')}
@@ -182,7 +176,11 @@ const BoissonsPage = () => {
           </div>
         </div>
 
-        <div className="menu-selector desktop-only">
+          {/* Contenu mobile/tablette */}
+          <div className="mobile-header-content">
+          <h2 className="mobile-subtitle">CARTE DES BOISSONS</h2>
+          <p className="mobile-description">BOISSONS, COCKTAILS & MOCKTAILS</p>
+          <div className="mobile-menu-selector">
           <button 
             className={`menu-button ${activeMenu === 'boissons' ? 'active' : ''}`}
             onClick={() => handleMenuChange('boissons')}
@@ -195,6 +193,8 @@ const BoissonsPage = () => {
           >
             <span>COCKTAILS</span>
           </button>
+            </div>
+          </div>
                 </div>
         
         <InfoSection />

@@ -1,0 +1,106 @@
+/* HEADER MOBILE ET TABLETTE PAR DÉFAUT */
+.boissons-header {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  z-index: 80;
+  margin: 0;
+  padding: 15px 20px 20px 20px;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+/* Contenus desktop et mobile */
+.desktop-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-header-content {
+  display: none;
+  text-align: center;
+}
+
+/* Media queries pour gérer l'affichage */
+@media (min-width: 1024px) {
+  .desktop-header-content {
+    display: flex;
+  }
+  
+  .mobile-header-content {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .desktop-header-content {
+    display: none;
+  }
+  
+  .mobile-header-content {
+    display: block;
+  }
+  
+  .mobile-subtitle {
+    color: #D4AF37;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    margin: 0 0 5px 0;
+  }
+  
+  .mobile-description {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin: 0 0 15px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .mobile-menu-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .mobile-menu-selector .menu-button {
+    background: rgba(30, 30, 30, 0.9);
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    min-width: 120px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+  }
+
+  .mobile-menu-selector .menu-button:hover {
+    color: #000;
+    background: linear-gradient(135deg, #D4AF37, #F4D03F);
+    border-color: #D4AF37;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+  }
+
+  .mobile-menu-selector .menu-button.active {
+    color: #000;
+    background: linear-gradient(135deg, #D4AF37, #F4D03F);
+    border: 2px solid #D4AF37;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    font-weight: 600;
+    transform: translateY(-2px);
+  }
+} 

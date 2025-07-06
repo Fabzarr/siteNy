@@ -99,8 +99,6 @@ button:focus-visible {
   outline: none;
 }
 
-/* Classes utilitaires supprimées temporairement pour éviter les conflits */
-
 /* Mobile - sans menu latéral */
 @media (max-width: 768px) {
   
@@ -124,5 +122,3 @@ button:focus-visible {
     font-size: 0.85em;
   }
 }
-
-/* Améliorations globales supprimées temporairement */

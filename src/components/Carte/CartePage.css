@@ -120,6 +120,23 @@
     text-transform: uppercase;
     font-weight: 400;
   }
+
+  .item-price {
+    color: #D4AF37;
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+    padding: 5px 10px;
+    
+    /* Fond noir uniforme aussi dans cette media query */
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    border: 1px solid #D4AF37;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .item-price:hover {
+    background: rgba(0, 0, 0, 0.9);
+    border-color: #E5C158;
+  }
 }
 
 /* HEADER MOBILE ET TABLETTE */
@@ -412,24 +429,24 @@
 }
 
 .item-price {
-  color: color-mix(in oklch, #D4AF37 90%, #F4D03F 10%);
+  color: #D4AF37;
   font-size: clamp(1rem, 2.5vw, 1.1rem);
   font-weight: 600;
   white-space: nowrap;
   
-  /* 2025 Price Styling */
-  background: color-mix(in srgb, #D4AF37 8%, transparent 92%);
+  /* Fond noir uniforme pour tous les prix */
+  background: rgba(0, 0, 0, 0.8);
   padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
   border-radius: 12px;
-  border: 1px solid color-mix(in srgb, #D4AF37 20%, transparent 80%);
+  border: 1px solid #D4AF37;
   
   /* Léger effet sur les prix */
   transition: background-color 0.2s ease, border-color 0.2s ease;
-  
-  &:hover {
-    background: color-mix(in srgb, #D4AF37 12%, transparent 88%);
-    border-color: color-mix(in srgb, #D4AF37 30%, transparent 70%);
-  }
+}
+
+.item-price:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: #E5C158;
 }
 
 .item-description {
@@ -574,16 +591,12 @@ body {
 }
 
 @media (max-width: 768px) {
-  .page-with-menu {
-    flex-direction: column;
-  }
-
   .carte-page-container {
     margin-left: 0;
-    padding: 20px;
-    padding-top: calc(var(--navbar-height) + 80px);
-    display: block;
-    align-items: stretch;
+    padding: 120px 15px 100px;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .carte-header {
@@ -622,12 +635,31 @@ body {
     text-align: center;
     margin-bottom: 15px;
   }
+
+  .carte-page-container .menu-section {
+    padding: 15px;
+    margin-bottom: 25px; /* Ajoute de l'espace entre les sections */
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+  }
 }
 
 @media (max-width: 480px) {
   .carte-page-container {
-    padding: 15px;
-    padding-top: calc(var(--navbar-height) + 80px);
+    padding: 100px 12px 80px;
+  }
+
+  /* Augmente la spécificité pour la version mobile */
+  .carte-page-container .menu-section {
+    padding: 15px !important;
+    margin-bottom: 30px !important;
+    border-radius: 12px !important;
+  }
+
+  .carte-page-container .menu-section.menu-section:last-child {
+    margin-bottom: 0;
   }
 
   .carte-header h1 {
@@ -887,11 +919,6 @@ body {
     font-size: clamp(0.95rem, 2.2vw, 1.05rem);
   }
   
-  .item-price {
-    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
-    padding: 5px 10px;
-  }
-  
   .item-description {
     font-size: clamp(0.8rem, 1.8vw, 0.85rem);
   }
@@ -900,5 +927,36 @@ body {
 @media (min-width: 1025px) {
   .mobile-nav-button {
     display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .carte-page-container .menu-section {
+    margin-bottom: 50px;  /* Espacement plus important entre les sections */
+    padding: 25px;
+    width: 100%;
+    border-radius: 15px;
+  }
+
+  .section-anchor {
+    position: absolute;
+    top: calc(-1 * (var(--navbar-height) + 120px));  /* Ajustement du point d'ancrage */
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .carte-page-container {
+    padding: 15px;
+    padding-top: calc(var(--navbar-height) + 65px);
+  }
+
+  .carte-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .carte-header h2 {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
   }
 }
