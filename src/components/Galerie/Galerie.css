@@ -5,31 +5,33 @@
   justify-content: center;
   min-height: 100vh;
   width: 100%;
+  padding-top: 110px;
 }
 
 .galerie-page-container {
   width: 100%;
   max-width: 1200px;
-  padding: 20px;
-  padding-top: calc(var(--navbar-height) + 40px);
-  padding-bottom: 200px;
+  padding: 0 20px 200px 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  position: relative;
+  z-index: 1;
 }
 
 /* HEADER FIXE MODERNE - Identique à CartePage */
 @media (min-width: 1025px) {
   .galerie-header {
     position: fixed;
-    top: var(--navbar-height);
+    top: var(--navbar-height, 70px);
     left: 0;
     right: 0;
     z-index: 80;
     margin: 0;
     padding: 15px 40px;
+    height: 70px;
     /* Glassmorphism moderne avec teinte dorée */
     background: color-mix(in srgb, #000000 88%, #D4AF37 3%);
     backdrop-filter: blur(16px);
@@ -45,7 +47,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
     /* Box-shadow avec profondeur moderne */
     box-shadow: 
       0 2px 12px rgba(0, 0, 0, 0.15),
@@ -127,17 +128,18 @@
     right: 0;
     z-index: 80;
     margin: 0;
-    padding: 15px 20px 20px 20px;
+    padding: 12px 20px 15px 20px;
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(212, 175, 55, 0.15);
     text-align: center;
+    height: 90px;
   }
 
   .galerie-header h1 {
     color: #D4AF37;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 2.2rem;
+    margin-bottom: 8px;
     font-family: 'Playfair Display', serif;
     font-weight: 600;
     user-select: none;
@@ -150,7 +152,7 @@
 
   .galerie-header h2 {
     color: #D4AF37;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     letter-spacing: 3px;
     font-family: 'Playfair Display', serif;
     font-weight: 500;
@@ -159,10 +161,23 @@
   .galerie-header p {
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.85rem;
-    margin: 5px 0 0 0;
+    margin: 4px 0 0 0;
     letter-spacing: 1px;
     text-transform: uppercase;
     font-weight: 400;
+  }
+
+  .page-with-gallery {
+    padding-top: 90px;
+  }
+
+  .galerie-section.video-section {
+    margin-top: -15px;
+    padding-top: 0;
+  }
+
+  .video-section .video-container {
+    margin-top: 0;
   }
 }
 
@@ -192,7 +207,7 @@
     /* Rim light */
     inset 0 1px 0 color-mix(in srgb, #D4AF37 8%, transparent 92%),
     /* Depth enhancement */
-    0 0 0 1px color-mix(in srgb, #D4AF37 5%, transparent 95%);
+    0 1px 2px color-mix(in srgb, #000000 10%, transparent 90%);
   
   box-sizing: border-box;
   position: relative;
@@ -220,8 +235,6 @@
     background: color-mix(in oklch, transparent 12%, oklch(0.06 0.025 240) 88%);
   }
 }
-
-
 
 /* SECTION HEADERS - Style identique */
 .section-header {
@@ -335,30 +348,40 @@
 .gallery-video {
   width: 100%;
   height: auto;
-  display: block;
-  background: #000;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  display: block;
 }
 
-.gallery-video:hover {
-  opacity: 0.95;
+/* Styles spécifiques pour les contrôles vidéo */
+.gallery-video::-webkit-media-controls {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .gallery-video::-webkit-media-controls-panel {
-  background-color: rgba(0, 0, 0, 0.8);
+  display: flex !important;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+}
+
+.gallery-video::-webkit-media-controls-play-button {
+  display: flex !important;
+  background-color: rgba(212, 175, 55, 0.8);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
 }
 
 /* GALERIE GRID - Style moderne - 2 rangées de 3 blocs */
 .galerie-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: clamp(16px, 3vw, 20px);
-  margin-top: 20px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
 }
 
 .galerie-item {
@@ -368,6 +391,7 @@
   border: 1px solid rgba(212, 175, 55, 0.3);
   aspect-ratio: 1;
   transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .galerie-item:hover {
@@ -466,7 +490,7 @@
 @media (max-width: 1024px) {
   .galerie-page-container {
     padding: 10px;
-    padding-top: calc(var(--navbar-height) + 120px);
+    padding-top: calc(var(--navbar-height) + 5px);
     padding-bottom: 150px;
     align-items: center;
   }
@@ -482,77 +506,103 @@
     background: color-mix(in oklch, transparent 5%, oklch(0.08 0.02 240) 95%);
     backdrop-filter: blur(16px) saturate(150%);
   }
+
+  .galerie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
 }
 
 @media (max-width: 768px) {
   .galerie-page-container {
-    padding: 8px;
-    padding-top: calc(var(--navbar-height) + 110px);
-    padding-bottom: 120px;
+    padding: 0 15px 100px 15px;
   }
 
   .galerie-section {
-    max-width: 98%;
-    padding: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    margin-top: 10px;
   }
 
   .galerie-header h1 {
-    font-size: 2rem !important;
+    font-size: 2rem;
   }
 
   .galerie-header h2 {
-    font-size: 1.4rem !important;
-    letter-spacing: 2px !important;
+    font-size: 1.5rem;
   }
 
-  .video-section .video-container::before {
-    width: 60px;
-    height: 60px;
-    font-size: 20px;
+  .page-with-gallery {
+    padding-top: 100px;
   }
 
   .galerie-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
   }
 
   .info-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .gallery-video {
+    width: 100%;
+    border-radius: 12px;
+    z-index: 2;
+  }
+
+  .gallery-video::-webkit-media-controls-panel {
+    display: flex !important;
+    padding: 0 10px;
+    height: 50px;
+  }
+
+  .gallery-video::-webkit-media-controls-play-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Masquer le pseudo-élément qui pourrait interférer avec les contrôles */
+  .video-section .video-container::before {
+    display: none;
+  }
+
+  .video-section .video-container.playing::before {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
   .galerie-page-container {
-    padding: 5px;
-    padding-top: calc(var(--navbar-height) + 100px);
-    padding-bottom: 100px;
+    padding: 0 10px 80px 10px;
   }
 
   .galerie-section {
-    max-width: 99%;
-    padding: 12px;
-    margin-bottom: 20px;
+    padding: 15px;
+    margin-bottom: 25px;
+    margin-top: 5px;
   }
 
   .galerie-header h1 {
-    font-size: 1.8rem !important;
+    font-size: 1.8rem;
   }
 
   .galerie-header h2 {
-    font-size: 1.2rem !important;
-    letter-spacing: 1px !important;
-  }
-
-  .video-section .video-container::before {
-    width: 55px;
-    height: 55px;
-    font-size: 18px;
+    font-size: 1.3rem;
   }
 
   .galerie-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
   }
 
   .info-grid {
@@ -568,5 +618,138 @@
   .info-item h3 {
     font-size: 1rem;
     margin-bottom: 8px;
+  }
+
+  .page-with-gallery {
+    padding-top: 90px;
+  }
+
+  .gallery-video::-webkit-media-controls-panel {
+    height: 44px;
+  }
+
+  .gallery-video::-webkit-media-controls-play-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Optimisation du conteneur vidéo */
+.video-container {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 16/9;
+}
+
+.gallery-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Styles pour les contrôles personnalisés */
+.custom-video-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  padding: 0 15px;
+}
+
+.custom-video-controls.visible {
+  opacity: 1;
+}
+
+.video-control-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(212, 175, 55, 0.9);
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: 6px;
+  left: 10px;
+}
+
+.video-control-button:hover {
+  transform: scale(1.1);
+  background: #D4AF37;
+}
+
+.video-control-button:active {
+  transform: scale(0.95);
+}
+
+/* Ajustements pour mobile */
+@media (max-width: 768px) {
+  .custom-video-controls {
+    height: 44px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  }
+
+  .video-control-button {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    bottom: 6px;
+    left: 8px;
+  }
+
+  .custom-video-controls.visible {
+    opacity: 1 !important;
+  }
+}
+
+/* Ajustements pour très petits écrans */
+@media (max-width: 480px) {
+  .custom-video-controls {
+    height: 40px;
+  }
+
+  .video-control-button {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    bottom: 5px;
+    left: 6px;
+  }
+}
+
+/* Ajustements spécifiques pour tablette */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .galerie-section {
+    margin-top: 10px;
+    padding: 20px;
+  }
+
+  .galerie-section.video-section {
+    margin-top: -20px;
+    padding-top: 0;
+  }
+
+  .video-section .video-container {
+    margin-top: 0;
   }
 } 
