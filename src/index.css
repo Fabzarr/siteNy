@@ -46,7 +46,7 @@ h2, .section-title {
 }
 
 /* Styles pour les noms d'items (pizzas, pâtes, etc.) */
-.item-name, .menu-item-name {
+.menu-item-name {
   font-family: 'Inter', sans-serif;
   font-size: 1.1em;
   font-weight: 600;
@@ -55,7 +55,7 @@ h2, .section-title {
 }
 
 /* Styles pour tous les ingrédients */
-.item-ingredients, .menu-item-ingredients {
+.menu-item-ingredients {
   font-family: 'Inter', sans-serif;
   font-size: 0.85em;
   font-weight: 300;
@@ -63,15 +63,6 @@ h2, .section-title {
   font-style: italic;
   margin-bottom: 6px;
   line-height: 1.4;
-}
-
-/* Styles pour tous les prix */
-.item-price, .menu-item-price {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9em;
-  font-weight: 600;
-  color: #D4AF37;
-  text-align: right;
 }
 
 /* Styles pour les sous-titres de sections */
@@ -110,15 +101,11 @@ button:focus-visible {
     font-size: 1.8em;
   }
 
-  .item-name, .menu-item-name {
+  .menu-item-name {
     font-size: 1em;
   }
 
-  .item-ingredients, .menu-item-ingredients {
+  .menu-item-ingredients {
     font-size: 0.8em;
-  }
-
-  .item-price, .menu-item-price {
-    font-size: 0.85em;
   }
 }

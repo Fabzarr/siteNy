@@ -124,10 +124,8 @@
   .item-price {
     color: #D4AF37;
     font-size: clamp(0.95rem, 2.2vw, 1.05rem);
-    padding: 5px 10px;
-    
-    /* Fond noir uniforme aussi dans cette media query */
     background: rgba(0, 0, 0, 0.8);
+    padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
     border-radius: 12px;
     border: 1px solid #D4AF37;
     transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -233,6 +231,21 @@
   
   /* 2025 Animation Performance */
   contain: layout style paint;
+}
+
+.carte-page-container .menu-section .item-price {
+  color: #D4AF37;
+  font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  background: rgba(0, 0, 0, 0.8);
+  padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+  border-radius: 12px;
+  border: 1px solid #D4AF37;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.carte-page-container .menu-section .item-price:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: #E5C158;
 }
 
 /* Container Queries 2025 - Responsive Adaptatif */
@@ -375,95 +388,142 @@
   }
 }
 
-/* MENU ITEMS - 2025 MODERNISATION */
-.menu-grid {
+/* Styles pour la grille du menu */
+.carte-page-container .menu-grid {
   display: grid;
-  gap: clamp(12px, 2vw, 15px);
   grid-template-columns: 1fr;
+  gap: clamp(12px, 2vw, 15px);
   container-type: inline-size;
 }
 
-.menu-item {
+/* Styles pour les items du menu */
+.carte-page-container .menu-section .menu-item {
   padding: clamp(12px, 2vw, 15px) 0;
   border-block-end: 1px solid color-mix(in srgb, #FFFFFF 10%, transparent 90%);
-  
-  /* Hover équilibré */
   transition: background-color 0.25s ease, border-color 0.25s ease;
   border-radius: 8px;
   padding-inline: clamp(8px, 2vw, 12px);
   margin-inline: -clamp(8px, 2vw, 12px);
-  
-  &:hover {
-    /* Changement plus visible mais modéré */
-    background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
-    border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
-  }
-  
-  &:last-child {
-    border-block-end: none;
-  }
 }
 
-.item-name-price {
+.carte-page-container .menu-section .menu-item:hover {
+  background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
+  border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
+}
+
+.carte-page-container .menu-section .menu-item:last-child {
+  border-block-end: none;
+}
+
+/* Conteneur du nom et du prix */
+.carte-page-container .menu-section .menu-item .item-name-price {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  /* ESPACEMENT ULTRA-MINIMAL */
   margin-bottom: 1px;
   gap: clamp(12px, 3vw, 15px);
 }
 
-.item-name {
+/* Style du nom de l'item */
+.carte-page-container .menu-section .menu-item .item-name {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   color: color-mix(in oklch, #FFFFFF 95%, #D4AF37 5%);
   font-size: clamp(1rem, 2.5vw, 1.1rem);
   font-weight: 500;
-  flex: 1;
-  
-  /* 2025 Typography Enhancement */
-  line-height: 1.3;
+  line-height: 1.2;
   font-optical-sizing: auto;
   font-variation-settings: "wght" 500;
-  
-  /* Subtle transition */
   transition: color 0.2s ease;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  flex: 1;
 }
 
-.item-price {
+/* Style du prix */
+.carte-page-container .menu-section .menu-item .item-price {
   color: #D4AF37;
   font-size: clamp(1rem, 2.5vw, 1.1rem);
   font-weight: 600;
   white-space: nowrap;
-  
-  /* Fond noir uniforme pour tous les prix */
   background: rgba(0, 0, 0, 0.8);
-  padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+  padding: 4px 10px;
   border-radius: 12px;
   border: 1px solid #D4AF37;
-  
-  /* Léger effet sur les prix */
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.item-price:hover {
+.carte-page-container .menu-section .menu-item .item-price:hover {
   background: rgba(0, 0, 0, 0.9);
   border-color: #E5C158;
 }
 
-.item-description {
-  color: color-mix(in oklch, #FFFFFF 70%, transparent 30%);
+/* Style de la description */
+.carte-page-container .menu-section .menu-item .item-description {
+  color: rgba(255, 255, 255, 0.7);
   font-size: clamp(0.85rem, 2vw, 0.9rem);
+  font-weight: 400;
   line-height: 1.4;
   font-style: italic;
-  
-  /* REMONTER LES INGRÉDIENTS */
   margin-top: -1px;
-  
-  /* 2025 Typography */
   font-optical-sizing: auto;
   letter-spacing: 0.2px;
-  
-  /* Enhanced readability */
   text-shadow: 0 1px 2px color-mix(in srgb, #000000 20%, transparent 80%);
+}
+
+/* Ajustements responsifs */
+@media (max-width: 768px) {
+  .carte-page-container .menu-grid {
+    gap: 10px;
+  }
+
+  .carte-page-container .menu-section .menu-item {
+    padding: 10px 0;
+  }
+
+  .carte-page-container .menu-section .menu-item .item-name {
+    font-size: 0.95rem;
+  }
+
+  .carte-page-container .menu-section .menu-item .item-price {
+    font-size: 0.95rem;
+    padding: 3px 8px;
+  }
+
+  .carte-page-container .menu-section .menu-item .item-description {
+    font-size: 0.85rem;
+  }
+}
+
+/* Ajustements tablette */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .carte-page-container .menu-section .menu-item .item-name {
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  }
+
+  .carte-page-container .menu-section .menu-item .item-price {
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  }
+}
+
+/* Styles spécifiques pour les grands écrans */
+@media (min-width: 1024px) {
+  .carte-page-container .menu-section .menu-item {
+    padding: clamp(15px, 2.5vw, 20px) 0;
+  }
+
+  .carte-page-container .menu-section .menu-item .item-name-price {
+    margin-bottom: 2px;
+  }
+
+  .carte-page-container .menu-section .menu-item .item-name {
+    font-size: clamp(1.05rem, 2.5vw, 1.15rem);
+  }
+
+  .carte-page-container .menu-section .menu-item .item-description {
+    font-size: clamp(0.9rem, 2vw, 0.95rem);
+    line-height: 1.5;
+  }
 }
 
 html {
@@ -476,6 +536,14 @@ html {
 @media (max-width: 768px) {
   html {
     scroll-padding-top: calc(var(--navbar-height) + 250px); /* Mobile: navbar + offset */
+  }
+
+  .item-price {
+    font-size: 0.95rem;
+  }
+
+  .carte-page-container .menu-section .menu-item .item-name-price .item-name {
+    font-size: 0.95rem !important;
   }
 }
 
@@ -959,4 +1027,55 @@ body {
     font-size: 1.2rem;
     letter-spacing: 1px;
   }
+}
+
+/* Ajustement tablette */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .carte-page-container .menu-section .menu-item .item-name-price .item-name {
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem) !important;
+  }
+}
+
+/* Ajustement desktop */
+@media (min-width: 1025px) {
+  .carte-page-container .menu-section .menu-item .item-name-price .item-name {
+    font-size: clamp(1rem, 2.5vw, 1.1rem) !important;
+  }
+}
+
+/* Styles spécifiques pour les noms d'items dans la carte */
+.page-with-menu .carte-page-container .menu-section .menu-grid .menu-item .item-name-price .item-name {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important;
+  color: color-mix(in oklch, #FFFFFF 95%, #D4AF37 5%) !important;
+  font-size: clamp(1rem, 2.5vw, 1.1rem) !important;
+  font-weight: 500 !important;
+  flex: 1 !important;
+  line-height: 1.2 !important;
+  font-optical-sizing: auto !important;
+  font-variation-settings: "wght" 500 !important;
+  transition: color 0.2s ease !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+.menu-item .item-name {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important;
+  color: color-mix(in oklch, #FFFFFF 95%, #D4AF37 5%) !important;
+  font-size: clamp(1rem, 2.5vw, 1.1rem) !important;
+  font-weight: 500 !important;
+  flex: 1 !important;
+  line-height: 1.2 !important;
+  font-optical-sizing: auto !important;
+  font-variation-settings: "wght" 500 !important;
+  transition: color 0.2s ease !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
 }

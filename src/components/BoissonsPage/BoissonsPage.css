@@ -4,16 +4,14 @@
 .boisson-price,
 .cocktail-price {
   color: #D4AF37;
-  font-size: 1.1rem; /* Desktop par défaut */
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
   font-weight: 600;
   white-space: nowrap;
   background: rgba(0, 0, 0, 0.8);
-  padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+  padding: 4px 10px;
   border-radius: 12px;
   border: 1px solid #D4AF37;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-  text-align: right;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Ajustement mobile */
@@ -481,23 +479,21 @@
 
 .boisson-item,
 .cocktail-item {
-  padding: clamp(12px, 2vw, 15px) 0;
+  padding: 8px 0;  /* Réduit le padding vertical */
   border-block-end: 1px solid color-mix(in srgb, #FFFFFF 10%, transparent 90%);
-  
-  /* Hover équilibré - EXACTEMENT comme CartePage */
   transition: background-color 0.25s ease, border-color 0.25s ease;
   border-radius: 8px;
   padding-inline: clamp(8px, 2vw, 12px);
   margin-inline: -clamp(8px, 2vw, 12px);
 }
-  
+
 .boisson-item:hover,
 .cocktail-item:hover {
-  /* Changement plus visible mais modéré - EXACTEMENT comme CartePage */
+  /* Changement plus visible mais modéré */
   background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
   border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
 }
-  
+
 .boisson-item:last-child,
 .cocktail-item:last-child {
   border-block-end: none;
@@ -508,43 +504,54 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  /* ESPACEMENT HARMONISÉ AVEC LE MENU */
-  margin-bottom: 1px;
-  gap: clamp(12px, 3vw, 15px);
+  gap: 10px;  /* Réduit le gap */
+  margin-bottom: 0;  /* Supprime la marge du bas */
 }
 
 .boisson-name,
 .cocktail-name {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   color: color-mix(in oklch, #FFFFFF 95%, #D4AF37 5%);
   font-size: clamp(1rem, 2.5vw, 1.1rem);
   font-weight: 500;
   flex: 1;
-  
-  /* 2025 Typography Enhancement - EXACTEMENT comme CartePage */
-  line-height: 1.3;
+  line-height: 1.2;  /* Réduit légèrement la hauteur de ligne */
   font-optical-sizing: auto;
   font-variation-settings: "wght" 500;
-  
-  /* Subtle transition */
   transition: color 0.2s ease;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .boisson-description,
 .cocktail-description {
   color: color-mix(in oklch, #FFFFFF 70%, transparent 30%);
   font-size: clamp(0.85rem, 2vw, 0.9rem);
-  line-height: 1.4;
+  line-height: 1.3;  /* Réduit la hauteur de ligne */
   font-style: italic;
-  
-  /* REMONTER LES INGRÉDIENTS */
-  margin-top: -1px;
-  
-  /* 2025 Typography - EXACTEMENT comme CartePage */
+  margin-top: 2px;  /* Ajuste l'espacement */
   font-optical-sizing: auto;
   letter-spacing: 0.2px;
-  
-  /* Enhanced readability */
   text-shadow: 0 1px 2px color-mix(in srgb, #000000 20%, transparent 80%);
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
+  .boisson-item,
+  .cocktail-item {
+    padding: 6px 0;  /* Réduit encore plus le padding sur mobile */
+  }
+  
+  .boisson-info,
+  .cocktail-info {
+    gap: 8px;  /* Réduit encore le gap sur mobile */
+  }
+  
+  .boisson-description,
+  .cocktail-description {
+    margin-top: 1px;  /* Réduit l'espacement sur mobile */
+  }
 }
 
 .boissons-footer {
@@ -1476,10 +1483,8 @@
 }
 
 .cocktail-item {
-  padding: clamp(12px, 2vw, 15px) 0;
+  padding: 8px 0;  /* Réduit le padding vertical */
   border-block-end: 1px solid color-mix(in srgb, #FFFFFF 10%, transparent 90%);
-  
-  /* Hover équilibré */
   transition: background-color 0.25s ease, border-color 0.25s ease;
   border-radius: 8px;
   padding-inline: clamp(8px, 2vw, 12px);
@@ -1487,22 +1492,21 @@
 }
 
 .cocktail-item:hover {
-    /* Changement plus visible mais modéré */
-    background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
-    border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
-  }
+  /* Changement plus visible mais modéré */
+  background: color-mix(in oklch, transparent 82%, oklch(0.15 0.03 45) 18%);
+  border-block-end-color: color-mix(in srgb, #D4AF37 25%, transparent 75%);
+}
 
 .cocktail-item:last-child {
-    border-block-end: none;
+  border-block-end: none;
 }
 
 .cocktail-info {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  /* ESPACEMENT HARMONISÉ AVEC LE MENU */
-  margin-bottom: 1px;
-  gap: clamp(12px, 3vw, 15px);
+  gap: 10px;  /* Réduit le gap */
+  margin-bottom: 0;  /* Supprime la marge du bas */
 }
 
 .cocktail-name {
@@ -1510,31 +1514,47 @@
   font-size: clamp(1rem, 2.5vw, 1.1rem);
   font-weight: 500;
   flex: 1;
-  
-  /* 2025 Typography Enhancement */
-  line-height: 1.3;
+  line-height: 1.2;  /* Réduit légèrement la hauteur de ligne */
   font-optical-sizing: auto;
   font-variation-settings: "wght" 500;
-  
-  /* Subtle transition */
   transition: color 0.2s ease;
 }
 
 .cocktail-description {
-  color: color-mix(in oklch, #FFFFFF 70%, transparent 30%);
-  font-size: clamp(0.85rem, 2vw, 0.9rem);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
   line-height: 1.4;
-  font-style: italic;
-  
-  /* REMONTER LES INGRÉDIENTS */
-  margin-top: -1px;
-  
-  /* 2025 Typography */
-  font-optical-sizing: auto;
+  margin: 0;
+  font-weight: 400;
   letter-spacing: 0.2px;
-  
-  /* Enhanced readability */
-  text-shadow: 0 1px 2px color-mix(in srgb, #000000 20%, transparent 80%);
+}
+
+/* Media queries pour la responsivité - EXACTEMENT comme menu-item */
+@media (max-width: 768px) {
+  .cocktail-info {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cocktail-name {
+    font-size: 0.95rem;
+  }
+
+  .cocktail-description {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+}
+
+@media (max-width: 480px) {
+  .cocktail-name {
+    font-size: 0.95rem;
+  }
+
+  .cocktail-description {
+    font-size: 0.85rem;
+  }
 }
 
 /* RESPONSIVE COCKTAILS - Desktop petit format */

@@ -13,6 +13,7 @@ import Evenements from './components/Evenements/Evenements';
 import Footer from './components/Footer/Footer';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import BoissonsPage from './components/BoissonsPage/BoissonsPage';
+import Menu from "./components/Menu/Menu";
 import './App.css';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
               <Route path="/galerie" element={<Galerie />} />
               <Route path="/evenements" element={<Evenements />} />
               <Route path="/boissons" element={<BoissonsPage />} />
+              <Route path="/menu" element={<Menu />} />
             </Routes>
           </div>
         </main>
